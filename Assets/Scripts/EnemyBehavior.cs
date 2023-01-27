@@ -8,7 +8,7 @@ public class EnemyBehavior : MonoBehaviour
     public GameObject player;
     public Rigidbody rb;
     public float intervalTimer = 2.0f;
-    public float knockBack = 10.0f;
+    public float knockBack = 50.0f;
     public static bool hit = false;
     // Start is called before the first frame update
     void Start()

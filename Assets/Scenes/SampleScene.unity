@@ -934,7 +934,7 @@ MonoBehaviour:
   player: {fileID: 1839447271}
   rb: {fileID: 1859177192}
   intervalTimer: 2
-  knockBack: 40
+  knockBack: 50
 --- !u!1 &1937647606
 GameObject:
   m_ObjectHideFlags: 0
