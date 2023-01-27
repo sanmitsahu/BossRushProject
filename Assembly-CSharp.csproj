@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{099BCE30-D78B-24B1-C8ED-0FAF9B529C90}</ProjectGuid>
+    <ProjectGuid>{3A83A195-36F1-ADB8-200E-9ED7FD536237}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -53,11 +53,11 @@
     <UnityVersion>2021.3.16f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BossSword.cs" />
+    <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
     <Compile Include="Assets\Scripts\SwordSwing.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\CamFollow.cs" />
-    <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
-    <Compile Include="Assets\Scripts\BossSword.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
