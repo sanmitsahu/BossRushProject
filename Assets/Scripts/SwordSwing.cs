@@ -8,7 +8,7 @@ public class SwordSwing : MonoBehaviour
     public GameObject character;
     public GameObject start;
     public float swingSpeed = 1000.0f;
-    public float timer = 0.15f;
+    public float timer = 0.5f;
     public static bool swung = false;
     private bool swinging = false;
     private Quaternion originalRot;
@@ -38,11 +38,16 @@ public class SwordSwing : MonoBehaviour
             {
                 swinging = false;
                 swung = false;
-                timer = 0.15f;
+                timer = 0.5f;
                 transform.localPosition = originalPos;
                 transform.localRotation = originalRot;
             }
             transform.RotateAround(character.transform.position, Vector3.up, -swingSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.localPosition = originalPos;
+            transform.localRotation = originalRot;
         }
     }
 }

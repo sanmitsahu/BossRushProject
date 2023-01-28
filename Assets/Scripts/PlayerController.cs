@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject swordPrefab;
     public float speed = 5.0f;
-    public float turnSpeed = 720.0f;
+    public float turnSpeed = 1080.0f;
     private float horizontalInput;
     private float verticalInput;
     // Start is called before the first frame update
@@ -31,11 +31,12 @@ public class PlayerController : MonoBehaviour
 
         if (moveDirect != Vector3.zero)
         {
-            Quaternion toRot = Quaternion.LookRotation(moveDirect, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRot, turnSpeed * Time.deltaTime);
+            //Quaternion toRot = Quaternion.LookRotation(moveDirect, Vector3.up);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRot, turnSpeed * Time.deltaTime);
+            transform.forward = moveDirect;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && swordPrefab.GetComponent <SwordSwing>().timer == 0.15f)
+        if (Input.GetKeyDown(KeyCode.Space) && swordPrefab.GetComponent <SwordSwing>().timer == 0.5f)
         {
             SwordSwing.swung = true;
         }

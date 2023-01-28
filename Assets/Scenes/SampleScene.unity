@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -170,7 +170,7 @@ GameObject:
   - component: {fileID: 481143637}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 1007357727}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,27 +577,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007357725}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1050301410 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1268504376831312692, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
-  m_PrefabInstance: {fileID: 1127801492}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1050301416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1050301410}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f8e6a80d6502014890481ad522de31f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 1859177187}
-  start: {fileID: 1210701445}
-  swingSpeed: 1000
-  timer: 0.15
 --- !u!1001 &1127801492
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -607,7 +586,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_Mass
-      value: 0.25
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_Constraints
@@ -615,6 +594,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1268504376831312692, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_Name
+      value: BossSword
+      objectReference: {fileID: 0}
+    - target: {fileID: 1268504376831312692, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_TagString
       value: BossSword
       objectReference: {fileID: 0}
     - target: {fileID: 2328202897925008284, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
@@ -677,13 +660,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 3064792079718467315, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3636406952509556550, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d344435840262d04eabfe72cd239a9f5, type: 2}
+    - target: {fileID: 5457079015883826470, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6270562556313195445, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d344435840262d04eabfe72cd239a9f5, type: 2}
+    - target: {fileID: 8424050954100348871, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_Name
+      value: BossSword
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2328202897925008284, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+    - {fileID: 4989407312916840303, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+--- !u!1 &1127801493 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8424050954100348871, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+  m_PrefabInstance: {fileID: 1127801492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1127801494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127801493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8e6a80d6502014890481ad522de31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 1859177187}
+  start: {fileID: 1210701445}
+  swingSpeed: 1000
+  timer: 0.5
 --- !u!1 &1210701445 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3064792079718467314, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
@@ -801,7 +822,7 @@ GameObject:
   - component: {fileID: 1770221638}
   m_Layer: 0
   m_Name: Cube (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -907,16 +928,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swordPrefab: {fileID: 3064792080964085355}
-  speed: 5
-  turnSpeed: 720
+  speed: 3
+  turnSpeed: 1080
 --- !u!1 &1859177187 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3064792079581895309, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
-  m_PrefabInstance: {fileID: 1127801492}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &1859177192 stripped
-Rigidbody:
-  m_CorrespondingSourceObject: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
   m_PrefabInstance: {fileID: 1127801492}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1859177193
@@ -932,9 +948,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1839447271}
-  rb: {fileID: 1859177192}
   intervalTimer: 2
-  knockBack: 50
+  knockBack: 10
 --- !u!1 &1937647606
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +964,7 @@ GameObject:
   - component: {fileID: 1937647608}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1044,6 +1059,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 326922845}
     m_Modifications:
+    - target: {fileID: 2029773718727416290, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2328202897925008284, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: start
       value: 
@@ -1112,10 +1131,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4989407312916840303, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: start
+      value: 
+      objectReference: {fileID: 1984405656}
+    - target: {fileID: 4989407312916840303, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: timer
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4989407312916840303, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 1839447271}
+    - target: {fileID: 4989407312916840303, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: swingSpeed
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5457079015883826470, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
 --- !u!1 &3064792080964085355 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1268504376831312692, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8424050954100348871, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
   m_PrefabInstance: {fileID: 3064792080964085354}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &3064792080964085361
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3064792080964085355}
+  serializedVersion: 2
+  m_Mass: 0.005
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

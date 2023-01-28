@@ -8,12 +8,13 @@ public class BossSword : MonoBehaviour
     public GameObject character;
     public GameObject start;
     public float swingSpeed = 1000.0f;
-    public float timer = 0.15f;
+    public float timer = 0.5f;
     public static bool swung = false;
     private bool swinging = false;
     private Quaternion originalRot;
     private Vector3 originalPos;
     // Start is called before the first frame update
+
     void Start()
     {
         originalRot = transform.localRotation;
@@ -38,7 +39,7 @@ public class BossSword : MonoBehaviour
             {
                 swinging = false;
                 swung = false;
-                timer = 0.15f;
+                timer = 0.5f;
                 transform.localPosition = originalPos;
                 transform.localRotation = originalRot;
             }
@@ -49,7 +50,7 @@ public class BossSword : MonoBehaviour
         {
             swinging = false;
             swung = false;
-            timer = 0.15f;
+            timer = 0.5f;
             transform.localPosition = originalPos;
             transform.localRotation = originalRot;
         }
