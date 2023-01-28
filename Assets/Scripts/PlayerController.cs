@@ -15,7 +15,28 @@ public class PlayerController : MonoBehaviour
     {
         
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        
+        //Check for a match with the specified name on any GameObject that collides with your GameObject
+        if (collision.gameObject.tag == "BossSword" && SwordSwing.blockon)
+        {
+            //If the GameObject's name matches the one you suggest, output this message in the console
+            StartCoroutine(waitercolor());
+        }
+        else if (collision.gameObject.name == "BossSword" && SwordSwing.blockon)
+        {
+            StartCoroutine(waitercolor());
+        }
 
+    }
+    IEnumerator waitercolor()
+    {
+        swordPrefab.GetComponent<Renderer> ().material.color = Color.yellow;
+        yield return new WaitForSecondsRealtime(7);
+        swordPrefab.GetComponent<Renderer> ().material.color = Color.grey;
+    }
+    
     // Update is called once per frame
     void Update()
     {
@@ -38,6 +59,12 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && swordPrefab.GetComponent <SwordSwing>().timer == 0.15f)
         {
             SwordSwing.swung = true;
+        }
+        
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && swordPrefab.GetComponent <SwordSwing>().timer == 0.15f)
+        {
+            SwordSwing.block = true;
+            SwordSwing.blockon = true;
         }
     }
 }

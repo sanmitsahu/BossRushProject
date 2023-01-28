@@ -14,6 +14,7 @@ public class BossSword : MonoBehaviour
     private Quaternion originalRot;
     private Vector3 originalPos;
     // Start is called before the first frame update
+
     void Start()
     {
         originalRot = transform.localRotation;
