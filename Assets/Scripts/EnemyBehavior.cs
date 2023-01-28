@@ -6,14 +6,14 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     public GameObject player;
+    public Rigidbody rb;
     public float intervalTimer = 2.0f;
-    public float knockBack = 10.0f;
+    public float knockBack = 50.0f;
     public static bool hit = false;
-    public static float knockBackTimer = 0.25f;
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -30,15 +30,8 @@ public class EnemyBehavior : MonoBehaviour
         }
         else
         {
-            knockBackTimer -= Time.deltaTime;
-            transform.Translate(-transform.forward * Time.deltaTime * knockBack, Space.World);
             BossSword.swung = false;
             intervalTimer = 1.0f;
-            if (knockBackTimer <= 0.0f)
-            {
-                knockBackTimer = 0.25f;
-                hit = false;
-            }
         }
     }
 
@@ -46,16 +39,16 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.name == "Sword" && SwordSwing.swung && !hit)
         {
-            transform.forward = -player.transform.forward;
+            rb.AddForce((player.transform.forward * knockBack) + (player.transform.up * knockBack));
             hit = true;
         }
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Wall")
+        if (other.gameObject.name == "Plane")
         {
-            knockBackTimer = 0.0f;
+            hit = false;
         }
     }
 }
