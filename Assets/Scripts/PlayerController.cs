@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float turnSpeed = 1080.0f;
     private float horizontalInput;
     private float verticalInput;
+    public static bool switchesValid = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +34,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator waitercolor()
     {
         swordPrefab.GetComponent<Renderer> ().material.color = Color.yellow;
+        switchesValid = true;
+        
         yield return new WaitForSecondsRealtime(5);
+        switchesValid = false;
         swordPrefab.GetComponent<Renderer> ().material.color = Color.grey;
     }
     
