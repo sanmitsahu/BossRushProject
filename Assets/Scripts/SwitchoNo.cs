@@ -13,7 +13,7 @@ public class SwitchoNo : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = Color.yellow;
         on = true;
         on_switch_count++;
-        yield return new WaitForSecondsRealtime(5);
+        yield return new WaitForSecondsRealtime(25);
         gameObject.GetComponent<Renderer>().material.color = Color.gray;
         on = false;
         on_switch_count--;
@@ -35,13 +35,13 @@ public class SwitchoNo : MonoBehaviour
         {
             StartCoroutine(flipSwitch());
         }
-        else if (collision.gameObject.tag == "BossSword" && BossSword.swung)
+        else if (collision.gameObject.tag == "BossSword" && !on && BossSword.swung)
         {
             StartCoroutine(flipSwitch());
             //If the GameObject's name matches the one you suggest, output this message in the console
 
         }
-        else if (collision.gameObject.name == "BossSword" && BossSword.swung)
+        else if (collision.gameObject.name == "BossSword" && !on && BossSword.swung)
         {
             StartCoroutine(flipSwitch());
         }

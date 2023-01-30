@@ -58,11 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/BossSword.cs" />
     <Compile Include="Assets/Scripts/EnemyBehavior.cs" />
+    <Compile Include="Assets/Scripts/SwitchoNo.cs" />
     <Compile Include="Assets/Scripts/SwordSwing.cs" />
+    <Compile Include="Assets/Scripts/Boss2Port.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Compile Include="Assets/Scripts/CamFollow.cs" />
-    <Compile Include="Assets/Scripts/SwitchoNo.cs" />
-    <Compile Include="Assets/Scripts/Boss2Port.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
