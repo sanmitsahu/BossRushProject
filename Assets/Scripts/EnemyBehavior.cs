@@ -48,6 +48,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             transform.forward = -player.transform.forward;
             hit = true;
+            //UnityEngine.Debug.Log($"hit behaviour = {hit}");
         }
     }
 
