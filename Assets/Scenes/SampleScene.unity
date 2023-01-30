@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 590479763}
   - component: {fileID: 590479762}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -869,7 +869,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178875660434766663, guid: 6397b9456bf4a4e38acec0bde287264d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.49
+      value: 7.47
       objectReference: {fileID: 0}
     - target: {fileID: 4178875660434766663, guid: 6397b9456bf4a4e38acec0bde287264d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1390,7 +1390,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178875660434766663, guid: 6397b9456bf4a4e38acec0bde287264d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.09375
+      value: -4.21
       objectReference: {fileID: 0}
     - target: {fileID: 4178875660434766663, guid: 6397b9456bf4a4e38acec0bde287264d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1398,7 +1398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178875660434766663, guid: 6397b9456bf4a4e38acec0bde287264d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.56
+      value: 7.7
       objectReference: {fileID: 0}
     - target: {fileID: 4178875660434766663, guid: 6397b9456bf4a4e38acec0bde287264d, type: 3}
       propertyPath: m_LocalRotation.w

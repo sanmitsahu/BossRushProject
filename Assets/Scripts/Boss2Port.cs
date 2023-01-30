@@ -9,7 +9,7 @@ public class Boss2Port : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameObject.GetComponent<Renderer>().material.color = Color.gray;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -30,6 +30,14 @@ public class Boss2Port : MonoBehaviour
             
             open = true;
         }
+        else
+        {
+            open = false;
+        }
         if (open) { gameObject.GetComponent<Renderer>().material.color = Color.cyan; }
+        else
+        {
+            gameObject.GetComponent<Renderer>().material.color = Color.gray;
+        }
     }
 }

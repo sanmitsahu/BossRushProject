@@ -8,11 +8,16 @@ public class SwitchoNo : MonoBehaviour
     static public int on_switch_count=0;
     private bool on = false;
 
-    private void flipSwitch()
+    IEnumerator flipSwitch()
     {
         gameObject.GetComponent<Renderer>().material.color = Color.yellow;
         on = true;
         on_switch_count++;
+        yield return new WaitForSecondsRealtime(5);
+        gameObject.GetComponent<Renderer>().material.color = Color.gray;
+        on = false;
+        on_switch_count--;
+
 
     }
 
@@ -22,23 +27,23 @@ public class SwitchoNo : MonoBehaviour
         //Check for a match with the specified name on any GameObject that collides with your GameObject
         if (collision.gameObject.tag == "Player" && !on && PlayerController.switchesValid)
         {
-            flipSwitch();
+            StartCoroutine(flipSwitch());
             //If the GameObject's name matches the one you suggest, output this message in the console
 
         }
         else if (collision.gameObject.name == "Player" && !on && PlayerController.switchesValid)
         {
-            flipSwitch();
+            StartCoroutine(flipSwitch());
         }
         else if (collision.gameObject.tag == "BossSword" && BossSword.swung)
         {
-            flipSwitch();
+            StartCoroutine(flipSwitch());
             //If the GameObject's name matches the one you suggest, output this message in the console
 
         }
         else if (collision.gameObject.name == "BossSword" && BossSword.swung)
         {
-            flipSwitch();
+            StartCoroutine(flipSwitch());
         }
 
 
@@ -46,7 +51,7 @@ public class SwitchoNo : MonoBehaviour
 
     void Start()
     {
-        
+        gameObject.GetComponent<Renderer>().material.color = Color.gray;
     }
 
     // Update is called once per frame
