@@ -47,12 +47,8 @@ public class SwordSwing : MonoBehaviour
             }
             transform.RotateAround(character.transform.position, Vector3.up, -swingSpeed * Time.deltaTime);
         }
-        else
-        {
-            transform.localPosition = originalPos;
-            transform.localRotation = originalRot;
-        }
-        if (block)
+
+        else if (block)
         {
             if (!blocking)
             {
@@ -67,12 +63,19 @@ public class SwordSwing : MonoBehaviour
                 blocking = false;
                 block = false;
                 timer = 0.5f;
-
+                transform.localPosition = originalPos;
+                transform.localRotation = originalRot;
             }
 
             StartCoroutine(waiter(originalPos, originalRot));
         }
-        
+
+        else
+        {
+            transform.localPosition = originalPos;
+            transform.localRotation = originalRot;
+        }
+
     }
    IEnumerator waiter(Vector3 startPos, Quaternion startRot)
     {

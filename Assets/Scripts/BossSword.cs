@@ -25,9 +25,9 @@ public class BossSword : MonoBehaviour
     void Update()
     {
         Vector3 startPos = start.transform.localPosition;
+        Quaternion startRot = start.transform.localRotation;
         if (swung)
         { 
-            Quaternion startRot = start.transform.localRotation;
             if (!swinging)
             {
                 transform.localPosition = startPos;
@@ -45,7 +45,11 @@ public class BossSword : MonoBehaviour
             }
             transform.RotateAround(character.transform.position, Vector3.up, -swingSpeed * Time.deltaTime);
         }
-
+        else
+        {
+            transform.localPosition = originalPos;
+            transform.localRotation = originalRot;
+        }
         if (EnemyBehavior.hit)
         {
             swinging = false;

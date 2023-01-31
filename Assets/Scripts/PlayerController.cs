@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         
         //Check for a match with the specified name on any GameObject that collides with your GameObject
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         {
             //Quaternion toRot = Quaternion.LookRotation(moveDirect, Vector3.up);
             //transform.rotation = Quaternion.RotateTowards(transform.rotation, toRot, turnSpeed * Time.deltaTime);
-            //transform.forward = moveDirect;
+            transform.forward = moveDirect;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && swordPrefab.GetComponent <SwordSwing>().timer == 0.5f)
