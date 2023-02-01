@@ -5,54 +5,32 @@ using UnityEngine;
 
 public class BossSword : MonoBehaviour
 {
-    public GameObject character;
-    public GameObject start;
-    public float swingSpeed = 1000.0f;
-    public float timer = 0.5f;
+    private GameObject start;
+    public float timer = 0.25f;
     public static bool swung = false;
-    private bool swinging = false;
-    private Quaternion originalRot;
-    private Vector3 originalPos;
     // Start is called before the first frame update
-
     void Start()
     {
-        originalRot = transform.localRotation;
-        originalPos = transform.localPosition;
+        start = GameObject.Find("PlayerCamera/Player/start");
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 startPos = start.transform.localPosition;
-        if (swung)
-        { 
-            Quaternion startRot = start.transform.localRotation;
-            if (!swinging)
-            {
-                transform.localPosition = startPos;
-                transform.localRotation = startRot;
-                swinging = true;
-            }
-            timer -= Time.deltaTime;
-            if (timer <= 0.0f)
-            {
-                swinging = false;
-                swung = false;
-                timer = 0.5f;
-                transform.localPosition = originalPos;
-                transform.localRotation = originalRot;
-            }
-            transform.RotateAround(character.transform.position, Vector3.up, -swingSpeed * Time.deltaTime);
+        transform.localPosition = start.transform.localPosition;
+        transform.localRotation = start.transform.localRotation;
+        timer -= Time.deltaTime;
+        if (timer <= 0.0f)
+        {
+            swung = false;
+            timer = 0.25f;
         }
 
         if (EnemyBehavior.hit)
         {
-            swinging = false;
             swung = false;
-            timer = 0.5f;
-            transform.localPosition = originalPos;
-            transform.localRotation = originalRot;
+            timer = 0.25f;
+            Destroy(gameObject);
         }
     }
 }
