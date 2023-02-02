@@ -10,18 +10,22 @@ public class SwordSwing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UnityEngine.Debug.Log("SLASH!");
+
     }
 
     // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
-        if (timer <= 0.0f)
+        if (swung)
         {
-            swung = false;
-            timer = 0.25f;
-            Destroy(gameObject);
+            timer -= Time.deltaTime;
+            if (timer <= 0.0f)
+            {
+                swung = false;
+                timer = 0.25f;
+                Destroy(gameObject);
+            }
         }
     }
 }
