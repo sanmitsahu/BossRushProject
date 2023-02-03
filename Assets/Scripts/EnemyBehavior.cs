@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     public GameObject player;
+    public GameObject projectile;
     public float intervalTimer = 2.0f;
     public float knockBack = 10.0f;
     public static bool hit = false;
@@ -17,6 +18,17 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
+    /*void Shoot()
+    {
+        Vector3 unitVector = new Vector3(1,0,0)
+        for (int d = 0; d<360; d += 20)
+        {
+            Vector3 pos = gameObject.transform.position;
+            
+            var instance = Instantiate(projectile, pos, new Quaternion());
+            instance.GetComponent<Rigidbody>().AddForce();
+        }
+    }*/
     void Update()
     {
         if (!hit)

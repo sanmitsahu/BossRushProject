@@ -11,14 +11,18 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     public static bool switchesValid = false;
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
     void OnTriggerEnter(Collider collision)
     {
         
+
         //Check for a match with the specified name on any GameObject that collides with your GameObject
         if (collision.gameObject.tag == "BossSword" && SwordSwing.blockon)
         {
@@ -28,6 +32,27 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.name == "BossSword" && SwordSwing.blockon)
         {
             StartCoroutine(waitercolor());
+        }
+        
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("hit");
+        if (collision.gameObject.tag == "prop" && SwordSwing.swung)
+        {
+
+            Vector3 pos = gameObject.transform.position;
+            Vector3 col = collision.gameObject.transform.position;
+            Vector3 mov = col-pos;
+            mov.Normalize();
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(mov * 1000);
+
+
+
+
+
+
         }
 
     }

@@ -21,7 +21,7 @@ public class SwitchoNo : MonoBehaviour
 
     }
 
-    void OnTriggerEnter(Collider collision)
+    void OnCollisionEnter(Collision collision)
     {
 
         //Check for a match with the specified name on any GameObject that collides with your GameObject
