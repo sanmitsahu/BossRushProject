@@ -6,10 +6,10 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     public GameObject player;
+    public GameObject fireBall;
     public static int health = 3;
-    public float intervalTimer = 5.0f;
     public float knockBack = 5.0f;
-    public float stunTimer = 5.0f;
+    public bool fired = false;
     public static float knockBackTimer = 0.5f;
     private Vector3 originalPos;
     private Quaternion originalRot;
@@ -21,7 +21,7 @@ public class EnemyBehavior : MonoBehaviour
         COMBO,
         STUN
     }
-    State st = State.NORMAL;
+    public static State st = State.NORMAL;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,17 +29,31 @@ public class EnemyBehavior : MonoBehaviour
         originalRot = transform.rotation;
     }
 
+    IEnumerator Fireball()
+    {
+        GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(1.5f);
+        fired = false;
+        Destroy(fire);
+    }
+
+    IEnumerator Stun()
+    {
+        fired = true;
+        yield return new WaitForSeconds(20.0f);
+        st = State.NORMAL;
+        health = 3;
+        transform.position = originalPos;
+        transform.rotation = originalRot;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (st != State.STUN)
+        if (st != State.STUN && !fired && health != 0)
         {
-            intervalTimer -= Time.deltaTime;
-            if (intervalTimer <= 0.0f)
-            {
-                BossSword.swung = true;
-                intervalTimer = 5.0f;
-            }
+            fired = true;
+            StartCoroutine(Fireball());
         }
 
         if (st == State.HIT)
@@ -49,31 +63,27 @@ public class EnemyBehavior : MonoBehaviour
             if (knockBackTimer <= 0.0f)
             {
                 knockBackTimer = 0.5f;
-                st = State.NORMAL;
-                transform.position = originalPos;
-                transform.rotation = originalRot;
+                if (health == 0)
+                {
+                    st = State.STUN;
+                }
+                else
+                {
+                    st = State.NORMAL;
+                    transform.position = originalPos;
+                    transform.rotation = originalRot;
+                }
             }
         }
         else if (st == State.COMBO)
         {
-            transform.Translate(transform.forward * Time.deltaTime * knockBack, Space.World);
-        }
-        else if (st == State.STUN)
-        {
-            stunTimer -= Time.deltaTime;
-            BossSword.swung = false;
-            intervalTimer = 5.0f;
-            if (stunTimer <= 0.0f)
-            {
-                stunTimer = 5.0f;
-                st = State.NORMAL;
-            }
+            transform.Translate(transform.forward * Time.deltaTime * knockBack/2.0f, Space.World);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Sword" && SwordSwing.swung && st == State.NORMAL)
+        if (other.gameObject.tag == "Sword" && PlayerController.swung && (st == State.NORMAL || st == State.STUN))
         {
             transform.forward = -player.transform.forward;
             st = State.HIT;
@@ -82,7 +92,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Block")
+        if (other.gameObject.tag == "Block" || other.gameObject.tag == "PushBlock")
         {
             health--;
             if (health == 0)
@@ -98,19 +108,20 @@ public class EnemyBehavior : MonoBehaviour
                 st = State.NORMAL;
             }
         }
-        else if (other.gameObject.tag == "moveBlock" && (st == State.HIT || st == State.COMBO))
+        else if (other.gameObject.tag == "ForwardBlock" && st != State.STUN)
         {
-            if (st == State.HIT)
+            if (st == State.HIT || st == State.NORMAL)
             {
                 knockBackTimer = 0.5f;
                 st = State.COMBO;
             }
             health--;
+            transform.forward = other.gameObject.transform.forward;
             if (health == 0)
             {
                 st = State.STUN;
+                StartCoroutine(Stun());
             }
-            Destroy(other.gameObject);
         }
     }
 }

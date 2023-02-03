@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject swordPrefab;
     public GameObject start;
+    public static bool swung = false;
     public float speed = 5.0f;
     private float horizontalInput;
     private float verticalInput;
@@ -17,8 +18,26 @@ public class PlayerController : MonoBehaviour
 
     }
     
+    IEnumerator SwordDespawn(GameObject sword)
+    {
+        yield return new WaitForSeconds(0.25f);
+        swung = false;
+        Destroy(sword);
+    }
+
     // Update is called once per frame
     void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && !swung)
+        {
+            swung = true;
+            GameObject sword = Instantiate(swordPrefab, start.transform.position, start.transform.rotation);
+            sword.transform.parent = transform;
+            StartCoroutine(SwordDespawn(sword));
+        }
+    }
+
+    void FixedUpdate()
     {
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -27,18 +46,9 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(moveDirect * speed * Time.deltaTime, Space.World);
 
-
-
         if (moveDirect != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirect), 1.0f);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && !SwordSwing.swung)
-        {
-            SwordSwing.swung = true;
-            GameObject sword = Instantiate(swordPrefab, start.transform.position, start.transform.rotation);
-            sword.transform.parent = transform;
         }
     }
 }

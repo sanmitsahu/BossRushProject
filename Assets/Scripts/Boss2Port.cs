@@ -11,7 +11,7 @@ public class Boss2Port : MonoBehaviour
         gameObject.GetComponent<Renderer>().material.color = Color.gray;
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Boss" && open)
         {
@@ -27,17 +27,11 @@ public class Boss2Port : MonoBehaviour
         if (EnemyBehavior.health == 0)
         {
             open = true;
+            gameObject.GetComponent<Renderer>().material.color = Color.cyan;
         }
         else
         {
             open = false;
-        }
-        if (open) 
-        { 
-            gameObject.GetComponent<Renderer>().material.color = Color.cyan; 
-        }
-        else
-        {
             gameObject.GetComponent<Renderer>().material.color = Color.gray;
         }
     }
