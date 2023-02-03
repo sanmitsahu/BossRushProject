@@ -35,17 +35,21 @@ public class SwitchoNo : MonoBehaviour
         {
             StartCoroutine(flipSwitch());
         }
-        else if (collision.gameObject.tag == "BossSword" && !on && BossSword.swung)
+        
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "BossSword" && !on && BossSword.swung)
         {
             StartCoroutine(flipSwitch());
             //If the GameObject's name matches the one you suggest, output this message in the console
 
         }
-        else if (collision.gameObject.name == "BossSword" && !on && BossSword.swung)
+        else if (other.gameObject.name == "BossSword" && !on && BossSword.swung)
         {
             StartCoroutine(flipSwitch());
         }
-
 
     }
 

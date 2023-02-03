@@ -11,6 +11,8 @@ public class EnemyBehavior : MonoBehaviour
     public float knockBack = 10.0f;
     public static bool hit = false;
     public static float knockBackTimer = 0.25f;
+    private float projASpeed = 300;
+    private float projRSpeed = 100;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,17 +20,28 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    /*void Shoot()
+    void ShootRadial()
     {
-        Vector3 unitVector = new Vector3(1,0,0)
-        for (int d = 0; d<360; d += 20)
+        Vector3 pos = gameObject.transform.position;
+        Vector3 unitVector = new Vector3(1, 0, 0);
+        for (int d = 0; d<360; d += 30)
         {
-            Vector3 pos = gameObject.transform.position;
             
-            var instance = Instantiate(projectile, pos, new Quaternion());
-            instance.GetComponent<Rigidbody>().AddForce();
+            Vector3 f = Quaternion.AngleAxis(d, Vector3.up) * unitVector;
+            UnityEngine.Debug.Log(f);
+            var instance = Instantiate(projectile, pos + f, new Quaternion());
+            instance.GetComponent<Rigidbody>().AddForce(f*projRSpeed);
         }
-    }*/
+    }
+    void ShootAimed()
+    {
+        Vector3 pos = gameObject.transform.position;
+        Vector3 ppos = player.transform.position;
+        Vector3 mov = ppos - pos;
+        mov.Normalize();
+        var instance = Instantiate(projectile, pos + mov, new Quaternion());
+        instance.GetComponent<Rigidbody>().AddForce(mov * projASpeed);
+    }
     void Update()
     {
         if (!hit)
@@ -36,8 +49,10 @@ public class EnemyBehavior : MonoBehaviour
             intervalTimer -= Time.deltaTime;
             if (intervalTimer <= 0.0f)
             {
+                ShootRadial();
                 BossSword.swung = true;
                 intervalTimer = 2.0f;
+                
             }
         }
         else
