@@ -13,12 +13,17 @@ public class BossSword : MonoBehaviour
     private bool swinging = false;
     private Quaternion originalRot;
     private Vector3 originalPos;
+    PlayerHealth playerhealth;
+
+    
     // Start is called before the first frame update
+
 
     void Start()
     {
         originalRot = transform.localRotation;
         originalPos = transform.localPosition;
+        playerhealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>();
     }
 
     // Update is called once per frame
@@ -59,5 +64,15 @@ public class BossSword : MonoBehaviour
             transform.localRotation = originalRot;
         }
     }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.name == "Player")
+        {
+            
+            playerhealth.TakeDamage(20);
+        }
+    }
+
 }
 

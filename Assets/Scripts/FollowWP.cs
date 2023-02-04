@@ -37,8 +37,8 @@ public class FollowWP : MonoBehaviour
         {
             collision.collider.gameObject.tag = "Untagged"; 
             //Destroy(collision.collider.gameObject);
-            target = FindTarget();
         }
+        target = FindTarget();
     }
 
     public Transform FindTarget()
@@ -48,7 +48,12 @@ public class FollowWP : MonoBehaviour
         Transform closest;
 
         if (candidates.Length == 0)
+        {
+            float distance = Vector3.Distance(this.transform.position, GameObject.Find("Player").transform.position);
+            if (distance > 1)
+                return GameObject.Find("Player").transform;
             return null;
+        }
 
         closest = candidates[0].transform;
         minDistance = Vector3.Distance(this.transform.position, candidates[0].transform.position);
