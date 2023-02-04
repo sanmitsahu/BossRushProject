@@ -26,5 +26,6 @@ public class BossSword : MonoBehaviour
         rb.velocity = direct * firingSpeed;
         firingSpeed += accel;
     }
+
 }
 

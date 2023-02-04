@@ -7,9 +7,10 @@ public class EnemyBehavior : MonoBehaviour
 {
     public GameObject player;
     public GameObject fireBall;
-    public static int health = 3;
+    public static int health = 4;
     public float knockBack = 5.0f;
     public bool fired = false;
+    public bool startDelay = true;
     public static float knockBackTimer = 0.5f;
     private Vector3 originalPos;
     private Quaternion originalRot;
@@ -31,18 +32,24 @@ public class EnemyBehavior : MonoBehaviour
 
     IEnumerator Fireball()
     {
+        if (startDelay)
+        {
+            yield return new WaitForSeconds(2.5f);
+            startDelay = false;
+        }
         GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
         fired = false;
         Destroy(fire);
     }
 
     IEnumerator Stun()
     {
+        startDelay = true;
         fired = true;
         yield return new WaitForSeconds(20.0f);
         st = State.NORMAL;
-        health = 3;
+        health = 4;
         transform.position = originalPos;
         transform.rotation = originalRot;
     }
@@ -92,7 +99,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "Block" || other.gameObject.tag == "PushBlock")
+        if (other.gameObject.tag == "PushBlock")
         {
             health--;
             if (health == 0)
@@ -102,7 +109,7 @@ public class EnemyBehavior : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("Try Again!");
-                health = 3;
+                health = 4;
                 transform.position = originalPos;
                 transform.rotation = originalRot;
                 st = State.NORMAL;

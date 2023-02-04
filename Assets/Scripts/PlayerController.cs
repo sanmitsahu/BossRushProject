@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -16,6 +17,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
 
+    }
+
+    IEnumerator RestartLevel()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
     
     IEnumerator SwordDespawn(GameObject sword)
@@ -49,6 +57,14 @@ public class PlayerController : MonoBehaviour
         if (moveDirect != Vector3.zero)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirect), 1.0f);
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Projectile")
+        {
+            StartCoroutine(RestartLevel());
         }
     }
 }
