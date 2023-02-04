@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public GameObject swordPrefab;
-    public float speed = 5.0f;
+    public float speed = 3.0f;
     public float turnSpeed = 1080.0f;
     private float horizontalInput;
     private float verticalInput;
