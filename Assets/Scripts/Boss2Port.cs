@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Boss2Port : MonoBehaviour
 {
-    private int switch_count = 2;
+    private int switch_count = 3;
     private bool open =false;
     // Start is called before the first frame update
     void Start()

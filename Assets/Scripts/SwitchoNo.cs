@@ -6,9 +6,11 @@ public class SwitchoNo : MonoBehaviour
 {
     // Start is called before the first frame update
     static public int on_switch_count=0;
-    private bool on = false;
+    public bool on = false;
+    public ChangeColor zone;
+    
 
-    IEnumerator flipSwitch()
+    /*IEnumerator flipSwitch()
     {
         gameObject.GetComponent<Renderer>().material.color = Color.yellow;
         on = true;
@@ -19,6 +21,21 @@ public class SwitchoNo : MonoBehaviour
         on_switch_count--;
 
 
+    }*/
+    public void flipOn()
+    {
+        gameObject.GetComponent<Renderer>().material.color = zone.onColor ;
+        on = true;
+        on_switch_count++;
+        zone.TurnOn();
+
+    }
+
+    public void flipOff()
+    {
+        gameObject.GetComponent<Renderer>().material.color = Color.gray;
+        on = false;
+        on_switch_count--;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -27,13 +44,13 @@ public class SwitchoNo : MonoBehaviour
         //Check for a match with the specified name on any GameObject that collides with your GameObject
         if (collision.gameObject.tag == "Player" && !on && PlayerController.switchesValid)
         {
-            StartCoroutine(flipSwitch());
+            flipOn();
             //If the GameObject's name matches the one you suggest, output this message in the console
 
         }
         else if (collision.gameObject.name == "Player" && !on && PlayerController.switchesValid)
         {
-            StartCoroutine(flipSwitch());
+            flipOn();
         }
         
 
@@ -42,13 +59,13 @@ public class SwitchoNo : MonoBehaviour
     {
         if (other.gameObject.tag == "BossSword" && !on && BossSword.swung)
         {
-            StartCoroutine(flipSwitch());
+            flipOn();
             //If the GameObject's name matches the one you suggest, output this message in the console
 
         }
         else if (other.gameObject.name == "BossSword" && !on && BossSword.swung)
         {
-            StartCoroutine(flipSwitch());
+            flipOn();
         }
 
     }
@@ -56,6 +73,7 @@ public class SwitchoNo : MonoBehaviour
     void Start()
     {
         gameObject.GetComponent<Renderer>().material.color = Color.gray;
+
     }
 
     // Update is called once per frame

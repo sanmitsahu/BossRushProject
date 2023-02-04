@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ChangeColorThree : MonoBehaviour
 {
+
     // Start is called before the first frame update
+    public Color onColor;
     void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.name == "Player")
