@@ -14,6 +14,7 @@ public class EnemyBehavior : MonoBehaviour
     public static float knockBackTimer = 0.5f;
     private Vector3 originalPos;
     private Quaternion originalRot;
+    //ss
 
     public enum State
     {
