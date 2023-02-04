@@ -36,9 +36,9 @@ public class PlayerController : MonoBehaviour
         
 
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        Debug.Log("hit");
+        
         if (collision.gameObject.tag == "prop" && SwordSwing.swung)
         {
 
