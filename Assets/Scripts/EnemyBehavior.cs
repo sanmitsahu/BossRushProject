@@ -7,12 +7,12 @@ public class EnemyBehavior : MonoBehaviour
 {
     public GameObject player;
     public GameObject projectile;
-    public float intervalTimer = 2.0f;
+    public float intervalTimer = 4.0f;
     public float knockBack = 10.0f;
     public static bool hit = false;
     public static float knockBackTimer = 0.25f;
-    private float projASpeed = 300;
-    private float projRSpeed = 100;
+    private float projASpeed = 0.0001f;
+    private float projRSpeed = 0.00005f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +24,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         Vector3 pos = gameObject.transform.position;
         Vector3 unitVector = new Vector3(1, 0, 0);
-        for (int d = 0; d<360; d += 30)
+        for (int d = 0; d<360; d += 45)
         {
             
             Vector3 f = Quaternion.AngleAxis(d, Vector3.up) * unitVector;
