@@ -13,6 +13,7 @@ public class ProjectileFlight : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player") && !SwordSwing.blockon)
         {
+            Application.LoadLevel(Application.loadedLevel);
             Destroy(collision.gameObject);
         }
         if(!collision.gameObject.CompareTag("Boss")){
