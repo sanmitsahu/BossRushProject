@@ -8,8 +8,8 @@ public class BossSword : MonoBehaviour
     private Vector3 playerPos;
     private Vector3 bossPos;
     private Rigidbody rb;
-    public float firingSpeed = 5.0f;
-    public float accel = 5.0f;
+    public float firingSpeed = 1.0f;
+    public float accel = 0.01f;
     // Start is called before the first frame update
 
     void Start()

@@ -131,5 +131,13 @@ public class EnemyBehavior : MonoBehaviour
                 StartCoroutine(Stun());
             }
         }
+        else if (other.gameObject.tag == "Block")
+        {
+            UnityEngine.Debug.Log("Try Again!");
+            health = 4;
+            transform.position = originalPos;
+            transform.rotation = originalRot;
+            st = State.NORMAL;
+        }
     }
 }
