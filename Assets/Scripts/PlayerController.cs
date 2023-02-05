@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
             Vector3 col = collision.gameObject.transform.position;
             Vector3 mov = col-pos;
             mov.Normalize();
-            collision.gameObject.GetComponent<Rigidbody>().AddForce(mov * 1000);
+            collision.gameObject.GetComponent<Rigidbody>().AddForce(mov * 100);
 
 
 

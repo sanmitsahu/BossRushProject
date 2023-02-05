@@ -95,7 +95,7 @@ SphereCollider:
   m_GameObject: {fileID: 5646038065149095180}
   m_Material: {fileID: 13400000, guid: e1a145c7e12ca48c69db414c887b6a86, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

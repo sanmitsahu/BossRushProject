@@ -72,6 +72,9 @@
     <Compile Include="Assets/Scripts/ProjectileFlight.cs" />
     <Compile Include="Assets/Scripts/Counter.cs" />
     <Compile Include="Assets/Scripts/CamFollow.cs" />
+    <Compile Include="Assets/Scripts/PlayerHealth.cs" />
+    <Compile Include="Assets/SceneManagementScript.cs" />
+    <Compile Include="Assets/Scripts/CubeForce.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
