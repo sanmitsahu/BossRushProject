@@ -9,6 +9,7 @@ TagManager:
   - BossSword
   - Boss
   - prop
+  - Sword
   layers:
   - Default
   - TransparentFX

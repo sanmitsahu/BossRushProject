@@ -13,7 +13,7 @@ public class BossSword : MonoBehaviour
     private bool swinging = false;
     private Quaternion originalRot;
     private Vector3 originalPos;
-    PlayerHealth playerhealth;
+    public PlayerHealth playerhealth;
 
     
     // Start is called before the first frame update
@@ -69,7 +69,6 @@ public class BossSword : MonoBehaviour
     {
         if(collider.gameObject.name == "Player")
         {
-            
             playerhealth.TakeDamage(20);
         }
     }

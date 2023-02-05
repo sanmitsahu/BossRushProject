@@ -34,7 +34,6 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(waitercolor());
         }
         
-
     }
     private void OnCollisionStay(Collision collision)
     {

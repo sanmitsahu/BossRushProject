@@ -15,7 +15,16 @@ public class CubeForce : MonoBehaviour
     {
         
     }
-    private void OnCollisionStay(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Sword" && SwordSwing.swung)
+        {
+            gameObject.GetComponent<Rigidbody>().AddForce(other.gameObject.transform.forward * 50);
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
     {
 
         if (collision.gameObject.tag == "Boss")
