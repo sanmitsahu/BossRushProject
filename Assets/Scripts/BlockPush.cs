@@ -15,6 +15,19 @@ public class BlockPush : MonoBehaviour
     {
         originalPos = this.transform.position;
         player = GameObject.FindWithTag("Player");
+        EventManager.OnRestart += OnDeath;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnRestart -= OnDeath;
+    }
+
+    public void OnDeath()
+    {
+        knockBackTimer = 0.25f;
+        knocked = false;
+        transform.position = originalPos;
     }
 
     // Update is called once per frame

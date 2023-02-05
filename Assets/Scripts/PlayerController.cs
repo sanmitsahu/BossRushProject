@@ -9,35 +9,32 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject swordPrefab;
     public GameObject start;
-    public static int health = 1;
     public static bool swung = false;
+    public static int health = 1;
     public float speed = 5.0f;
     private float horizontalInput;
     private float verticalInput;
     private Vector3 originalPos;
     private Quaternion originalRot;
+
     // Start is called before the first frame update
     void Start()
     {
         originalPos = transform.position;
         originalRot = transform.rotation;
-    }
-
-    void OnEnable()
-    {
-        EventManager.OnRestart += Restart;
+        EventManager.OnRestart += OnDeath;
     }
 
     void OnDisable()
     {
-        EventManager.OnRestart -= Restart;
+        EventManager.OnRestart -= OnDeath;
     }
 
-    void Restart()
+    public void OnDeath()
     {
+        swung = false;
         transform.position = originalPos;
         transform.rotation = originalRot;
-        swung = false;
     }
     
     IEnumerator SwordDespawn(GameObject sword)
@@ -79,7 +76,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Projectile")
         {
             health--;
-            UnityEngine.Debug.Log(health);
         }
     }
 }

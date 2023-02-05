@@ -7,14 +7,14 @@ public class EventManager : MonoBehaviour
     public delegate void RestartAction();
     public static event RestartAction OnRestart;
 
-    void OnDeath()
+    void Update()
     {
-        if (PlayerController.health == 0)
+        if (PlayerController.health <= 0)
         {
-            UnityEngine.Debug.Log("ENACTED!");
             if (OnRestart != null)
             {
                 OnRestart();
+                PlayerController.health = 1;
             }
         }
     }

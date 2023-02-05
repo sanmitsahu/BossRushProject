@@ -14,7 +14,6 @@ public class EnemyBehavior : MonoBehaviour
     public static float knockBackTimer = 0.5f;
     private Vector3 originalPos;
     private Quaternion originalRot;
-    //ss
 
     public enum State
     {
@@ -29,6 +28,23 @@ public class EnemyBehavior : MonoBehaviour
     {
         originalPos = transform.position;
         originalRot = transform.rotation;
+        EventManager.OnRestart += OnDeath;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnRestart -= OnDeath;
+    }
+
+    public void OnDeath()
+    {
+        st = State.NORMAL;
+        knockBackTimer = 0.5f;
+        //fired = false;
+        startDelay = true;
+        health = 4;
+        transform.position = originalPos;
+        transform.rotation = originalRot;
     }
 
     IEnumerator Fireball()

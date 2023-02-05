@@ -9,6 +9,18 @@ public class Boss2Port : MonoBehaviour
     void Start()
     {
         gameObject.GetComponent<Renderer>().material.color = Color.gray;
+        EventManager.OnRestart += OnDeath;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnRestart -= OnDeath;
+    }
+
+    public void OnDeath()
+    {
+        open = false;
+        gameObject.GetComponent<Renderer>().material.color = Color.gray;
     }
 
     private void OnCollisionEnter(Collision collision)

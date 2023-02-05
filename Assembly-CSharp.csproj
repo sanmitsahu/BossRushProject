@@ -55,11 +55,11 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BossSword.cs" />
     <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
+    <Compile Include="Assets\Scripts\EventManager.cs" />
     <Compile Include="Assets\Scripts\Boss2Port.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\BlockPush.cs" />
     <Compile Include="Assets\Scripts\CamFollow.cs" />
-    <Compile Include="Assets\Scripts\EventManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

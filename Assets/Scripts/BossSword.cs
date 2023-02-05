@@ -17,6 +17,17 @@ public class BossSword : MonoBehaviour
         playerPos = GameObject.FindWithTag("Player").transform.position;
         bossPos = GameObject.FindWithTag("Boss").transform.position;
         rb = gameObject.GetComponent<Rigidbody>();
+        EventManager.OnRestart += OnDeath;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnRestart -= OnDeath;
+    }
+
+    public void OnDeath()
+    {
+        Destroy(gameObject);
     }
 
     // Update is called once per frame
