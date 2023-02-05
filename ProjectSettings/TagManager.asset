@@ -11,6 +11,8 @@ TagManager:
   - Block
   - PushBlock
   - ForwardBlock
+  - Projectile
+  - StunBlock
   layers:
   - Default
   - TransparentFX

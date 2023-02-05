@@ -11,6 +11,7 @@ public class EnemyBehavior : MonoBehaviour
     public float knockBack = 5.0f;
     public bool fired = false;
     public bool startDelay = true;
+    public bool shocked = false;
     public static float knockBackTimer = 0.5f;
     private Vector3 originalPos;
     private Quaternion originalRot;
@@ -60,6 +61,19 @@ public class EnemyBehavior : MonoBehaviour
         Destroy(fire);
     }
 
+    IEnumerator Shock()
+    {
+        yield return new WaitForSeconds(5.0f);
+        if (st == State.NORMAL && shocked)
+        {
+            shocked = false;
+            knockBackTimer = 0.5f;
+            health = 4;
+            transform.position = originalPos;
+            transform.rotation = originalRot;
+        }
+    }
+
     IEnumerator Stun()
     {
         startDelay = true;
@@ -107,8 +121,9 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Sword" && PlayerController.swung && (st == State.NORMAL || st == State.STUN))
+        if (other.gameObject.tag == "Sword" && PlayerController.swung)
         {
+            shocked = false;
             transform.forward = -player.transform.forward;
             st = State.HIT;
         }
@@ -118,6 +133,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "PushBlock")
         {
+            shocked = false;
             health--;
             if (health == 0)
             {
@@ -125,7 +141,6 @@ public class EnemyBehavior : MonoBehaviour
             }
             else
             {
-                UnityEngine.Debug.Log("Try Again!");
                 health = 4;
                 transform.position = originalPos;
                 transform.rotation = originalRot;
@@ -134,6 +149,7 @@ public class EnemyBehavior : MonoBehaviour
         }
         else if (other.gameObject.tag == "ForwardBlock" && st != State.STUN)
         {
+            shocked = false;
             if (st == State.HIT || st == State.NORMAL)
             {
                 knockBackTimer = 0.5f;
@@ -147,8 +163,23 @@ public class EnemyBehavior : MonoBehaviour
                 StartCoroutine(Stun());
             }
         }
+        else if (other.gameObject.tag == "StunBlock" && st != State.STUN)
+        {
+            health--;
+            if (health == 0)
+            {
+                st = State.STUN;
+            }
+            else
+            {
+                st = State.NORMAL;
+                shocked = true;
+                StartCoroutine(Shock());
+            }
+        }
         else if (other.gameObject.tag == "Block")
         {
+            shocked = false;
             UnityEngine.Debug.Log("Try Again!");
             health = 4;
             transform.position = originalPos;
