@@ -36,7 +36,7 @@ public class Boss2Port : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EnemyBehavior.health == 0)
+        if (EnemyBehavior.health <= 0)
         {
             open = true;
             gameObject.GetComponent<Renderer>().material.color = Color.cyan;

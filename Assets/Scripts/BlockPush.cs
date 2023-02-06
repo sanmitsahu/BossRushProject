@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockPush : MonoBehaviour
 {
     public float knockBack = 5.0f;
-    public float knockBackTimer = 0.25f;
+    public float knockBackTimer = 0.2f;
     public bool knocked = false;
     private Vector3 forward;
     private Vector3 originalPos;
@@ -25,7 +25,7 @@ public class BlockPush : MonoBehaviour
 
     public void OnDeath()
     {
-        knockBackTimer = 0.25f;
+        knockBackTimer = 0.2f;
         knocked = false;
         transform.position = originalPos;
     }
@@ -39,7 +39,7 @@ public class BlockPush : MonoBehaviour
             transform.Translate(forward * Time.deltaTime * knockBack, Space.World);
             if (knockBackTimer <= 0.0f)
             {
-                knockBackTimer = 0.25f;
+                knockBackTimer = 0.2f;
                 knocked = false;
             }
         }
@@ -58,7 +58,7 @@ public class BlockPush : MonoBehaviour
     {
         if (col.gameObject.tag == "Boss")
         {
-            knockBackTimer = 0.25f;
+            knockBackTimer = 0.2f;
             knocked = false;
             transform.position = originalPos;
         }
