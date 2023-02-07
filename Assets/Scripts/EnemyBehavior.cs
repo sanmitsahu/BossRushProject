@@ -115,6 +115,7 @@ public class EnemyBehavior : MonoBehaviour
             health--;
             if (health <= 0)
             {
+                UnityEngine.Debug.Log("You beat the boss!");
                 Destroy(gameObject);
             }
             shocked = false;
@@ -131,6 +132,7 @@ public class EnemyBehavior : MonoBehaviour
             health--;
             if (health <= 0)
             {
+                UnityEngine.Debug.Log("You beat the boss!");
                 Destroy(gameObject);
             }
             else
@@ -153,6 +155,7 @@ public class EnemyBehavior : MonoBehaviour
             transform.forward = other.gameObject.transform.forward;
             if (health <= 0)
             {
+                UnityEngine.Debug.Log("You beat the boss!");
                 Destroy(gameObject);
             }
         }
@@ -162,6 +165,7 @@ public class EnemyBehavior : MonoBehaviour
             health--;
             if (health <= 0)
             {
+                UnityEngine.Debug.Log("You beat the boss!");
                 Destroy(gameObject);
             }
             else
