@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firingSpeed: 1
-  accel: 0.01
+  accel: 0.001
 --- !u!54 &8587264922890181054
 Rigidbody:
   m_ObjectHideFlags: 0

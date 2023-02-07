@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     
     IEnumerator SwordDespawn(GameObject sword)
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
         swung = false;
         Destroy(sword);
     }
