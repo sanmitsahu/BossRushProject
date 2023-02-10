@@ -2,18 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     public GameObject fireBall;
     public Light light;
-    public static int health = 6;
+    public int health = 6;
     public float knockBack = 5.0f;
-    public bool shocked = false;
+    public bool wallTouch = false;
     public bool fired = false;
     public bool startDelay = true;
-    public static float knockBackTimer = 0.5f;
+    public float knockBackTimer = 0.5f;
     public float shockTimer = 5.0f;
     private Vector3 originalPos;
     private Quaternion originalRot;
@@ -29,6 +30,7 @@ public class EnemyBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindWithTag("Player");
         originalPos = transform.position;
         originalRot = transform.rotation;
         EventManager.OnRestart += OnDeath;
@@ -41,15 +43,26 @@ public class EnemyBehavior : MonoBehaviour
         EventManager.OnRestart -= OnDeath;
     }
 
+    void OnEnable()
+    {
+        //UnityEngine.Debug.Log("OnEnable called");
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
     public void OnDeath()
     {
-        shocked = false;
-        st = State.NORMAL;
-        knockBackTimer = 0.5f;
-        startDelay = true;
-        health = 6;
-        transform.position = originalPos;
-        transform.rotation = originalRot;
+        Restart();
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        player = GameObject.FindWithTag("Player");
+        originalPos = transform.position;
+        originalRot = transform.rotation;
+        EventManager.OnRestart += OnDeath;
+        light.intensity = 0.0f;
+        rb = gameObject.GetComponent<Rigidbody>();
+        Restart();
     }
 
     IEnumerator Fireball()
@@ -77,17 +90,12 @@ public class EnemyBehavior : MonoBehaviour
             StartCoroutine(Fireball());
         }
 
-        if (shocked && DisableShock.drained)
+        if (wallTouch)
         {
             shockTimer -= Time.deltaTime;
             if (shockTimer <= 0.0f)
             {
-                shocked = false;
-                shockTimer = 5.0f;
-                knockBackTimer = 0.5f;
-                health = 6;
-                transform.position = originalPos;
-                transform.rotation = originalRot;
+                Restart();
             }
         }
 
@@ -97,28 +105,31 @@ public class EnemyBehavior : MonoBehaviour
             transform.Translate(-transform.forward * Time.deltaTime * knockBack, Space.World);
             if (knockBackTimer <= 0.0f)
             {
-                knockBackTimer = 0.5f;
-                transform.position = originalPos;
-                transform.rotation = originalRot;
-                health = 6;
-                st = State.NORMAL;
+                Restart();
             }
         }
-        //else if (st == State.COMBO)
-        //{
-        //    transform.Translate(transform.forward * Time.deltaTime * knockBack/2.0f, Space.World);
-        //}
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung)
         {
-            shocked = false;
-            shockTimer = 5.0f;
             transform.forward = -player.transform.forward;
             st = State.HIT;
         }
+    }
+
+    private void Restart()
+    {
+        rb.velocity = Vector3.zero;
+        transform.position = originalPos;
+        transform.rotation = originalRot;
+        st = State.NORMAL;
+        startDelay = true;
+        wallTouch = false;
+        knockBackTimer = 0.5f;
+        health = 6;
+        shockTimer = 5.0f;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -128,16 +139,11 @@ public class EnemyBehavior : MonoBehaviour
             health--;
             if (health <= 0)
             {
-                UnityEngine.Debug.Log("You beat the boss!");
                 Destroy(gameObject);
             }
             else
             {
-                transform.position = originalPos;
-                transform.rotation = originalRot;
-                shocked = false;
-                health = 6;
-                st = State.NORMAL;
+                Restart();
             }
         }
         else if (other.gameObject.tag == "ForwardBlock")
@@ -147,41 +153,48 @@ public class EnemyBehavior : MonoBehaviour
                 knockBackTimer = 0.5f;
                 st = State.COMBO;
             }
-
             health--;
             rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
-            //transform.forward = other.gameObject.transform.forward;
             if (health <= 0)
             {
                 UnityEngine.Debug.Log("You beat the boss!");
                 Destroy(gameObject);
             }
         }
-        else if (other.gameObject.tag == "StunBlock" && !DisableShock.drained && !shocked)
+        else if (other.gameObject.tag == "StunBlock")
         {
-            knockBackTimer = 0.5f;
-            health--;
-            if (health <= 0)
+            if (!wallTouch)
             {
-                UnityEngine.Debug.Log("You beat the boss!");
-                Destroy(gameObject);
+                knockBackTimer = 0.5f;
+                health--;
+                if (health <= 0)
+                {
+                    UnityEngine.Debug.Log("You beat the boss!");
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    st = State.NORMAL;
+                    wallTouch = true;
+                }
             }
             else
             {
-                st = State.NORMAL;
-                shocked = true;
+                Restart();
             }
         }
         else if (other.gameObject.tag == "Block")
         {
-            transform.position = originalPos;
-            transform.rotation = originalRot;
-            st = State.NORMAL;
-            startDelay = true;
-            shocked = false;
-            shockTimer = 5.0f;
-            health = 6;
+            Restart();
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "StunBlock")
+        {
+            wallTouch = false;
         }
     }
 }

@@ -36,7 +36,19 @@ public class PlayerController : MonoBehaviour
         transform.position = originalPos;
         transform.rotation = originalRot;
     }
-    
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        swung = false;
+        transform.position = originalPos;
+        transform.rotation = originalRot;
+    }
+
     IEnumerator SwordDespawn(GameObject sword)
     {
         yield return new WaitForSeconds(0.2f);
@@ -75,7 +87,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Projectile")
         {
-            health--;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
