@@ -17,6 +17,7 @@ public class EnemyBehavior : MonoBehaviour
     public float shockTimer = 5.0f;
     private Vector3 originalPos;
     private Quaternion originalRot;
+    private Rigidbody rb;
 
     public enum State
     {
@@ -32,6 +33,7 @@ public class EnemyBehavior : MonoBehaviour
         originalRot = transform.rotation;
         EventManager.OnRestart += OnDeath;
         light.intensity = 0.0f;
+        rb = gameObject.GetComponent<Rigidbody>();
     }
 
     void OnDisable()
@@ -102,22 +104,16 @@ public class EnemyBehavior : MonoBehaviour
                 st = State.NORMAL;
             }
         }
-        else if (st == State.COMBO)
-        {
-            transform.Translate(transform.forward * Time.deltaTime * knockBack/2.0f, Space.World);
-        }
+        //else if (st == State.COMBO)
+        //{
+        //    transform.Translate(transform.forward * Time.deltaTime * knockBack/2.0f, Space.World);
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung)
         {
-            health--;
-            if (health <= 0)
-            {
-                UnityEngine.Debug.Log("You beat the boss!");
-                Destroy(gameObject);
-            }
             shocked = false;
             shockTimer = 5.0f;
             transform.forward = -player.transform.forward;
@@ -151,8 +147,11 @@ public class EnemyBehavior : MonoBehaviour
                 knockBackTimer = 0.5f;
                 st = State.COMBO;
             }
+
             health--;
-            transform.forward = other.gameObject.transform.forward;
+            rb.velocity = Vector3.zero;
+            rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
+            //transform.forward = other.gameObject.transform.forward;
             if (health <= 0)
             {
                 UnityEngine.Debug.Log("You beat the boss!");
