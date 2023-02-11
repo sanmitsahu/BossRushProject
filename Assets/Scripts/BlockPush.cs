@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BlockPush : MonoBehaviour
 {
@@ -25,9 +26,12 @@ public class BlockPush : MonoBehaviour
 
     public void OnDeath()
     {
+        /*
         knockBackTimer = 0.2f;
         knocked = false;
         transform.position = originalPos;
+        */
+        SceneManager.LoadScene(0);
     }
 
     // Update is called once per frame

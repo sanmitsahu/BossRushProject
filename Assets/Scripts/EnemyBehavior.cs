@@ -43,26 +43,9 @@ public class EnemyBehavior : MonoBehaviour
         EventManager.OnRestart -= OnDeath;
     }
 
-    void OnEnable()
-    {
-        //UnityEngine.Debug.Log("OnEnable called");
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
     public void OnDeath()
     {
-        Restart();
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        player = GameObject.FindWithTag("Player");
-        originalPos = transform.position;
-        originalRot = transform.rotation;
-        EventManager.OnRestart += OnDeath;
-        light.intensity = 0.0f;
-        rb = gameObject.GetComponent<Rigidbody>();
-        Restart();
+        Res();
     }
 
     IEnumerator Fireball()
@@ -132,6 +115,16 @@ public class EnemyBehavior : MonoBehaviour
         shockTimer = 5.0f;
     }
 
+    private void Res()
+    {
+        rb.velocity = Vector3.zero;
+        st = State.NORMAL;
+        startDelay = true;
+        wallTouch = false;
+        fired = false;
+        SceneManager.LoadScene(0);
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.tag == "PushBlock")
@@ -139,7 +132,7 @@ public class EnemyBehavior : MonoBehaviour
             health--;
             if (health <= 0)
             {
-                Destroy(gameObject);
+                SceneManager.LoadScene(0);
             }
             else
             {
@@ -158,8 +151,7 @@ public class EnemyBehavior : MonoBehaviour
             rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
             if (health <= 0)
             {
-                UnityEngine.Debug.Log("You beat the boss!");
-                Destroy(gameObject);
+                SceneManager.LoadScene(0);
             }
         }
         else if (other.gameObject.tag == "StunBlock")
@@ -170,8 +162,7 @@ public class EnemyBehavior : MonoBehaviour
                 health--;
                 if (health <= 0)
                 {
-                    UnityEngine.Debug.Log("You beat the boss!");
-                    Destroy(gameObject);
+                    SceneManager.LoadScene(0);
                 }
                 else
                 {

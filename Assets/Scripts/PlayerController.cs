@@ -33,20 +33,9 @@ public class PlayerController : MonoBehaviour
     public void OnDeath()
     {
         swung = false;
-        transform.position = originalPos;
-        transform.rotation = originalRot;
-    }
-
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        swung = false;
-        transform.position = originalPos;
-        transform.rotation = originalRot;
+        //transform.position = originalPos;
+        //transform.rotation = originalRot;
+        SceneManager.LoadScene(0);
     }
 
     IEnumerator SwordDespawn(GameObject sword)
@@ -87,7 +76,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "Projectile")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            health--;
         }
     }
 }
