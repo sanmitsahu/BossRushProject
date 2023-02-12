@@ -9,7 +9,7 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     public GameObject fireBall;
     public Light light;
-    public int health = 6;
+    public int health = 2;
     public float knockBack = 5.0f;
     public bool wallTouch = false;
     public bool fired = false;
@@ -48,7 +48,7 @@ public class EnemyBehavior : MonoBehaviour
         Res();
     }
 
-    IEnumerator Fireball()
+    /*IEnumerator Fireball()
     {
         if (startDelay)
         {
@@ -62,16 +62,16 @@ public class EnemyBehavior : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         fired = false;
         Destroy(fire);
-    }
+    }*/
 
     // Update is called once per frame
     void Update()
     {
-        if (!fired && health > 0)
+        /*if (!fired && health > 0)
         {
             fired = true;
             StartCoroutine(Fireball());
-        }
+        }*/
 
         if (wallTouch)
         {
@@ -111,7 +111,7 @@ public class EnemyBehavior : MonoBehaviour
         startDelay = true;
         wallTouch = false;
         knockBackTimer = 0.5f;
-        health = 6;
+        health = 2;
         shockTimer = 5.0f;
     }
 
@@ -132,7 +132,8 @@ public class EnemyBehavior : MonoBehaviour
             health--;
             if (health <= 0)
             {
-                SceneManager.LoadScene(0);
+                UnityEngine.Debug.Log("You Win");
+                Destroy(gameObject);
             }
             else
             {
@@ -151,7 +152,8 @@ public class EnemyBehavior : MonoBehaviour
             rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
             if (health <= 0)
             {
-                SceneManager.LoadScene(0);
+                UnityEngine.Debug.Log("You Win");
+                Destroy(gameObject);
             }
         }
         else if (other.gameObject.tag == "StunBlock")
@@ -162,7 +164,8 @@ public class EnemyBehavior : MonoBehaviour
                 health--;
                 if (health <= 0)
                 {
-                    SceneManager.LoadScene(0);
+                    UnityEngine.Debug.Log("You Win");
+                    Destroy(gameObject);
                 }
                 else
                 {
