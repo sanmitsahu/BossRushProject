@@ -43,25 +43,8 @@ public class EnemyBehavior : MonoBehaviour
         EventManager.OnRestart -= OnDeath;
     }
 
-    void OnEnable()
-    {
-        //UnityEngine.Debug.Log("OnEnable called");
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
     public void OnDeath()
     {
-        Restart();
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        player = GameObject.FindWithTag("Player");
-        originalPos = transform.position;
-        originalRot = transform.rotation;
-        EventManager.OnRestart += OnDeath;
-        light.intensity = 0.0f;
-        rb = gameObject.GetComponent<Rigidbody>();
         Restart();
     }
 
@@ -114,10 +97,8 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung)
         {
-            Vector3 f = new Vector3(1, 0, 0);
-            float v = knockBack/0.75f;
-            
-            rb.velocity = other.transform.rotation *Quaternion.Euler(0, 270, 0) * f * v;
+            rb.velocity = Vector3.zero;
+            rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             st = State.HIT;
         }
     }

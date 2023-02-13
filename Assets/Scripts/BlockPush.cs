@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class BlockPush : MonoBehaviour
 {
-    public float knockBack = 5.0f;
+    public float knockBack = 7.5f;
     public float knockBackTimer = 0.2f;
     public bool knocked = false;
     private Vector3 forward;
     private Vector3 originalPos;
     private GameObject player;
+    private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         originalPos = this.transform.position;
         player = GameObject.FindWithTag("Player");
+        rb = gameObject.GetComponent<Rigidbody>();
         EventManager.OnRestart += OnDeath;
     }
 
@@ -36,9 +38,9 @@ public class BlockPush : MonoBehaviour
         if (knocked)
         {
             knockBackTimer -= Time.deltaTime;
-            transform.Translate(forward * Time.deltaTime * knockBack, Space.World);
             if (knockBackTimer <= 0.0f)
             {
+                rb.velocity = Vector3.zero;
                 knockBackTimer = 0.2f;
                 knocked = false;
             }
@@ -50,6 +52,7 @@ public class BlockPush : MonoBehaviour
         if (other.gameObject.tag == "Sword" && !knocked)
         {
             forward = player.transform.forward;
+            rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             knocked = true;
         }
     }
