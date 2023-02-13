@@ -21,7 +21,6 @@ public class ChaseBlock : MonoBehaviour
     {
         if (SwitchOn.on && chasing)
         {
-            UnityEngine.Debug.Log("Hello");
             Vector3 direct = (switchPos - bossPos).normalized;
             rb.velocity = direct * 1.0f;
         }       

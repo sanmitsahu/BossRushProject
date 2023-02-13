@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,6 +22,7 @@ public class EnemyBehavior : MonoBehaviour
     private Vector3 originalPos;
     private Quaternion originalRot;
     private Rigidbody rb;
+    Scene scene;
 
     public enum State
     {
@@ -39,6 +41,7 @@ public class EnemyBehavior : MonoBehaviour
         EventManager.OnRestart += OnDeath;
         light.intensity = 0.0f;
         rb = gameObject.GetComponent<Rigidbody>();
+        scene = SceneManager.GetActiveScene();
     }
 
     void OnDisable()
@@ -144,7 +147,29 @@ public class EnemyBehavior : MonoBehaviour
         startDelay = true;
         wallTouch = false;
         fired = false;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(scene.buildIndex);
+    }
+
+    private void beatBoss()
+    {
+        if (scene.buildIndex == 0)
+        {
+            rb.velocity = Vector3.zero;
+            st = State.NORMAL;
+            startDelay = true;
+            wallTouch = false;
+            fired = false;
+            SceneManager.LoadScene(1);
+        }
+        else if (scene.buildIndex == 1)
+        {
+            rb.velocity = Vector3.zero;
+            st = State.NORMAL;
+            startDelay = true;
+            wallTouch = false;
+            fired = false;
+            SceneManager.LoadScene(2);
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -154,7 +179,7 @@ public class EnemyBehavior : MonoBehaviour
             health--;
             if (health <= 0)
             {
-                SceneManager.LoadScene(0);
+                beatBoss();
             }
             else
             {
@@ -173,7 +198,7 @@ public class EnemyBehavior : MonoBehaviour
             rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
             if (health <= 0)
             {
-                SceneManager.LoadScene(0);
+                beatBoss();
             }
         }
         else if (other.gameObject.tag == "StunBlock")
@@ -184,7 +209,7 @@ public class EnemyBehavior : MonoBehaviour
                 health--;
                 if (health <= 0)
                 {
-                    SceneManager.LoadScene(0);
+                    beatBoss();
                 }
                 else
                 {

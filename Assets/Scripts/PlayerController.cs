@@ -16,10 +16,12 @@ public class PlayerController : MonoBehaviour
     private float verticalInput;
     private Vector3 originalPos;
     private Quaternion originalRot;
+    Scene scene;
 
     // Start is called before the first frame update
     void Start()
     {
+        scene = SceneManager.GetActiveScene();
         originalPos = transform.position;
         originalRot = transform.rotation;
         EventManager.OnRestart += OnDeath;
@@ -33,7 +35,7 @@ public class PlayerController : MonoBehaviour
     public void OnDeath()
     {
         swung = false;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(scene.buildIndex);
     }
 
     IEnumerator SwordDespawn(GameObject sword)
