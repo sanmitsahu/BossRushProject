@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
     public void OnDeath()
     {
         swung = false;
-        //transform.position = originalPos;
-        //transform.rotation = originalRot;
         SceneManager.LoadScene(0);
     }
 

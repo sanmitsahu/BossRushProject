@@ -13,6 +13,7 @@ TagManager:
   - ForwardBlock
   - Projectile
   - StunBlock
+  - Switch
   layers:
   - Default
   - TransparentFX

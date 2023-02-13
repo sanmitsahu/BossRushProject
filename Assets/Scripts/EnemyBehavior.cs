@@ -9,7 +9,9 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     public GameObject fireBall;
     public Light light;
-    public int health = 6;
+    [SerializeField]
+    private int originalHealth;
+    private int health;
     public float knockBack = 5.0f;
     public bool wallTouch = false;
     public bool fired = false;
@@ -30,6 +32,7 @@ public class EnemyBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        health = originalHealth;
         player = GameObject.FindWithTag("Player");
         originalPos = transform.position;
         originalRot = transform.rotation;
@@ -84,11 +87,26 @@ public class EnemyBehavior : MonoBehaviour
 
         if (st == State.HIT)
         {
+            if (ChaseBlock.chasing)
+            {
+                ChaseBlock.chasing = false;
+            }
             knockBackTimer -= Time.deltaTime;
             transform.Translate(-transform.forward * Time.deltaTime * knockBack, Space.World);
             if (knockBackTimer <= 0.0f)
             {
+                if (SwitchOn.on)
+                {
+                    ChaseBlock.chasing = true;
+                }
                 Restart();
+            }
+        }
+        else if (st == State.COMBO)
+        {
+            if (ChaseBlock.chasing)
+            {
+                ChaseBlock.chasing = false;
             }
         }
     }
@@ -111,8 +129,12 @@ public class EnemyBehavior : MonoBehaviour
         startDelay = true;
         wallTouch = false;
         knockBackTimer = 0.5f;
-        health = 6;
+        health = originalHealth;
         shockTimer = 5.0f;
+        if (SwitchOn.on)
+        {
+            ChaseBlock.chasing = true;
+        }
     }
 
     private void Res()
@@ -176,6 +198,10 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
         else if (other.gameObject.tag == "Block")
+        {
+            Restart();
+        }
+        else if (other.gameObject.tag == "Switch")
         {
             Restart();
         }
