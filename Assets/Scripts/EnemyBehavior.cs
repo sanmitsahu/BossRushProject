@@ -102,7 +102,7 @@ public class EnemyBehavior : MonoBehaviour
         if (st == State.HIT)
         {
             knockBackTimer -= Time.deltaTime;
-            transform.Translate(-transform.forward * Time.deltaTime * knockBack, Space.World);
+            //transform.Translate(-transform.forward * Time.deltaTime * knockBack, Space.World);
             if (knockBackTimer <= 0.0f)
             {
                 Restart();
@@ -114,7 +114,10 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung)
         {
-            transform.forward = -player.transform.forward;
+            Vector3 f = new Vector3(1, 0, 0);
+            float v = knockBack/0.75f;
+            
+            rb.velocity = other.transform.rotation *Quaternion.Euler(0, 270, 0) * f * v;
             st = State.HIT;
         }
     }
