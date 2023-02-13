@@ -9,7 +9,7 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     public GameObject fireBall;
     public Light light;
-    public int health = 2;
+    public static int health = 2;
     public float knockBack = 5.0f;
     public bool wallTouch = false;
     public bool fired = false;
@@ -182,6 +182,8 @@ public class EnemyBehavior : MonoBehaviour
         {
             Restart();
         }
+
+        UnityEngine.Debug.Log($"Health: {health}");
     }
 
     private void OnCollisionExit(Collision other)
