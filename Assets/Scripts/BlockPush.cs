@@ -51,7 +51,15 @@ public class BlockPush : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Sword" && !knocked)
+        if (other.gameObject.tag == "Sword" && !knocked && PlayerController.swung == true)
+        {
+            forward = player.transform.forward;
+            knocked = true;
+        }
+    }
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Sword" && !knocked && PlayerController.swung == true)
         {
             forward = player.transform.forward;
             knocked = true;

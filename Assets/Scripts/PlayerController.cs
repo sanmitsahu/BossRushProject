@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         swung = false;
-        Destroy(sword);
+        sword.transform.localPosition = new Vector3(0.44f, 0, 0.56f);
+        //Destroy(sword);
     }
 
     // Update is called once per frame
@@ -51,8 +52,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !swung)
         {
             swung = true;
-            GameObject sword = Instantiate(swordPrefab, start.transform.position, start.transform.rotation);
-            sword.transform.parent = transform;
+            /*GameObject sword = Instantiate(swordPrefab, start.transform.position, start.transform.rotation);*/
+            GameObject sword = GameObject.FindGameObjectWithTag("Sword");
+            sword.transform.localPosition += new Vector3(0, 0, 0.3f);
             StartCoroutine(SwordDespawn(sword));
         }
     }
