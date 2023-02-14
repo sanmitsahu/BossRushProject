@@ -5,6 +5,11 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using Debug = UnityEngine.Debug;
+using UnityEngine.Networking;
+using System;
+using System.Runtime.CompilerServices;
+
 public class EnemyBehavior : MonoBehaviour
 {
     private GameObject player;
@@ -23,6 +28,13 @@ public class EnemyBehavior : MonoBehaviour
     private Quaternion originalRot;
     private Rigidbody rb;
     Scene scene;
+    
+    public int no_of_tries = 0;
+    public float[,] locations = new float[100,100];
+    private string URL1 = "https://docs.google.com/forms/u/1/d/e/1FAIpQLSeBtC1XHWUIEBZRTmxn3xRiTX0wEgjlm8ZI2qfqYR6Y8xPW5w/formResponse";
+    private string URL = "https://docs.google.com/forms/u/1/d/e/1FAIpQLSd8oLR_OzoW0uwK2OmbssF7nDTgOBva4IXGj-17CwF3ZJrFSg/formResponse";
+    private long _sessionID;
+    private Vector3 temploc;
 
     public enum State
     {
@@ -42,6 +54,8 @@ public class EnemyBehavior : MonoBehaviour
         light.intensity = 0.0f;
         rb = gameObject.GetComponent<Rigidbody>();
         scene = SceneManager.GetActiveScene();
+        
+        _sessionID = DateTime.Now.Ticks;
     }
 
     void OnDisable()
@@ -51,6 +65,12 @@ public class EnemyBehavior : MonoBehaviour
 
     public void OnDeath()
     {
+        temploc = GameObject.Find("Player").transform.position;
+        locations[no_of_tries, 0] = temploc.x;
+        locations[no_of_tries, 1] = temploc.y;
+        locations[no_of_tries, 2] = temploc.z;
+        UnityEngine.Debug.Log(locations[no_of_tries, 0]+" "+locations[no_of_tries, 1]+" "+locations[no_of_tries, 2]+" "+(no_of_tries + 1));
+        StartCoroutine(Post_tries(_sessionID.ToString()));
         Restart();
     }
 
@@ -138,6 +158,8 @@ public class EnemyBehavior : MonoBehaviour
         {
             ChaseBlock.chasing = true;
         }
+        
+        no_of_tries += 1;
     }
 
     private void Res()
@@ -255,6 +277,35 @@ public class EnemyBehavior : MonoBehaviour
         if (other.gameObject.tag == "StunBlock")
         {
             wallTouch = false;
+        }
+    }
+    
+    public IEnumerator Post_tries(string sessionID)
+    {
+        UnityEngine.Debug.Log("POSTIE");
+        WWWForm form = new WWWForm();
+        
+        form.AddField("entry.728675539", sessionID);
+        form.AddField("entry.1829062957", no_of_tries+1);
+        //for(int t=0;t<no_of_tries+1;t++)
+        //{
+        form.AddField("entry.1492841611", (temploc.x).ToString());
+        form.AddField("entry.475872908", (temploc.y).ToString());
+        form.AddField("entry.432244748", (temploc.z).ToString());
+        //}
+        
+        using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
+        {
+           
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Form upload complete!");
+            }
         }
     }
 }
