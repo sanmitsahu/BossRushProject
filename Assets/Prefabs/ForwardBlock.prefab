@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3e4775c17f14d24a9cf54acc65136ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBack: 7
   knockBackTimer: 0.2
   knocked: 0
 --- !u!1 &4248164590932212181

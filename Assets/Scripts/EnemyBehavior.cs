@@ -51,7 +51,7 @@ public class EnemyBehavior : MonoBehaviour
 
     public void OnDeath()
     {
-        Res();
+        Restart();
     }
 
     IEnumerator Fireball()
