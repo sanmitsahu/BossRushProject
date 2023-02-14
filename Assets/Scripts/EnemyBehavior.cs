@@ -95,7 +95,6 @@ public class EnemyBehavior : MonoBehaviour
                 ChaseBlock.chasing = false;
             }
             knockBackTimer -= Time.deltaTime;
-            transform.Translate(-transform.forward * Time.deltaTime * knockBack, Space.World);
             if (knockBackTimer <= 0.0f)
             {
                 if (SwitchOn.on)
@@ -114,11 +113,12 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung)
         {
-            transform.forward = -player.transform.forward;
+            rb.velocity = Vector3.zero;
+            rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             st = State.HIT;
         }
     }
@@ -169,6 +169,24 @@ public class EnemyBehavior : MonoBehaviour
             wallTouch = false;
             fired = false;
             SceneManager.LoadScene(2);
+        }
+        else if (scene.buildIndex == 2)
+        {
+            rb.velocity = Vector3.zero;
+            st = State.NORMAL;
+            startDelay = true;
+            wallTouch = false;
+            fired = false;
+            SceneManager.LoadScene(3);
+        }
+        else if (scene.buildIndex == 3)
+        {
+            rb.velocity = Vector3.zero;
+            st = State.NORMAL;
+            startDelay = true;
+            wallTouch = false;
+            fired = false;
+            SceneManager.LoadScene(4);
         }
     }
 

@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     public float speed = 5.0f;
     private float horizontalInput;
     private float verticalInput;
-    private Vector3 originalPos;
+    private Vector3 swordPos;
+    private Vector3 startPos;
     private Quaternion originalRot;
     Scene scene;
 
@@ -22,8 +23,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         scene = SceneManager.GetActiveScene();
-        originalPos = transform.position;
-        originalRot = transform.rotation;
+        startPos = start.transform.localPosition;
+        swordPos = swordPrefab.transform.localPosition;
         EventManager.OnRestart += OnDeath;
     }
 
@@ -42,8 +43,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         swung = false;
-        sword.transform.localPosition = new Vector3(0.44f, 0, 0.56f);
-        //Destroy(sword);
+        sword.transform.localPosition = swordPos;
     }
 
     // Update is called once per frame
@@ -51,10 +51,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && !swung)
         {
+            //UnityEngine.Debug.Log(swung);
             swung = true;
-            /*GameObject sword = Instantiate(swordPrefab, start.transform.position, start.transform.rotation);*/
+            UnityEngine.Debug.Log("Is it true?" + swung);
             GameObject sword = GameObject.FindGameObjectWithTag("Sword");
-            sword.transform.localPosition += new Vector3(0, 0, 0.3f);
+            sword.transform.localPosition = startPos;
             StartCoroutine(SwordDespawn(sword));
         }
     }

@@ -1,21 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BlockPush : MonoBehaviour
 {
-    public float knockBack = 5.0f;
+    public float knockBack = 7.5f;
     public float knockBackTimer = 0.2f;
     public bool knocked = false;
     private Vector3 forward;
     private Vector3 originalPos;
     private GameObject player;
+    private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         originalPos = this.transform.position;
         player = GameObject.FindWithTag("Player");
+        rb = gameObject.GetComponent<Rigidbody>();
+        EventManager.OnRestart += OnDeath;
+    }
+
+    void OnDisable()
+    {
+        EventManager.OnRestart -= OnDeath;
+    }
+
+    public void OnDeath()
+    {
+        knockBackTimer = 0.2f;
+        knocked = false;
+        transform.position = originalPos;
     }
 
     // Update is called once per frame
@@ -24,28 +38,22 @@ public class BlockPush : MonoBehaviour
         if (knocked)
         {
             knockBackTimer -= Time.deltaTime;
-            transform.Translate(forward * Time.deltaTime * knockBack, Space.World);
             if (knockBackTimer <= 0.0f)
             {
+                rb.velocity = Vector3.zero;
                 knockBackTimer = 0.2f;
                 knocked = false;
             }
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Sword" && !knocked && PlayerController.swung == true)
-        {
-            forward = player.transform.forward;
-            knocked = true;
-        }
-    }
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Sword" && !knocked && PlayerController.swung == true)
+        UnityEngine.Debug.Log(PlayerController.swung);
+        if (other.gameObject.tag == "Sword" && PlayerController.swung && !knocked)
         {
-            forward = player.transform.forward;
+            UnityEngine.Debug.Log(PlayerController.swung);
+            rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             knocked = true;
         }
     }
