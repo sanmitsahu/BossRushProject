@@ -12,7 +12,7 @@ public class EnemyBehavior : MonoBehaviour
     public Light light;
     [SerializeField]
     private int originalHealth;
-    private int health;
+    public static int health;
     public float knockBack = 5.0f;
     public bool wallTouch = false;
     public bool fired = false;
