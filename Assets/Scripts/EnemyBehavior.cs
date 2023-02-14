@@ -51,7 +51,7 @@ public class EnemyBehavior : MonoBehaviour
 
     public void OnDeath()
     {
-        Res();
+        Restart();
     }
 
     IEnumerator Fireball()
@@ -118,7 +118,8 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung)
         {
-            transform.forward = -player.transform.forward;
+            rb.velocity = Vector3.zero;
+            rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             st = State.HIT;
         }
     }
