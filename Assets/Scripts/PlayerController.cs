@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public GameObject swordPrefab;
+    private float swordTimer = 0.2f;
+    public GameObject sword;
     public GameObject start;
     public static bool swung = false;
     public static int health = 1;
@@ -24,7 +25,7 @@ public class PlayerController : MonoBehaviour
     {
         scene = SceneManager.GetActiveScene();
         startPos = start.transform.localPosition;
-        swordPos = swordPrefab.transform.localPosition;
+        swordPos = sword.transform.localPosition;
         EventManager.OnRestart += OnDeath;
     }
 
@@ -39,24 +40,36 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene(scene.buildIndex);
     }
 
+    /*
     IEnumerator SwordDespawn(GameObject sword)
     {
         yield return new WaitForSeconds(0.2f);
         swung = false;
         sword.transform.localPosition = swordPos;
     }
+    */
 
     // Update is called once per frame
     void Update()
     {
+        if (swung)
+        {
+            swordTimer -= Time.deltaTime;
+            if (swordTimer <= 0.0f)
+            {
+                swordTimer = 0.2f;
+                swung = false;
+                sword.transform.localPosition = swordPos;
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Space) && !swung)
         {
             //UnityEngine.Debug.Log(swung);
             swung = true;
             UnityEngine.Debug.Log("Is it true?" + swung);
-            GameObject sword = GameObject.FindGameObjectWithTag("Sword");
+            //GameObject sword = GameObject.FindGameObjectWithTag("Sword");
             sword.transform.localPosition = startPos;
-            StartCoroutine(SwordDespawn(sword));
+            //StartCoroutine(SwordDespawn(sword));
         }
     }
 
