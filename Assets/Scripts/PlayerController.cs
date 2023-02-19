@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 startPos;
     private Quaternion originalRot;
     Scene scene;
-
+    public GameOverManager gameOverManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour
     public void OnDeath()
     {
         swung = false;
-        SceneManager.LoadScene(scene.buildIndex);
+        //SceneManager.LoadScene(scene.buildIndex);
     }
 
     IEnumerator SwordDespawn(GameObject sword)
@@ -80,6 +81,9 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Projectile")
         {
             health--;
+
+            gameOverManager.SetGameOver();
         }
+        
     }
 }

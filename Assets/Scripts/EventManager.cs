@@ -6,6 +6,7 @@ public class EventManager : MonoBehaviour
 {
     public delegate void RestartAction();
     public static event RestartAction OnRestart;
+    [SerializeField] GameOverManager gameOverManager;
 
     void Update()
     {
@@ -16,6 +17,7 @@ public class EventManager : MonoBehaviour
                 OnRestart();
                 PlayerController.health = 1;
             }
+            
         }
     }
 }
