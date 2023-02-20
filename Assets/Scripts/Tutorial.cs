@@ -6,19 +6,22 @@ using UnityEngine;
 public class Tutorial : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject tutorialText;
-    private string triggerTag= null;
-    
+    public GameObject textBox;
+    public string spotText;
+    private TextMeshProUGUI textPane;
+
+
     void Start()
     {
-        
-        
-        
+        textPane = textBox.GetComponentInChildren<TextMeshProUGUI>();
+
+
+
     }
     private void OnTriggerEnter(Collider other)
     {
-        TextMeshProUGUI textPane = tutorialText.GetComponentInChildren<TextMeshProUGUI>();
-        if (other.gameObject.tag== "PushBlock")
+        
+        /*if (other.gameObject.tag== "PushBlock")
         {
 
             
@@ -36,17 +39,26 @@ public class Tutorial : MonoBehaviour
         {
             textPane.text = "Hit the boss into white blocks to hurt him";
             triggerTag = other.gameObject.tag;
+        }*/
+        if (other.gameObject.tag == "Player")
+        {
+            
+            textPane.text = spotText;
         }
 
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == triggerTag)
+
+        Debug.Log(textPane.text);
+        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.tag == "Player" && textPane.text==spotText)
         {
-            TextMeshProUGUI textPane = tutorialText.GetComponentInChildren<TextMeshProUGUI>();
-            Debug.Log(textPane);
+
+            
+            
             textPane.text = "";
-            triggerTag = null;
+            
         }
     }
 

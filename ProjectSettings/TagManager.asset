@@ -14,6 +14,7 @@ TagManager:
   - Projectile
   - StunBlock
   - Switch
+  - TutorialSpot
   layers:
   - Default
   - TransparentFX
