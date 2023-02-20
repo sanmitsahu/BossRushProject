@@ -181,7 +181,7 @@ public class EnemyBehavior : MonoBehaviour
             startDelay = true;
             wallTouch = false;
             fired = false;
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         else if (scene.buildIndex == 1)
         {

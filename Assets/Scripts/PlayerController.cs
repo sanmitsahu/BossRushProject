@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour
             health--;
 
             gameOverManager.SetGameOver();
+            Time.timeScale = 0;
         }
         
     }
