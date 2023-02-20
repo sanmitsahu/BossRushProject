@@ -174,42 +174,12 @@ public class EnemyBehavior : MonoBehaviour
 
     private void beatBoss()
     {
-        if (scene.buildIndex == 0)
-        {
-            rb.velocity = Vector3.zero;
-            st = State.NORMAL;
-            startDelay = true;
-            wallTouch = false;
-            fired = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-        else if (scene.buildIndex == 1)
-        {
-            rb.velocity = Vector3.zero;
-            st = State.NORMAL;
-            startDelay = true;
-            wallTouch = false;
-            fired = false;
-            SceneManager.LoadScene(2);
-        }
-        else if (scene.buildIndex == 2)
-        {
-            rb.velocity = Vector3.zero;
-            st = State.NORMAL;
-            startDelay = true;
-            wallTouch = false;
-            fired = false;
-            SceneManager.LoadScene(3);
-        }
-        else if (scene.buildIndex == 3)
-        {
-            rb.velocity = Vector3.zero;
-            st = State.NORMAL;
-            startDelay = true;
-            wallTouch = false;
-            fired = false;
-            SceneManager.LoadScene(4);
-        }
+        rb.velocity = Vector3.zero;
+        st = State.NORMAL;
+        startDelay = true;
+        wallTouch = false;
+        fired = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnCollisionEnter(Collision other)
