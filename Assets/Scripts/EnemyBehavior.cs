@@ -14,6 +14,9 @@ public class EnemyBehavior : MonoBehaviour
 {
     private GameObject player;
     public GameObject fireBall;
+    public GameObject resetPane;
+    public float resetPaneTMAX = 2.0f;
+    private float resetPanetimer = 0;
     public Light light;
     [SerializeField]
     private int originalHealth;
@@ -54,8 +57,10 @@ public class EnemyBehavior : MonoBehaviour
         light.intensity = 0.0f;
         rb = gameObject.GetComponent<Rigidbody>();
         scene = SceneManager.GetActiveScene();
+        resetPane.SetActive(false);
         
         _sessionID = DateTime.Now.Ticks;
+        
     }
 
     void OnDisable()
@@ -131,6 +136,14 @@ public class EnemyBehavior : MonoBehaviour
                 ChaseBlock.chasing = false;
             }
         }
+        if (resetPane.activeSelf)
+        {
+            resetPanetimer -= Time.deltaTime;
+            if (resetPanetimer <= 0.0f)
+            {
+                resetPane.SetActive(false);
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -145,6 +158,8 @@ public class EnemyBehavior : MonoBehaviour
 
     private void Restart()
     {
+        resetPane.SetActive(true);
+        resetPanetimer = resetPaneTMAX;
         rb.velocity = Vector3.zero;
         transform.position = originalPos;
         transform.rotation = originalRot;
