@@ -32,6 +32,6 @@ public class PlayerHealthBar : MonoBehaviour
 
         mySlider.value = healthBarValue;
 
-        UnityEngine.Debug.Log($"Health Bar Value: {currentHealth} / {maxHealth} : {mySlider.value}");
+        //UnityEngine.Debug.Log($"Health Bar Value: {currentHealth} / {maxHealth} : {mySlider.value}");
     }
 }

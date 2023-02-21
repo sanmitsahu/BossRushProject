@@ -50,8 +50,8 @@ public class Tutorial : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
 
-        Debug.Log(textPane.text);
-        Debug.Log(other.gameObject.tag);
+        //Debug.Log(textPane.text);
+        //Debug.Log(other.gameObject.tag);
         if (other.gameObject.tag == "Player" && textPane.text==spotText)
         {
 

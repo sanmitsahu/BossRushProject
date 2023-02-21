@@ -49,10 +49,10 @@ public class BlockPush : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        UnityEngine.Debug.Log(PlayerController.swung);
+        //UnityEngine.Debug.Log(PlayerController.swung);
         if (other.gameObject.tag == "Sword" && PlayerController.swung && !knocked)
         {
-            UnityEngine.Debug.Log(PlayerController.swung);
+            //UnityEngine.Debug.Log(PlayerController.swung);
             rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             knocked = true;
         }

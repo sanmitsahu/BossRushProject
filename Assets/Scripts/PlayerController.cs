@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         {
             //UnityEngine.Debug.Log(swung);
             swung = true;
-            UnityEngine.Debug.Log("Is it true?" + swung);
+            //UnityEngine.Debug.Log("Is it true?" + swung);
             //GameObject sword = GameObject.FindGameObjectWithTag("Sword");
             sword.transform.localPosition = startPos;
             //StartCoroutine(SwordDespawn(sword));

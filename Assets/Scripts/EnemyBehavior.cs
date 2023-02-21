@@ -33,12 +33,14 @@ public class EnemyBehavior : MonoBehaviour
     Scene scene;
     
     public int no_of_tries = 0;
-    public float[,] locations = new float[100,100];
-    private string URL1 = "https://docs.google.com/forms/u/1/d/e/1FAIpQLSeBtC1XHWUIEBZRTmxn3xRiTX0wEgjlm8ZI2qfqYR6Y8xPW5w/formResponse";
+    public float[,] locations = new float[100, 100];
+    private string URL_blocks = "https://docs.google.com/forms/u/1/d/e/1FAIpQLSfkVBkGzZ9kS2AIiRUbRBfmfkyHXdaP1gnOObQaXEaadvs1GQ/formResponse";
     private string URL = "https://docs.google.com/forms/u/1/d/e/1FAIpQLSd8oLR_OzoW0uwK2OmbssF7nDTgOBva4IXGj-17CwF3ZJrFSg/formResponse";
     private long _sessionID;
     private Vector3 temploc;
-
+    private int level = 0;
+    private int temphits = 0;
+    private int nforward = 0, npushable = 0, nstun = 0, nblock = 0, healthred = 0, ndirecthits=0;
     public enum State
     {
         NORMAL,
@@ -74,8 +76,25 @@ public class EnemyBehavior : MonoBehaviour
         locations[no_of_tries, 0] = temploc.x;
         locations[no_of_tries, 1] = temploc.y;
         locations[no_of_tries, 2] = temploc.z;
-        UnityEngine.Debug.Log(locations[no_of_tries, 0]+" "+locations[no_of_tries, 1]+" "+locations[no_of_tries, 2]+" "+(no_of_tries + 1));
-        StartCoroutine(Post_tries(_sessionID.ToString()));
+        
+        //UnityEngine.Debug.Log(locations[no_of_tries, 0]+" "+locations[no_of_tries, 1]+" "+locations[no_of_tries, 2]+" "+(no_of_tries + 1));
+        if(no_of_tries>0)
+        {
+            if (scene.buildIndex == 7)
+                level = 4;
+            else if (scene.buildIndex == 5)
+                level = 3;
+            else if (scene.buildIndex == 3)
+                level = 2;
+            else
+            {
+                level = 1;
+            }
+            
+            //UnityEngine.Debug.Log("no_of_tries: "+no_of_tries+" "+ Math.Abs(level));
+            StartCoroutine(Post_tries(_sessionID.ToString())); 
+        }
+        no_of_tries = 0;
         Restart();
     }
 
@@ -155,9 +174,44 @@ public class EnemyBehavior : MonoBehaviour
             st = State.HIT;
         }
     }
-
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Sword" && PlayerController.swung)
+        {
+            //UnityEngine.Debug.Log("Collission happens now");
+            ndirecthits+=1;
+            temphits = ndirecthits;
+            //UnityEngine.Debug.Log("DIRECT HITTTT"+ndirecthits);
+        }
+    }
+    
     private void Restart()
     {
+        if (nforward + npushable + nstun != 0)
+        {
+            if (scene.buildIndex == 7)
+                level = 4;
+            else if (scene.buildIndex == 5)
+                level = 3;
+            else if (scene.buildIndex == 3)
+                level = 2;
+            else
+            {
+                level = 1;
+            }
+            UnityEngine.Debug.Log("F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
+            //temphits = ndirecthits;
+            StartCoroutine(Post_blocks(_sessionID.ToString()));
+        }
+        //COPY
+        nforward = 0;
+        npushable = 0;
+        nstun = 0;
+        nblock = 0;
+        healthred = 0;
+        ndirecthits = 0;
+        
         resetPane.SetActive(true);
         resetPanetimer = resetPaneTMAX;
         rb.velocity = Vector3.zero;
@@ -201,7 +255,9 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "PushBlock")
         {
+            npushable++;
             health--;
+            healthred++;
             if (health <= 0)
             {
                 beatBoss();
@@ -213,12 +269,14 @@ public class EnemyBehavior : MonoBehaviour
         }
         else if (other.gameObject.tag == "ForwardBlock")
         {
+            nforward++;
             if (st == State.HIT || st == State.NORMAL)
             {
                 knockBackTimer = 0.5f;
                 st = State.COMBO;
             }
             health--;
+            healthred++;
             rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
             if (health <= 0)
@@ -228,10 +286,12 @@ public class EnemyBehavior : MonoBehaviour
         }
         else if (other.gameObject.tag == "StunBlock")
         {
+            nstun++;
             if (!wallTouch)
             {
                 knockBackTimer = 0.5f;
                 health--;
+                healthred++;
                 if (health <= 0)
                 {
                     beatBoss();
@@ -249,6 +309,7 @@ public class EnemyBehavior : MonoBehaviour
         }
         else if (other.gameObject.tag == "Block")
         {
+            nblock++;
             Restart();
         }
         else if (other.gameObject.tag == "Switch")
@@ -271,14 +332,14 @@ public class EnemyBehavior : MonoBehaviour
         WWWForm form = new WWWForm();
         
         form.AddField("entry.728675539", sessionID);
-        form.AddField("entry.1829062957", no_of_tries+1);
+        form.AddField("entry.1829062957", no_of_tries);
         //for(int t=0;t<no_of_tries+1;t++)
         //{
         form.AddField("entry.1492841611", (temploc.x).ToString());
         form.AddField("entry.475872908", (temploc.y).ToString());
         form.AddField("entry.432244748", (temploc.z).ToString());
         //}
-        
+        form.AddField("entry.596243283", (level).ToString());
         using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
         {
            
@@ -290,6 +351,38 @@ public class EnemyBehavior : MonoBehaviour
             else
             {
                 UnityEngine.Debug.Log("Form upload complete!");
+            }
+        }
+    }
+    
+    public IEnumerator Post_blocks(string sessionID)
+    {
+        //UnityEngine.Debug.Log("POSTBlocks");
+        WWWForm form = new WWWForm();
+        
+        form.AddField("entry.1580530392", sessionID);
+        form.AddField("entry.1986196806", nforward);
+        
+        form.AddField("entry.542647140", npushable);
+        form.AddField("entry.136227332", nstun);
+        form.AddField("entry.511319478", nblock);
+        form.AddField("entry.657771776", temphits);
+        form.AddField("entry.188267377", healthred);
+        form.AddField("entry.1786672107", level);
+        UnityEngine.Debug.Log("FUNCDIRECT HITTTT"+temphits);
+        //UnityEngine.Debug.Log("F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
+        UnityEngine.Debug.Log(ndirecthits);
+        using (UnityWebRequest www = UnityWebRequest.Post(URL_blocks, form))
+        {
+           
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                UnityEngine.Debug.Log(www.error);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("Form upload complete !!!");
             }
         }
     }

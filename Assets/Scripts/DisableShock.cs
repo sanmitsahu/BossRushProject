@@ -33,7 +33,7 @@ public class DisableShock : MonoBehaviour
     {
         if (other.gameObject.tag == "Boss")
         {
-            UnityEngine.Debug.Log("SHOCK");
+            //UnityEngine.Debug.Log("SHOCK");
             drained = false;
         }
     }
