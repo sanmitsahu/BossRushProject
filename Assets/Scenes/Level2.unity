@@ -2005,35 +2005,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
   m_PrefabInstance: {fileID: 5046275188438137851}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1839447276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1839447271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97126f79eeb70cd4ba793c2a21b67557, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sword: {fileID: 0}
-  start: {fileID: 0}
-  speed: 5
-  gameOverManager: {fileID: 0}
---- !u!114 &1839447281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1839447271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a972742347186b48932cdfb3d3d93b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameOverManager: {fileID: 0}
 --- !u!1001 &1881654093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2397,6 +2368,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 326922845}
     m_Modifications:
+    - target: {fileID: 5046275188746569482, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: gameOverManager
+      value: 
+      objectReference: {fileID: 559677209}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2441,6 +2416,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: gameOverManager
+      value: 
+      objectReference: {fileID: 559677209}
     - target: {fileID: 5046275188746569500, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_Name
       value: Player

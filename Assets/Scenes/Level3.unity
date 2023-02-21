@@ -2633,7 +2633,7 @@ PrefabInstance:
     - target: {fileID: 5046275188746569482, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: gameOverManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 174476678}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2681,7 +2681,7 @@ PrefabInstance:
     - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: gameOverManager
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 174476678}
     - target: {fileID: 5046275188746569500, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_Name
       value: Player

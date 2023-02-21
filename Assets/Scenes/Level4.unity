@@ -2289,6 +2289,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1091480579}
     m_Modifications:
+    - target: {fileID: 5046275188746569482, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: gameOverManager
+      value: 
+      objectReference: {fileID: 1241822420}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2333,6 +2337,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: gameOverManager
+      value: 
+      objectReference: {fileID: 1241822420}
     - target: {fileID: 5046275188746569500, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_Name
       value: Player
