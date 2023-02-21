@@ -95,6 +95,7 @@ public class EnemyBehavior : MonoBehaviour
             StartCoroutine(Post_tries(_sessionID.ToString())); 
         }
         no_of_tries = 0;
+        Debug.Log("Restart cus no_of_tries");
         Restart();
     }
 
@@ -128,6 +129,7 @@ public class EnemyBehavior : MonoBehaviour
             shockTimer -= Time.deltaTime;
             if (shockTimer <= 0.0f)
             {
+                Debug.Log("Restart cus shockTimer");
                 Restart();
             }
         }
@@ -145,6 +147,7 @@ public class EnemyBehavior : MonoBehaviour
                 {
                     ChaseBlock.chasing = true;
                 }
+                Debug.Log("Restart cus Switch");
                 Restart();
             }
         }
@@ -188,6 +191,7 @@ public class EnemyBehavior : MonoBehaviour
     
     private void Restart()
     {
+        
         if (nforward + npushable + nstun != 0)
         {
             if (scene.buildIndex == 7)
@@ -211,9 +215,9 @@ public class EnemyBehavior : MonoBehaviour
         nblock = 0;
         healthred = 0;
         ndirecthits = 0;
-        
-        resetPane.SetActive(true);
-        resetPanetimer = resetPaneTMAX;
+
+        if (no_of_tries>0) { resetPane.SetActive(true);
+            resetPanetimer = resetPaneTMAX; }
         rb.velocity = Vector3.zero;
         transform.position = originalPos;
         transform.rotation = originalRot;
@@ -264,6 +268,8 @@ public class EnemyBehavior : MonoBehaviour
             }
             else
             {
+                Debug.Log("Restart cus health");
+                
                 Restart();
             }
         }
@@ -304,16 +310,19 @@ public class EnemyBehavior : MonoBehaviour
             }
             else
             {
+                Debug.Log("Restart stun collision");
                 Restart();
             }
         }
         else if (other.gameObject.tag == "Block")
         {
             nblock++;
+            Debug.Log("Restart cus block");
             Restart();
         }
         else if (other.gameObject.tag == "Switch")
         {
+            Debug.Log("Restart cus switch");
             Restart();
         }
     }
