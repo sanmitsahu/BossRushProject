@@ -12,7 +12,9 @@ public class PlayerController : MonoBehaviour
     public GameObject sword;
     public GameObject start;
     public static bool swung = false;
-    public static int health = 1;
+    [SerializeField]
+    private int originalHealth;
+    public static int health;
     public float speed = 5.0f;
     private float horizontalInput;
     private float verticalInput;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         startPos = start.transform.localPosition;
         swordPos = sword.transform.localPosition;
+        health = originalHealth;
         EventManager.OnRestart += OnDeath;
     }
 
@@ -95,9 +98,12 @@ public class PlayerController : MonoBehaviour
         {
             health--;
 
-            gameOverManager.SetGameOver();
+            if (health <= 0)
+            {
+                gameOverManager.SetGameOver();
+            }
+
             Time.timeScale = 0;
         }
-        
     }
 }
