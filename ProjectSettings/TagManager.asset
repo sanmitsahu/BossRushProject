@@ -15,6 +15,7 @@ TagManager:
   - StunBlock
   - Switch
   - GameOver
+  - TutorialSpot
   layers:
   - Default
   - TransparentFX
