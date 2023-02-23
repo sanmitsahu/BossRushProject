@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Quaternion originalRot;
     Scene scene;
     public GameOverManager gameOverManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,15 +44,6 @@ public class PlayerController : MonoBehaviour
         swung = false;
         //SceneManager.LoadScene(scene.buildIndex);
     }
-
-    /*
-    IEnumerator SwordDespawn(GameObject sword)
-    {
-        yield return new WaitForSeconds(0.2f);
-        swung = false;
-        sword.transform.localPosition = swordPos;
-    }
-    */
 
     // Update is called once per frame
     void Update()
@@ -101,9 +93,8 @@ public class PlayerController : MonoBehaviour
             if (health <= 0)
             {
                 gameOverManager.SetGameOver();
+                Time.timeScale = 0;
             }
-
-            Time.timeScale = 0;
         }
     }
 }

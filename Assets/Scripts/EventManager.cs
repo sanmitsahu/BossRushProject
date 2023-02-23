@@ -14,7 +14,7 @@ public class EventManager : MonoBehaviour
             if (OnRestart != null)
             {
                 OnRestart();
-                PlayerController.health = 1;
+                PlayerController.health = 4;
             }
         }
     }
