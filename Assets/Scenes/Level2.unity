@@ -3107,6 +3107,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: originalHealth
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: gameOverManager
       value: 
       objectReference: {fileID: 559677209}
