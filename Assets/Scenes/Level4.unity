@@ -3034,6 +3034,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1091480579}
     m_Modifications:
+    - target: {fileID: 2792467493545912370, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3469645538956470621, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569482, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: gameOverManager
       value: 
@@ -3083,12 +3091,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: sword
+      value: 
+      objectReference: {fileID: 1996713758}
+    - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: gameOverManager
       value: 
       objectReference: {fileID: 1241822420}
     - target: {fileID: 5046275188746569500, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5181204811260221124, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7894147537899044254, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 9078551230145040262, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
@@ -3100,6 +3124,11 @@ Transform:
 --- !u!1 &1996713757 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5046275188746569500, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+  m_PrefabInstance: {fileID: 1996713755}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1996713758 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4505656720361956180, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
   m_PrefabInstance: {fileID: 1996713755}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2086758261 stripped

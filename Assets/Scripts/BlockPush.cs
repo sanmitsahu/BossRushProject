@@ -64,6 +64,7 @@ public class BlockPush : MonoBehaviour
         {
             knockBackTimer = 0.2f;
             knocked = false;
+            rb.velocity = Vector3.zero;
             transform.position = originalPos;
         }
     }

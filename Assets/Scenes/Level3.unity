@@ -3197,6 +3197,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+      propertyPath: sword
+      value: 
+      objectReference: {fileID: 2011078643}
+    - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: gameOverManager
       value: 
       objectReference: {fileID: 174476678}
@@ -3214,6 +3218,11 @@ Transform:
 --- !u!1 &2011078642 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5046275188746569500, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
+  m_PrefabInstance: {fileID: 2011078640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2011078643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4505656720361956180, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
   m_PrefabInstance: {fileID: 2011078640}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2049964300

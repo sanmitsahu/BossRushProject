@@ -19,7 +19,9 @@ public class PlayerController : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
     private Vector3 swordPos;
+    private Quaternion swordRot;
     private Vector3 startPos;
+    private Quaternion startRot;
     private Quaternion originalRot;
     Scene scene;
     public GameOverManager gameOverManager;
@@ -28,7 +30,9 @@ public class PlayerController : MonoBehaviour
     {
         scene = SceneManager.GetActiveScene();
         startPos = start.transform.localPosition;
+        startRot = start.transform.localRotation;
         swordPos = sword.transform.localPosition;
+        swordRot = sword.transform.localRotation;
         health = 3;
         EventManager.OnRestart += OnDeath;
     }
@@ -56,6 +60,7 @@ public class PlayerController : MonoBehaviour
                 swordTimer = 0.2f;
                 swung = false;
                 sword.transform.localPosition = swordPos;
+                sword.transform.localRotation = swordRot;
             }
         }
 
@@ -73,6 +78,7 @@ public class PlayerController : MonoBehaviour
         {
             swung = true;
             sword.transform.localPosition = startPos;
+            sword.transform.localRotation = startRot;
         }
     }
 

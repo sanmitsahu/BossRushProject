@@ -15,7 +15,7 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     public GameObject fireBall;
     public GameObject resetPane;
-    public static float projectileTime = 1.5f;
+    public static float projectileTime = 2.0f;
     public float resetPaneTMAX = 2.0f;
     private float resetPanetimer = 0;
     public Light light;
@@ -130,6 +130,7 @@ public class EnemyBehavior : MonoBehaviour
                 light.intensity = 0.0f;
                 GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
                 fired = true;
+                projectileTime = 2.0f;
             }
         }
 
@@ -232,7 +233,7 @@ public class EnemyBehavior : MonoBehaviour
         wallTouch = false;
         knockBackTimer = 0.5f;
         health = originalHealth;
-        projectileTime = 1.5f;
+        projectileTime = 2.0f;
         fired = false;
         shockTimer = 5.0f;
         light.intensity = 0.0f;
@@ -251,7 +252,7 @@ public class EnemyBehavior : MonoBehaviour
         startDelay = true;
         wallTouch = false;
         fired = false;
-        projectileTime = 1.5f;
+        projectileTime = 2.0f;
         light.intensity = 0.0f;
         SceneManager.LoadScene(scene.buildIndex);
     }
