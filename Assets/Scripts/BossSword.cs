@@ -28,5 +28,17 @@ public class BossSword : MonoBehaviour
         firingSpeed += accel;
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "StunBlock" || other.gameObject.tag == "Player" || other.gameObject.tag == "Block" || other.gameObject.tag == "PushBlock"
+            || other.gameObject.tag == "ForwardBlock")
+        {
+            EnemyBehavior.projectileTime = 1.5f;
+            EnemyBehavior.fired = false;
+            Destroy(gameObject);
+        }
+    }
+
+
 }
 

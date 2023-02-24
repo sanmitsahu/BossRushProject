@@ -9,11 +9,11 @@ using System;
 public class PlayerController : MonoBehaviour
 {
     private float swordTimer = 0.2f;
+    private float damageTimer = 0.1f;
+    private bool hit = false;
     public GameObject sword;
     public GameObject start;
     public static bool swung = false;
-    [SerializeField]
-    private int originalHealth;
     public static int health;
     public float speed = 5.0f;
     private float horizontalInput;
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         startPos = start.transform.localPosition;
         swordPos = sword.transform.localPosition;
-        health = originalHealth;
+        health = 3;
         EventManager.OnRestart += OnDeath;
     }
 
@@ -41,17 +41,9 @@ public class PlayerController : MonoBehaviour
     public void OnDeath()
     {
         swung = false;
+        hit = false;
         //SceneManager.LoadScene(scene.buildIndex);
     }
-
-    /*
-    IEnumerator SwordDespawn(GameObject sword)
-    {
-        yield return new WaitForSeconds(0.2f);
-        swung = false;
-        sword.transform.localPosition = swordPos;
-    }
-    */
 
     // Update is called once per frame
     void Update()
@@ -66,14 +58,21 @@ public class PlayerController : MonoBehaviour
                 sword.transform.localPosition = swordPos;
             }
         }
+
+        if (hit)
+        {
+            damageTimer -= Time.deltaTime;
+            if (damageTimer <= 0.0f)
+            {
+                damageTimer = 0.1f;
+                hit = false;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && !swung)
         {
-            //UnityEngine.Debug.Log(swung);
             swung = true;
-            //UnityEngine.Debug.Log("Is it true?" + swung);
-            //GameObject sword = GameObject.FindGameObjectWithTag("Sword");
             sword.transform.localPosition = startPos;
-            //StartCoroutine(SwordDespawn(sword));
         }
     }
 
@@ -94,16 +93,15 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Projectile")
+        if (other.gameObject.tag == "Projectile" && !hit)
         {
             health--;
-
+            hit = true;
             if (health <= 0)
             {
+                Time.timeScale = 0;
                 gameOverManager.SetGameOver();
             }
-
-            Time.timeScale = 0;
         }
     }
 }

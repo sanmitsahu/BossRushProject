@@ -214,7 +214,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &5046275188746569495
 MonoBehaviour:
@@ -231,6 +231,7 @@ MonoBehaviour:
   sword: {fileID: 5046275187920746129}
   start: {fileID: 5046275189214501731}
   speed: 5
+  gameOverManager: {fileID: 0}
 --- !u!114 &5046275188746569482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a972742347186b48932cdfb3d3d93b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverManager: {fileID: 0}
 --- !u!1 &5046275189214501731
 GameObject:
   m_ObjectHideFlags: 0
