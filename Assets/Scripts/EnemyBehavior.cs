@@ -15,6 +15,7 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     public GameObject fireBall;
     public GameObject resetPane;
+    public static float projectileTime = 2.0f;
     public float resetPaneTMAX = 2.0f;
     private float resetPanetimer = 0;
     public Light light;
@@ -23,7 +24,7 @@ public class EnemyBehavior : MonoBehaviour
     public static int health;
     public float knockBack = 5.0f;
     public bool wallTouch = false;
-    public bool fired = false;
+    public static bool fired = false;
     public bool startDelay = true;
     public float knockBackTimer = 0.5f;
     public float shockTimer = 5.0f;
@@ -118,10 +119,20 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fired && health > 0)
+        if (!fired)
         {
-            fired = true;
-            StartCoroutine(Fireball());
+            projectileTime -= Time.deltaTime;
+            if (projectileTime <= 1.0f && projectileTime > 0.0f)
+            {
+                light.intensity = 20.0f;
+            }
+            else if (projectileTime <= 0.0f)
+            {
+                light.intensity = 0.0f;
+                GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
+                fired = true;
+                projectileTime = 2.0f;
+            }
         }
 
         if (wallTouch)
@@ -226,7 +237,10 @@ public class EnemyBehavior : MonoBehaviour
         wallTouch = false;
         knockBackTimer = 0.5f;
         health = originalHealth;
+        projectileTime = 2.0f;
+        fired = false;
         shockTimer = 5.0f;
+        light.intensity = 0.0f;
         if (SwitchOn.on)
         {
             ChaseBlock.chasing = true;
@@ -242,6 +256,8 @@ public class EnemyBehavior : MonoBehaviour
         startDelay = true;
         wallTouch = false;
         fired = false;
+        projectileTime = 2.0f;
+        light.intensity = 0.0f;
         SceneManager.LoadScene(scene.buildIndex);
     }
 

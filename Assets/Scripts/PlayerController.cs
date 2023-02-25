@@ -9,17 +9,19 @@ using System;
 public class PlayerController : MonoBehaviour
 {
     private float swordTimer = 0.2f;
+    private float damageTimer = 0.1f;
+    private bool hit = false;
     public GameObject sword;
     public GameObject start;
     public static bool swung = false;
-    [SerializeField]
-    private int originalHealth;
     public static int health;
     public float speed = 5.0f;
     private float horizontalInput;
     private float verticalInput;
     private Vector3 swordPos;
+    private Quaternion swordRot;
     private Vector3 startPos;
+    private Quaternion startRot;
     private Quaternion originalRot;
     Scene scene;
     public GameOverManager gameOverManager;
@@ -29,8 +31,10 @@ public class PlayerController : MonoBehaviour
     {
         scene = SceneManager.GetActiveScene();
         startPos = start.transform.localPosition;
+        startRot = start.transform.localRotation;
         swordPos = sword.transform.localPosition;
-        health = originalHealth;
+        swordRot = sword.transform.localRotation;
+        health = 3;
         EventManager.OnRestart += OnDeath;
     }
 
@@ -42,6 +46,7 @@ public class PlayerController : MonoBehaviour
     public void OnDeath()
     {
         swung = false;
+        hit = false;
         //SceneManager.LoadScene(scene.buildIndex);
     }
 
@@ -56,16 +61,25 @@ public class PlayerController : MonoBehaviour
                 swordTimer = 0.2f;
                 swung = false;
                 sword.transform.localPosition = swordPos;
+                sword.transform.localRotation = swordRot;
             }
         }
+
+        if (hit)
+        {
+            damageTimer -= Time.deltaTime;
+            if (damageTimer <= 0.0f)
+            {
+                damageTimer = 0.1f;
+                hit = false;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && !swung)
         {
-            //UnityEngine.Debug.Log(swung);
             swung = true;
-            //UnityEngine.Debug.Log("Is it true?" + swung);
-            //GameObject sword = GameObject.FindGameObjectWithTag("Sword");
             sword.transform.localPosition = startPos;
-            //StartCoroutine(SwordDespawn(sword));
+            sword.transform.localRotation = startRot;
         }
     }
 
@@ -86,12 +100,13 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Projectile")
+        if (other.gameObject.tag == "Projectile" && !hit)
         {
             health--;
-
+            hit = true;
             if (health <= 0)
             {
+                Time.timeScale = 0;
                 gameOverManager.SetGameOver();
                 Time.timeScale = 0;
             }
