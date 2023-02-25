@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public GameObject sword;
     public GameObject start;
     public static bool swung = false;
+    [SerializeField]
+    private int originalHealth;
+    public static int maximumHealth;
     public static int health;
     public float speed = 5.0f;
     private float horizontalInput;
@@ -34,7 +37,8 @@ public class PlayerController : MonoBehaviour
         startRot = start.transform.localRotation;
         swordPos = sword.transform.localPosition;
         swordRot = sword.transform.localRotation;
-        health = 3;
+        maximumHealth = originalHealth;
+        health = originalHealth;
         EventManager.OnRestart += OnDeath;
     }
 

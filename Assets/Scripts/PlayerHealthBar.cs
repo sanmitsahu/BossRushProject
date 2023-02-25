@@ -15,7 +15,7 @@ public class PlayerHealthBar : MonoBehaviour
     {
         mySlider = GetComponent<Slider>();
 
-        maxHealth = PlayerController.health;
+        maxHealth = PlayerController.maximumHealth;
         currentHealth = PlayerController.health;
         healthBarValue = currentHealth / maxHealth;
     }

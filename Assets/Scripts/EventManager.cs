@@ -14,7 +14,7 @@ public class EventManager : MonoBehaviour
             if (OnRestart != null)
             {
                 OnRestart();
-                PlayerController.health = 4;
+                PlayerController.health = PlayerController.maximumHealth;
             }
         }
     }
