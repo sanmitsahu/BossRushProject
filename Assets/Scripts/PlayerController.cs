@@ -69,6 +69,15 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (BlockGrab.grab)
+        {
+            speed = 2.0f;
+        }
+        else
+        {
+            speed = 5.0f;
+        }
+
         if (hit)
         {
             damageTimer -= Time.deltaTime;
@@ -79,7 +88,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && !swung)
+        if (Input.GetKeyDown(KeyCode.Space) && !swung && !BlockGrab.grab)
         {
             swung = true;
             sword.transform.localPosition = startPos;
@@ -96,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         transform.Translate(moveDirect * speed * Time.deltaTime, Space.World);
 
-        if (moveDirect != Vector3.zero)
+        if (moveDirect != Vector3.zero && !BlockGrab.grab)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirect), 1.0f);
         }
