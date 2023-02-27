@@ -31,6 +31,7 @@ public class EnemyBehavior : MonoBehaviour
     private Vector3 originalPos;
     private Quaternion originalRot;
     private Rigidbody rb;
+    private bool hitSword;
     Scene scene;
     
     public int no_of_tries = 0;
@@ -181,8 +182,9 @@ public class EnemyBehavior : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Sword" && PlayerController.swung)
+        if (other.gameObject.tag == "Sword" && PlayerController.swung && !PlayerController.swordHit)
         {
+            PlayerController.swordHit = true;
             rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             st = State.HIT;
@@ -191,7 +193,7 @@ public class EnemyBehavior : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Sword" && PlayerController.swung)
+        if (other.gameObject.tag == "Sword" && PlayerController.swung && !PlayerController.swordHit)
         {
             //UnityEngine.Debug.Log("Collission happens now");
             ndirecthits+=1;
@@ -309,6 +311,7 @@ public class EnemyBehavior : MonoBehaviour
         else if (other.gameObject.tag == "StunBlock")
         {
             nstun++;
+            rb.velocity = Vector3.zero;
             if (!wallTouch)
             {
                 knockBackTimer = 0.5f;

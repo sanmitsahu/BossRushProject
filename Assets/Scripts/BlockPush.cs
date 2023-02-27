@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlockPush : MonoBehaviour
 {
-    public bool held = false;
     public float knockBack = 7.5f;
     public float knockBackTimer = 0.2f;
     public bool knocked = false;
@@ -51,9 +50,10 @@ public class BlockPush : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         //UnityEngine.Debug.Log(PlayerController.swung);
-        if (other.gameObject.tag == "Sword" && PlayerController.swung && !knocked)
+        if (other.gameObject.tag == "Sword" && PlayerController.swung && !knocked && !PlayerController.swordHit)
         {
             //UnityEngine.Debug.Log(PlayerController.swung);
+            PlayerController.swordHit = true;
             rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             knocked = true;
         }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class BlockGrab : MonoBehaviour
 {
-    public GameObject grabStart;
+    public GameObject player;
+    private GameObject blockChild;
     public static bool grab = false;
     public GameObject sword;
     private Vector3 grabPos;
@@ -18,8 +19,8 @@ public class BlockGrab : MonoBehaviour
     {
         swordPos = sword.transform.localPosition;
         swordRot = sword.transform.localRotation;
-        grabPos = grabStart.transform.localPosition;
-        grabRot = grabStart.transform.localRotation;
+        grabPos = transform.localPosition;
+        grabRot = transform.localRotation;
     }
 
     // Update is called once per frame
@@ -28,41 +29,41 @@ public class BlockGrab : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && !grab && !PlayerController.swung)
         {
             grab = true;
-            sword.transform.localPosition = grabPos;
-            sword.transform.localRotation = grabRot;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) && grab && !PlayerController.swung)
         {
             grab = false;
             sword.transform.localPosition = swordPos;
             sword.transform.localRotation = swordRot;
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && grab && !isGrab)
-        {
-            isGrab = true;
-            other.gameObject.GetComponent<BlockPush>().held = true;
+            if (blockChild)
+            {
+                blockChild.transform.parent = null;
+                blockChild = null;
+            }
         }
     }
 
     void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && (isGrab && other.gameObject.GetComponent<BlockPush>().held))
+        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && grab && !blockChild)
         {
-            other.gameObject.transform.position = new Vector3(grabStart.transform.position.x, other.gameObject.transform.position.y, grabStart.transform.position.z);
-            //other.gameObject.GetComponent<Rigidbody>().velocity = sword.GetComponent<Rigidbody>().velocity;
+            sword.transform.localPosition = grabPos;
+            sword.transform.localRotation = grabRot;
+            //blockChild.transform.localPosition = new Vector3(grabStart.transform.localPosition.x, blockChild.transform.localPosition.y, grabStart.transform.localPosition.z);
+            blockChild = other.gameObject;
+            blockChild.transform.parent = player.transform;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock"))
+        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && blockChild)
         {
-            isGrab = false;
-            other.gameObject.GetComponent<BlockPush>().held = false;
+            blockChild.transform.parent = null;
+            blockChild = null;
+            //grab = false;
+            sword.transform.localPosition = swordPos;
+            sword.transform.localRotation = swordRot;
         }
     }
 }

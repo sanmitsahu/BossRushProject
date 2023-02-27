@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private float swordTimer = 0.2f;
     private float damageTimer = 0.1f;
     private bool hit = false;
+    public static bool swordHit = false;
     public GameObject sword;
     public GameObject start;
     public static bool swung = false;
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour
             {
                 swordTimer = 0.2f;
                 swung = false;
+                swordHit = false;
                 sword.transform.localPosition = swordPos;
                 sword.transform.localRotation = swordRot;
             }
