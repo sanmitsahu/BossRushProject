@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
     private Quaternion originalRot;
     Scene scene;
     public GameOverManager gameOverManager;
+    private void Awake()
+    {
+        maximumHealth = originalHealth;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +42,7 @@ public class PlayerController : MonoBehaviour
         startRot = start.transform.localRotation;
         swordPos = sword.transform.localPosition;
         swordRot = sword.transform.localRotation;
-        maximumHealth = originalHealth;
+        
         health = originalHealth;
         EventManager.OnRestart += OnDeath;
     }
