@@ -51,9 +51,14 @@ public class EnemyBehavior : MonoBehaviour
     }
     public static State st = State.NORMAL;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        UnityEngine.Debug.Log("sethealth");
+        health = originalHealth;
+    }
     void Start()
     {
-        health = originalHealth;
+        
         player = GameObject.FindWithTag("Player");
         originalPos = transform.position;
         originalRot = transform.rotation;
