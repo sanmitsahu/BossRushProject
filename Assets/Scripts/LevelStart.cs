@@ -18,10 +18,9 @@ public class LevelStart : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Time.time >= timeToDisappear)
         {
-            UnityEngine.Debug.Log("here");
+            //UnityEngine.Debug.Log("here");
             gameStartScreen.SetActive(false);
             //Time.timeScale = 1;
         }

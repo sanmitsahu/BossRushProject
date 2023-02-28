@@ -12,6 +12,10 @@ using System.Runtime.CompilerServices;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    private Color originalColor;
+    public Color targetColor;
+    private Renderer renderer;
+    public float flashDuration = 0.15f;
     private GameObject player;
     public GameObject fireBall;
     public GameObject resetPane;
@@ -62,7 +66,10 @@ public class EnemyBehavior : MonoBehaviour
     }
     void Start()
     {
-        
+        renderer = GetComponent<Renderer>();
+        originalColor = renderer.material.color;
+        targetColor = Color.Lerp(Color.white, Color.yellow, 0.25f);
+
         player = GameObject.FindWithTag("Player");
         originalPos = transform.position;
         originalRot = transform.rotation;
@@ -73,7 +80,6 @@ public class EnemyBehavior : MonoBehaviour
         resetPane.SetActive(false);
         
         _sessionID = DateTime.Now.Ticks.ToString();
-        
     }
 
     void OnDisable()
@@ -110,6 +116,13 @@ public class EnemyBehavior : MonoBehaviour
         Restart();
     }
 
+    IEnumerator DamageFlash()
+    {
+        renderer.material.color = targetColor;
+        yield return new WaitForSeconds(flashDuration);
+        renderer.material.color = originalColor;
+    }
+
     IEnumerator Fireball()
     {
         if (startDelay)
@@ -117,11 +130,13 @@ public class EnemyBehavior : MonoBehaviour
             yield return new WaitForSeconds(3.0f);
             startDelay = false;
         }
+
         light.intensity = 20.0f;
         yield return new WaitForSeconds(0.5f);
         light.intensity = 0.0f;
         GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(2.5f);
+
         fired = false;
         Destroy(fire);
     }
@@ -132,6 +147,7 @@ public class EnemyBehavior : MonoBehaviour
         if (!fired)
         {
             projectileTime -= Time.deltaTime;
+
             if (projectileTime <= 1.0f && projectileTime > 0.0f)
             {
                 light.intensity = 20.0f;
@@ -148,9 +164,9 @@ public class EnemyBehavior : MonoBehaviour
         if (wallTouch)
         {
             shockTimer -= Time.deltaTime;
+
             if (shockTimer <= 0.0f)
             {
-                //Debug.Log("Restart cus shockTimer");
                 Restart();
             }
         }
@@ -161,14 +177,16 @@ public class EnemyBehavior : MonoBehaviour
             {
                 ChaseBlock.chasing = false;
             }
+
             knockBackTimer -= Time.deltaTime;
+
             if (knockBackTimer <= 0.0f)
             {
                 if (SwitchOn.on)
                 {
                     ChaseBlock.chasing = true;
                 }
-                //Debug.Log("Restart cus Switch");
+
                 Restart();
             }
         }
@@ -179,9 +197,11 @@ public class EnemyBehavior : MonoBehaviour
                 ChaseBlock.chasing = false;
             }
         }
+
         if (resetPane.activeSelf)
         {
             resetPanetimer -= Time.deltaTime;
+
             if (resetPanetimer <= 0.0f)
             {
                 resetPane.SetActive(false);
@@ -213,7 +233,6 @@ public class EnemyBehavior : MonoBehaviour
     
     private void Restart()
     {
-        
         if (nforward + npushable + nstun != 0)
         {
             if (scene.buildIndex == 7)
@@ -240,6 +259,7 @@ public class EnemyBehavior : MonoBehaviour
 
         if (no_of_tries>0) { resetPane.SetActive(true);
             resetPanetimer = resetPaneTMAX; }
+
         rb.velocity = Vector3.zero;
         transform.position = originalPos;
         transform.rotation = originalRot;
@@ -252,6 +272,7 @@ public class EnemyBehavior : MonoBehaviour
         fired = false;
         shockTimer = 5.0f;
         light.intensity = 0.0f;
+
         if (SwitchOn.on)
         {
             ChaseBlock.chasing = true;
@@ -288,31 +309,37 @@ public class EnemyBehavior : MonoBehaviour
         if (other.gameObject.tag == "PushBlock")
         {
             npushable++;
+
+            StartCoroutine(DamageFlash());
             health--;
             healthred++;
+
             if (health <= 0)
             {
                 beatBoss();
             }
             else
-            {
-               //Debug.Log("Restart cus health");
-                
+            {                
                 Restart();
             }
         }
         else if (other.gameObject.tag == "ForwardBlock")
         {
             nforward++;
+
             if (st == State.HIT || st == State.NORMAL)
             {
                 knockBackTimer = 0.5f;
                 st = State.COMBO;
             }
+
+            StartCoroutine(DamageFlash());
             health--;
             healthred++;
+
             rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
+            
             if (health <= 0)
             {
                 beatBoss();
@@ -322,11 +349,15 @@ public class EnemyBehavior : MonoBehaviour
         {
             nstun++;
             rb.velocity = Vector3.zero;
+
             if (!wallTouch)
             {
                 knockBackTimer = 0.5f;
+
+                StartCoroutine(DamageFlash());
                 health--;
                 healthred++;
+
                 if (health <= 0)
                 {
                     beatBoss();
@@ -339,19 +370,16 @@ public class EnemyBehavior : MonoBehaviour
             }
             else
             {
-                //Debug.Log("Restart stun collision");
                 Restart();
             }
         }
         else if (other.gameObject.tag == "Block")
         {
             nblock++;
-            //Debug.Log("Restart cus block");
             Restart();
         }
         else if (other.gameObject.tag == "Switch")
         {
-            //Debug.Log("Restart cus switch");
             fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
             Debug.Log(fblock.Length+"  "+fblock[1].transform.position.x+"   "+fblock[1].transform.position.z);
             StartCoroutine(Post_L4(_sessionID,fblock[1].transform.position));
@@ -439,7 +467,6 @@ public class EnemyBehavior : MonoBehaviour
  
         using (UnityWebRequest www = UnityWebRequest.Post(URL_L4, form))
         {
-           
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
@@ -451,9 +478,9 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
     }
+
     public IEnumerator Post_Level(string sessionID)
     {
-        Debug.Log("Here");
         WWWForm form = new WWWForm();
         
         form.AddField("entry.1950975398", sessionID);
