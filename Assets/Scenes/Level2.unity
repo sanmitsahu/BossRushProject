@@ -446,8 +446,8 @@ PrefabInstance:
       objectReference: {fileID: 1585837736}
     - target: {fileID: 1554982805173816019, guid: 8250f5502eb154ce7ac033418dc65f09, type: 3}
       propertyPath: spotText
-      value: Watch out for black blocks. When the boss touches them, its position
-        will reset.
+      value: Watch out for black blocks. When the boss touches them, progress will
+        reset.
       objectReference: {fileID: 0}
     - target: {fileID: 6202333906965242330, guid: 8250f5502eb154ce7ac033418dc65f09, type: 3}
       propertyPath: m_Name
