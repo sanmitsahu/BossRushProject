@@ -1729,6 +1729,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4034785514196017469, guid: 5f1ab05a1af9a42a2a4fd1c3103c341e, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034785514196017469, guid: 5f1ab05a1af9a42a2a4fd1c3103c341e, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.91462684
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034785514196017469, guid: 5f1ab05a1af9a42a2a4fd1c3103c341e, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034785514196017469, guid: 5f1ab05a1af9a42a2a4fd1c3103c341e, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034785514196017469, guid: 5f1ab05a1af9a42a2a4fd1c3103c341e, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 4034785514642046210, guid: 5f1ab05a1af9a42a2a4fd1c3103c341e, type: 3}
       propertyPath: m_Name
       value: TutorialCanvas
