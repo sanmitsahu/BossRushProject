@@ -123,24 +123,6 @@ public class EnemyBehavior : MonoBehaviour
         renderer.material.color = originalColor;
     }
 
-    IEnumerator Fireball()
-    {
-        if (startDelay)
-        {
-            yield return new WaitForSeconds(3.0f);
-            startDelay = false;
-        }
-
-        light.intensity = 20.0f;
-        yield return new WaitForSeconds(0.5f);
-        light.intensity = 0.0f;
-        GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(2.5f);
-
-        fired = false;
-        Destroy(fire);
-    }
-
     // Update is called once per frame
     void Update()
     {
