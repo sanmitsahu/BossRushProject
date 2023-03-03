@@ -17,18 +17,17 @@ public class EnemyBehavior : MonoBehaviour
     private Renderer renderer;
     public float flashDuration = 0.15f;
     private GameObject player;
-    public GameObject fireBall;
     public GameObject resetPane;
-    public static float projectileTime = 2.0f;
+    //public static float projectileTime = 2.0f;
     public float resetPaneTMAX = 2.0f;
     private float resetPanetimer = 0;
-    public Light light;
+   //public Light light;
     [SerializeField]
     private int originalHealth;
     public static int health;
     public float knockBack = 5.0f;
     public bool wallTouch = false;
-    public static bool fired = false;
+    //public static bool fired = false;
     public bool startDelay = true;
     public float knockBackTimer = 0.5f;
     public float shockTimer = 5.0f;
@@ -74,7 +73,6 @@ public class EnemyBehavior : MonoBehaviour
         originalPos = transform.position;
         originalRot = transform.rotation;
         EventManager.OnRestart += OnDeath;
-        light.intensity = 0.0f;
         rb = gameObject.GetComponent<Rigidbody>();
         scene = SceneManager.GetActiveScene();
         resetPane.SetActive(false);
@@ -126,22 +124,6 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fired)
-        {
-            projectileTime -= Time.deltaTime;
-
-            if (projectileTime <= 1.0f && projectileTime > 0.0f)
-            {
-                light.intensity = 20.0f;
-            }
-            else if (projectileTime <= 0.0f)
-            {
-                light.intensity = 0.0f;
-                GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
-                fired = true;
-                projectileTime = 2.0f;
-            }
-        }
 
         if (wallTouch)
         {
@@ -250,10 +232,10 @@ public class EnemyBehavior : MonoBehaviour
         wallTouch = false;
         knockBackTimer = 0.5f;
         health = originalHealth;
-        projectileTime = 2.0f;
-        fired = false;
+        //projectileTime = 2.0f;
+        //fired = false;
         shockTimer = 5.0f;
-        light.intensity = 0.0f;
+        //light.intensity = 0.0f;
 
         if (SwitchOn.on)
         {
@@ -269,9 +251,9 @@ public class EnemyBehavior : MonoBehaviour
         st = State.NORMAL;
         startDelay = true;
         wallTouch = false;
-        fired = false;
-        projectileTime = 2.0f;
-        light.intensity = 0.0f;
+        //fired = false;
+        //projectileTime = 2.0f;
+        //light.intensity = 0.0f;
         SceneManager.LoadScene(scene.buildIndex);
     }
 
@@ -281,7 +263,7 @@ public class EnemyBehavior : MonoBehaviour
         st = State.NORMAL;
         startDelay = true;
         wallTouch = false;
-        fired = false;
+        //fired = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         StartCoroutine(Post_Level(_sessionID));
     }

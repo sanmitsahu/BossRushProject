@@ -33,8 +33,8 @@ public class BossSword : MonoBehaviour
         if (other.gameObject.tag == "StunBlock" || other.gameObject.tag == "Player" || other.gameObject.tag == "Block" || other.gameObject.tag == "PushBlock"
             || other.gameObject.tag == "ForwardBlock")
         {
-            EnemyBehavior.projectileTime = 2.0f;
-            EnemyBehavior.fired = false;
+            FireProjectile.projectileTime = 2.0f;
+            FireProjectile.fired = false;
             Destroy(gameObject);
         }
     }
