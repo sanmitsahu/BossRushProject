@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockPush : MonoBehaviour
 {
-    public float knockBack = 9.0f;
+    public float knockBack = 10.0f;
     public float knockBackTimer = 0.2f;
     public bool knocked = false;
     private Vector3 forward;

@@ -12,7 +12,7 @@ public class FireProjectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        light.intensity = 0.0f;
+
     }
 
     // Update is called once per frame

@@ -45,7 +45,7 @@ public class BlockGrab : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && grab && !blockChild)
+        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "StunBlock") && grab && !blockChild)
         {
             sword.transform.localPosition = grabPos;
             sword.transform.localRotation = grabRot;
@@ -57,7 +57,7 @@ public class BlockGrab : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && blockChild)
+        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "StunBlock") && blockChild)
         {
             blockChild.transform.parent = null;
             blockChild = null;
