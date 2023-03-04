@@ -6,30 +6,42 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/TitleCards/Tutorial1-TC.unity
+    guid: e72ea4174d7158046b99e11eaf1d543c
+  - enabled: 1
     path: Assets/Scenes/Tutorial1.unity
     guid: b80d3379d1d3e514294ddc61c5c09d65
+  - enabled: 1
+    path: Assets/Scenes/TitleCards/Tutorial2-TC.unity
+    guid: bfc1702e31b5de349ae5ed7029daf2d9
   - enabled: 1
     path: Assets/Scenes/Tutorial2.unity
     guid: 4aaef9ed7c6727748a13aeb553a21b78
   - enabled: 1
+    path: Assets/Scenes/TitleCards/Level1-TC.unity
+    guid: 67bc185cd43fc9349985e972852a1d23
+  - enabled: 1
     path: Assets/Scenes/Level1.unity
     guid: 9539e59c10b3dd04aa59547f4e77470e
+  - enabled: 1
+    path: Assets/Scenes/TitleCards/Level2-TC.unity
+    guid: 455ef6efd24512447ac67af8536b66fa
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: 9c4f585767345ae47876b249fe233bd2
   - enabled: 1
+    path: Assets/Scenes/TitleCards/Level3-TC.unity
+    guid: 6b0bfcbb36520ed4fab4f7a7cf674716
+  - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: a5d78ca06bd31884c9cdbb0907501299
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/TitleCards/Level4-TC.unity
+    guid: c64bb01dc4954724ca6eb5e8fd952a5d
   - enabled: 1
     path: Assets/Scenes/Level4.unity
     guid: 956bc957703b56249bbe0a9dc8a97ade
   - enabled: 1
-    path: Assets/Scenes/Level5.unity
+    path: Assets/Scenes/TitleCards/End-TC.unity
     guid: 0b168a2cee36ce1458df114b4d977f5b
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   m_configObjects: {}
