@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
         if (BlockGrab.grab)
         {
-            speed = 2.0f;
+            speed = 1.5f;
         }
         else
         {

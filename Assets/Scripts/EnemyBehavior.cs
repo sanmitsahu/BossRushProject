@@ -26,11 +26,11 @@ public class EnemyBehavior : MonoBehaviour
     private int originalHealth;
     public static int health;
     public float knockBack = 5.0f;
-    public bool wallTouch = false;
+    public static bool wallTouch = false;
     //public static bool fired = false;
     public bool startDelay = true;
     public float knockBackTimer = 0.5f;
-    public float shockTimer = 5.0f;
+    public static float shockTimer = 5.0f;
     private Vector3 originalPos;
     private Quaternion originalRot;
     private Rigidbody rb;
@@ -65,9 +65,11 @@ public class EnemyBehavior : MonoBehaviour
     }
     void Start()
     {
+        flashDuration = 0.15f;
         renderer = GetComponent<Renderer>();
         originalColor = renderer.material.color;
         targetColor = Color.Lerp(Color.white, Color.yellow, 0.25f);
+        renderer.material.color = originalColor;
 
         player = GameObject.FindWithTag("Player");
         originalPos = transform.position;

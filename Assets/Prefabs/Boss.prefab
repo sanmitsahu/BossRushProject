@@ -162,6 +162,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3064792079581895298, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 590b05fe8c506d84c9b8d38c96e2146b, type: 2}
+    - target: {fileID: 3064792079581895298, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
@@ -213,11 +217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bab824e8254964428544fadb1586d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  fireBall: {fileID: 6562075296119966366, guid: 69edd249286210249ac147347d27b4c1, type: 3}
-  light: {fileID: 4883105085197155875}
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
+  flashDuration: 0.15
+  resetPane: {fileID: 0}
+  resetPaneTMAX: 2
+  originalHealth: 0
   knockBack: 5
-  shocked: 0
-  fired: 0
   startDelay: 1
-  shockTimer: 5
+  knockBackTimer: 0.5
+  no_of_tries: 0

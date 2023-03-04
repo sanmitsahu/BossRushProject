@@ -26,11 +26,11 @@ public class BlockGrab : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !grab && !PlayerController.swung)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) && !grab && !PlayerController.swung)
         {
             grab = true;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && grab && !PlayerController.swung)
+        else if ((Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift)) && grab && !PlayerController.swung)
         {
             grab = false;
             sword.transform.localPosition = swordPos;
