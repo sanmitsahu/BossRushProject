@@ -22,7 +22,7 @@ EditorBuildSettings:
     guid: 26c1c9a4525d96f409a0739fa3b82e72
   - enabled: 1
     path: Assets/Scenes/Tutorial3.unity
-    guid: 65da8e0ecc578ec44aafeebe23dea32d
+    guid: fc5f9db6aec2b194b9bb0e1ed3f5a288
   - enabled: 1
     path: Assets/Scenes/TitleCards/Level1-TC.unity
     guid: 67bc185cd43fc9349985e972852a1d23
