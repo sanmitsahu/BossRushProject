@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelStart : MonoBehaviour
 {
@@ -11,8 +13,7 @@ public class LevelStart : MonoBehaviour
     void Start()
     {
         timeToDisappear = Time.time + timeToAppear;
-        gameStartScreen.SetActive(true);
-        //Time.timeScale = 0;
+        //gameStartScreen.SetActive(true);
     }
 
     // Update is called once per frame
@@ -20,9 +21,9 @@ public class LevelStart : MonoBehaviour
     {
         if (Time.time >= timeToDisappear)
         {
-            //UnityEngine.Debug.Log("here");
-            gameStartScreen.SetActive(false);
-            //Time.timeScale = 1;
+            //UnityEngine.Debug.Log("Level Start");
+            //gameStartScreen.SetActive(false);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }
