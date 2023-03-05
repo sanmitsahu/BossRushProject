@@ -103,7 +103,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_UseGravity
@@ -248,27 +248,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3064792079581895309, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
   m_PrefabInstance: {fileID: 4883105086487986871}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1859177193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7587459387387402298}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bab824e8254964428544fadb1586d76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireBall: {fileID: 6562075296119966366, guid: 69edd249286210249ac147347d27b4c1, type: 3}
-  light: {fileID: 371826176}
-  health: 3
-  knockBack: 5
-  wallTouch: 0
-  fired: 0
-  startDelay: 1
-  knockBackTimer: 0.5
-  shockTimer: 5
 --- !u!114 &-478364578920124419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,3 +260,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad71450eb498ce14c948f5918b175043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1859177193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7587459387387402298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bab824e8254964428544fadb1586d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetColor: {r: 0, g: 0, b: 0, a: 0}
+  flashDuration: 0.15
+  resetPane: {fileID: 0}
+  resetPaneTMAX: 2
+  originalHealth: 0
+  knockBack: 3500
+  startDelay: 1
+  knockBackTimer: 0.5
+  no_of_tries: 0

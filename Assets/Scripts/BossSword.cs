@@ -30,11 +30,17 @@ public class BossSword : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "StunBlock" || other.gameObject.tag == "Player" || other.gameObject.tag == "Block" || other.gameObject.tag == "PushBlock"
-            || other.gameObject.tag == "ForwardBlock")
+        if (other.gameObject.tag == "StunBlock" || other.gameObject.tag == "Player" || other.gameObject.tag == "Block")
         {
-            EnemyBehavior.projectileTime = 2.0f;
-            EnemyBehavior.fired = false;
+            FireProjectile.projectileTime = 2.0f;
+            FireProjectile.fired = false;
+            Destroy(gameObject);
+        }
+
+        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && other.gameObject.transform.parent.gameObject.tag != "Player")
+        {
+            FireProjectile.projectileTime = 2.0f;
+            FireProjectile.fired = false;
             Destroy(gameObject);
         }
     }

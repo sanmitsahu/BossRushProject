@@ -6,6 +6,7 @@ public class BlockGrab : MonoBehaviour
 {
     public GameObject player;
     private GameObject blockChild;
+    private Transform originalParent;
     public static bool grab = false;
     public GameObject sword;
     private Vector3 grabPos;
@@ -21,23 +22,24 @@ public class BlockGrab : MonoBehaviour
         swordRot = sword.transform.localRotation;
         grabPos = transform.localPosition;
         grabRot = transform.localRotation;
+        originalParent = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !grab && !PlayerController.swung)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) && !grab && !PlayerController.swung)
         {
             grab = true;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && grab && !PlayerController.swung)
+        else if ((Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift)) && grab && !PlayerController.swung)
         {
             grab = false;
             sword.transform.localPosition = swordPos;
             sword.transform.localRotation = swordRot;
             if (blockChild)
             {
-                blockChild.transform.parent = null;
+                blockChild.transform.parent = originalParent;
                 blockChild = null;
             }
         }
@@ -51,6 +53,7 @@ public class BlockGrab : MonoBehaviour
             sword.transform.localRotation = grabRot;
             //blockChild.transform.localPosition = new Vector3(grabStart.transform.localPosition.x, blockChild.transform.localPosition.y, grabStart.transform.localPosition.z);
             blockChild = other.gameObject;
+            originalParent = blockChild.transform.parent;
             blockChild.transform.parent = player.transform;
         }
     }
@@ -59,7 +62,7 @@ public class BlockGrab : MonoBehaviour
     {
         if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && blockChild)
         {
-            blockChild.transform.parent = null;
+            blockChild.transform.parent = originalParent;
             blockChild = null;
             //grab = false;
             sword.transform.localPosition = swordPos;

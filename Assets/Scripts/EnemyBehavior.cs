@@ -17,22 +17,21 @@ public class EnemyBehavior : MonoBehaviour
     private Renderer renderer;
     public float flashDuration = 0.15f;
     private GameObject player;
-    public GameObject fireBall;
     public GameObject resetPane;
     public GameObject pushIcon;
-    public static float projectileTime = 2.0f;
+    //public static float projectileTime = 2.0f;
     public float resetPaneTMAX = 2.0f;
     private float resetPanetimer = 0;
-    public Light light;
+    //public Light light;
     [SerializeField]
     private int originalHealth;
     public static int health;
     public float knockBack = 5.0f;
-    public bool wallTouch = false;
-    public static bool fired = false;
+    public static bool wallTouch = false;
+    //public static bool fired = false;
     public bool startDelay = true;
     public float knockBackTimer = 0.5f;
-    public float shockTimer = 5.0f;
+    public static float shockTimer = 5.0f;
     private Vector3 originalPos;
     private Quaternion originalRot;
     private Rigidbody rb;
@@ -67,16 +66,19 @@ public class EnemyBehavior : MonoBehaviour
     }
     void Start()
     {
+        //rb.isKinematic = false;
+        flashDuration = 0.15f;
         renderer = GetComponent<Renderer>();
         originalColor = renderer.material.color;
         targetColor = Color.Lerp(Color.white, Color.yellow, 0.25f);
+        renderer.material.color = originalColor;
 
         player = GameObject.FindWithTag("Player");
         originalPos = transform.position;
         originalRot = transform.rotation;
         EventManager.OnRestart += OnDeath;
-        light.intensity = 0.0f;
         rb = gameObject.GetComponent<Rigidbody>();
+        //rb.isKinematic = false;
         scene = SceneManager.GetActiveScene();
         resetPane.SetActive(false);
         pushIcon.SetActive(false) ;
@@ -125,43 +127,9 @@ public class EnemyBehavior : MonoBehaviour
         renderer.material.color = originalColor;
     }
 
-    IEnumerator Fireball()
-    {
-        if (startDelay)
-        {
-            yield return new WaitForSeconds(3.0f);
-            startDelay = false;
-        }
-
-        light.intensity = 20.0f;
-        yield return new WaitForSeconds(0.5f);
-        light.intensity = 0.0f;
-        GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(2.5f);
-
-        fired = false;
-        Destroy(fire);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (!fired)
-        {
-            projectileTime -= Time.deltaTime;
-
-            if (projectileTime <= 1.0f && projectileTime > 0.0f)
-            {
-                light.intensity = 20.0f;
-            }
-            else if (projectileTime <= 0.0f)
-            {
-                light.intensity = 0.0f;
-                GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
-                fired = true;
-                projectileTime = 2.0f;
-            }
-        }
 
         if (wallTouch)
         {
@@ -227,8 +195,9 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung && !PlayerController.swordHit)
         {
+            //rb.isKinematic = false;
             //UnityEngine.Debug.Log("Collission happens now");
-            ndirecthits+=1;
+            ndirecthits +=1;
             temphits = ndirecthits;
             //UnityEngine.Debug.Log("DIRECT HITTTT"+ndirecthits);
         }
@@ -272,10 +241,10 @@ public class EnemyBehavior : MonoBehaviour
         wallTouch = false;
         knockBackTimer = 0.5f;
         health = originalHealth;
-        projectileTime = 2.0f;
-        fired = false;
+        //projectileTime = 2.0f;
+        //fired = false;
         shockTimer = 5.0f;
-        light.intensity = 0.0f;
+        //light.intensity = 0.0f;
 
         if (SwitchOn.on)
         {
@@ -291,9 +260,9 @@ public class EnemyBehavior : MonoBehaviour
         st = State.NORMAL;
         startDelay = true;
         wallTouch = false;
-        fired = false;
-        projectileTime = 2.0f;
-        light.intensity = 0.0f;
+        //fired = false;
+        //projectileTime = 2.0f;
+        //light.intensity = 0.0f;
         SceneManager.LoadScene(scene.buildIndex);
     }
 
@@ -303,7 +272,7 @@ public class EnemyBehavior : MonoBehaviour
         st = State.NORMAL;
         startDelay = true;
         wallTouch = false;
-        fired = false;
+        //fired = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         StartCoroutine(Post_Level(_sessionID));
     }
@@ -360,11 +329,11 @@ public class EnemyBehavior : MonoBehaviour
         else if (other.gameObject.tag == "StunBlock")
         {
             nstun++;
-            rb.velocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
             pushIcon.SetActive(false);
 
             if (!wallTouch)
-            {
+            {                
                 knockBackTimer = 0.5f;
 
                 StartCoroutine(DamageFlash());
@@ -377,6 +346,7 @@ public class EnemyBehavior : MonoBehaviour
                 }
                 else
                 {
+                    rb.velocity = Vector3.zero;
                     st = State.NORMAL;
                     wallTouch = true;
                 }
@@ -389,14 +359,14 @@ public class EnemyBehavior : MonoBehaviour
         else if (other.gameObject.tag == "Block")
         {
             nblock++;
-            Restart();
+            Res();
         }
         else if (other.gameObject.tag == "Switch")
         {
             fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
             Debug.Log(fblock.Length+"  "+fblock[1].transform.position.x+"   "+fblock[1].transform.position.z);
             StartCoroutine(Post_L4(_sessionID,fblock[1].transform.position));
-            Restart();
+            Res();
         }
     }
 
