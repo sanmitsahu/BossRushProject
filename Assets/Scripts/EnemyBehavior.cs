@@ -18,10 +18,11 @@ public class EnemyBehavior : MonoBehaviour
     public float flashDuration = 0.15f;
     private GameObject player;
     public GameObject resetPane;
+    public GameObject pushIcon;
     //public static float projectileTime = 2.0f;
     public float resetPaneTMAX = 2.0f;
     private float resetPanetimer = 0;
-   //public Light light;
+    //public Light light;
     [SerializeField]
     private int originalHealth;
     public static int health;
@@ -80,6 +81,7 @@ public class EnemyBehavior : MonoBehaviour
         //rb.isKinematic = false;
         scene = SceneManager.GetActiveScene();
         resetPane.SetActive(false);
+        pushIcon.SetActive(false) ;
         
         _sessionID = DateTime.Now.Ticks.ToString();
     }
@@ -182,6 +184,7 @@ public class EnemyBehavior : MonoBehaviour
         if (other.gameObject.tag == "Sword" && PlayerController.swung && !PlayerController.swordHit)
         {
             PlayerController.swordHit = true;
+            pushIcon.SetActive(false);
             rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             st = State.HIT;
@@ -202,6 +205,7 @@ public class EnemyBehavior : MonoBehaviour
     
     private void Restart()
     {
+        pushIcon.SetActive(false);
         if (nforward + npushable + nstun != 0)
         {
             if (scene.buildIndex == 7)
@@ -308,16 +312,25 @@ public class EnemyBehavior : MonoBehaviour
 
             rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
-            
+            pushIcon.SetActive(true);
+            pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
+            Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
+
+
+
+
             if (health <= 0)
             {
                 beatBoss();
             }
+           
+            
         }
         else if (other.gameObject.tag == "StunBlock")
         {
             nstun++;
             //rb.velocity = Vector3.zero;
+            pushIcon.SetActive(false);
 
             if (!wallTouch)
             {                
