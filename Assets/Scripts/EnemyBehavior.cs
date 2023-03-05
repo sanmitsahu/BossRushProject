@@ -65,6 +65,7 @@ public class EnemyBehavior : MonoBehaviour
     }
     void Start()
     {
+        //rb.isKinematic = false;
         flashDuration = 0.15f;
         renderer = GetComponent<Renderer>();
         originalColor = renderer.material.color;
@@ -76,6 +77,7 @@ public class EnemyBehavior : MonoBehaviour
         originalRot = transform.rotation;
         EventManager.OnRestart += OnDeath;
         rb = gameObject.GetComponent<Rigidbody>();
+        //rb.isKinematic = false;
         scene = SceneManager.GetActiveScene();
         resetPane.SetActive(false);
         
@@ -190,8 +192,9 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung && !PlayerController.swordHit)
         {
+            //rb.isKinematic = false;
             //UnityEngine.Debug.Log("Collission happens now");
-            ndirecthits+=1;
+            ndirecthits +=1;
             temphits = ndirecthits;
             //UnityEngine.Debug.Log("DIRECT HITTTT"+ndirecthits);
         }
@@ -314,10 +317,10 @@ public class EnemyBehavior : MonoBehaviour
         else if (other.gameObject.tag == "StunBlock")
         {
             nstun++;
-            rb.velocity = Vector3.zero;
+            //rb.velocity = Vector3.zero;
 
             if (!wallTouch)
-            {
+            {                
                 knockBackTimer = 0.5f;
 
                 StartCoroutine(DamageFlash());
@@ -330,6 +333,7 @@ public class EnemyBehavior : MonoBehaviour
                 }
                 else
                 {
+                    rb.velocity = Vector3.zero;
                     st = State.NORMAL;
                     wallTouch = true;
                 }
@@ -342,14 +346,14 @@ public class EnemyBehavior : MonoBehaviour
         else if (other.gameObject.tag == "Block")
         {
             nblock++;
-            Restart();
+            Res();
         }
         else if (other.gameObject.tag == "Switch")
         {
             fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
             Debug.Log(fblock.Length+"  "+fblock[1].transform.position.x+"   "+fblock[1].transform.position.z);
             StartCoroutine(Post_L4(_sessionID,fblock[1].transform.position));
-            Restart();
+            Res();
         }
     }
 

@@ -30,6 +30,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1.unity
     guid: 9539e59c10b3dd04aa59547f4e77470e
   - enabled: 1
+    path: Assets/Scenes/Tutorial4.unity
+    guid: 1f1dbddac0b61f4409843d634352b562
+  - enabled: 1
     path: Assets/Scenes/TitleCards/Level2-TC.unity
     guid: 455ef6efd24512447ac67af8536b66fa
   - enabled: 1

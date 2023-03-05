@@ -103,10 +103,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_Mass
-      value: 1
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
+      propertyPath: m_AngularDrag
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 456474656833670880, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
@@ -164,7 +168,7 @@ PrefabInstance:
     - target: {fileID: 3064792079581895298, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 13400000, guid: 590b05fe8c506d84c9b8d38c96e2146b, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3064792079581895298, guid: ec97337d6c107664fb7270f3a1a00f88, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -222,7 +226,7 @@ MonoBehaviour:
   resetPane: {fileID: 0}
   resetPaneTMAX: 2
   originalHealth: 0
-  knockBack: 5
+  knockBack: 3500
   startDelay: 1
   knockBackTimer: 0.5
   no_of_tries: 0
