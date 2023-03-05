@@ -8120,7 +8120,9 @@ PrefabInstance:
       objectReference: {fileID: 1507545573}
     - target: {fileID: 1554982805173816019, guid: 8250f5502eb154ce7ac033418dc65f09, type: 3}
       propertyPath: spotText
-      value: Press [Space] to punch the boss into the white blocks!
+      value: Press [Space] to punch the boss into the white blocks! Beware that if
+        the boss doesn't make contact with a block after getting punched, he will
+        reset!
       objectReference: {fileID: 0}
     - target: {fileID: 6202333906965242330, guid: 8250f5502eb154ce7ac033418dc65f09, type: 3}
       propertyPath: m_Name
