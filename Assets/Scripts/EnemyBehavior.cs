@@ -174,6 +174,7 @@ public class EnemyBehavior : MonoBehaviour
         else
         {
             CancelInvoke("StunTime");
+            stunTextMesh.text = "";
         }
 
         if (st == State.HIT)
@@ -277,11 +278,11 @@ public class EnemyBehavior : MonoBehaviour
         st = State.NORMAL;
         startDelay = true;
         wallTouch = false;
+        shockTimer = 6.0f;
         knockBackTimer = 0.5f;
         health = originalHealth;
         //projectileTime = 2.0f;
         //fired = false;
-        shockTimer = 6.0f;
         //light.intensity = 0.0f;
 
         if (SwitchOn.on)
@@ -298,6 +299,7 @@ public class EnemyBehavior : MonoBehaviour
         st = State.NORMAL;
         startDelay = true;
         wallTouch = false;
+        shockTimer = 6.0f;
         //fired = false;
         //projectileTime = 2.0f;
         //light.intensity = 0.0f;
@@ -413,6 +415,7 @@ public class EnemyBehavior : MonoBehaviour
         if (other.gameObject.tag == "StunBlock")
         {
             wallTouch = false;
+            shockTimer = 6.0f;
         }
     }
 
