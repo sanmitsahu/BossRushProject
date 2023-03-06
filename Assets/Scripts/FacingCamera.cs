@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FacingCamera : MonoBehaviour
 {
-    // Reference to the Slider component
-    private Slider mySlider;
+    //private Slider mySlider;
+    private TextMeshPro textMesh;
+
     // Reference to the main camera
     private Camera mainCamera;
 
     private void Start()
     {
-        // Get the Text Mesh Pro component attached to this GameObject
-        mySlider = GetComponent<Slider>();
+        //mySlider = GetComponent<Slider>();
+        textMesh = GetComponent<TextMeshPro>();
+
         // Get reference to the main camera in the scene
         mainCamera = Camera.main;
     }

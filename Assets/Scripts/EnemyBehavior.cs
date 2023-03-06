@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 using Debug = UnityEngine.Debug;
 using UnityEngine.Networking;
@@ -13,14 +14,15 @@ using System.Runtime.CompilerServices;
 public class EnemyBehavior : MonoBehaviour
 {
     private Color originalColor;
-    public Color targetColor;
+    public Color damageColor;
+    public Color stunColor;
     private Renderer renderer;
-    public float flashDuration = 0.15f;
+    private float flashDuration;
     private GameObject player;
     public GameObject resetPane;
     public GameObject pushIcon;
     //public static float projectileTime = 2.0f;
-    public float resetPaneTMAX = 2.0f;
+    private float resetPaneTMAX = 2.0f;
     private float resetPanetimer = 0;
     //public Light light;
     [SerializeField]
@@ -31,13 +33,16 @@ public class EnemyBehavior : MonoBehaviour
     //public static bool fired = false;
     public bool startDelay = true;
     public float knockBackTimer = 0.5f;
-    public static float shockTimer = 5.0f;
+    public static float shockTimer = 6.0f;
+    private float shockDecrement = 1.0f;
+    public GameObject stunCanvas;
+    private TextMeshProUGUI stunTextMesh;
     private Vector3 originalPos;
     private Quaternion originalRot;
     private Rigidbody rb;
     private bool hitSword;
     Scene scene;
-    
+
     public int no_of_tries = 0;
     public float[,] locations = new float[100, 100];
     private string URL_blocks = "https://docs.google.com/forms/u/1/d/e/1FAIpQLSfkVBkGzZ9kS2AIiRUbRBfmfkyHXdaP1gnOObQaXEaadvs1GQ/formResponse";
@@ -48,9 +53,9 @@ public class EnemyBehavior : MonoBehaviour
     private Vector3 temploc;
     private int level = 0;
     private int temphits = 0;
-    private int nforward = 0, npushable = 0, nstun = 0, nblock = 0, healthred = 0, ndirecthits=0;
+    private int nforward = 0, npushable = 0, nstun = 0, nblock = 0, healthred = 0, ndirecthits = 0;
     private GameObject[] fblock;
-    
+
     public enum State
     {
         NORMAL,
@@ -58,20 +63,23 @@ public class EnemyBehavior : MonoBehaviour
         COMBO,
     }
     public static State st = State.NORMAL;
-    // Start is called before the first frame update
+
     private void Awake()
     {
-        //UnityEngine.Debug.Log("sethealth");
         health = originalHealth;
+        stunTextMesh = stunCanvas.GetComponentInChildren<TextMeshProUGUI>();
     }
+
     void Start()
     {
         //rb.isKinematic = false;
-        flashDuration = 0.15f;
+        flashDuration = 0.5f;
         renderer = GetComponent<Renderer>();
         originalColor = renderer.material.color;
-        targetColor = Color.Lerp(Color.white, Color.yellow, 0.25f);
+        damageColor = Color.Lerp(Color.white, Color.yellow, 0.25f);
+        stunColor = Color.Lerp(Color.red, Color.yellow, 0.75f);
         renderer.material.color = originalColor;
+        stunTextMesh.text = "";
 
         player = GameObject.FindWithTag("Player");
         originalPos = transform.position;
@@ -81,8 +89,8 @@ public class EnemyBehavior : MonoBehaviour
         //rb.isKinematic = false;
         scene = SceneManager.GetActiveScene();
         resetPane.SetActive(false);
-        pushIcon.SetActive(false) ;
-        
+        pushIcon.SetActive(false);
+
         _sessionID = DateTime.Now.Ticks.ToString();
     }
 
@@ -99,7 +107,7 @@ public class EnemyBehavior : MonoBehaviour
         locations[no_of_tries, 2] = temploc.z;
         //UnityEngine.Debug.Log("no_of_tries: "+no_of_tries+" "+ Math.Abs(level));
         //UnityEngine.Debug.Log(locations[no_of_tries, 0]+" "+locations[no_of_tries, 1]+" "+locations[no_of_tries, 2]+" "+(no_of_tries + 1));
-        if(no_of_tries>0)
+        if (no_of_tries > 0)
         {
             /*if (scene.buildIndex == 7)
                 level = 4;
@@ -111,9 +119,9 @@ public class EnemyBehavior : MonoBehaviour
             {
                 level = 1;
             }*/
-            
-            UnityEngine.Debug.Log("no_of_tries: "+no_of_tries+" "+ Math.Abs(level));
-            StartCoroutine(Post_tries(_sessionID)); 
+
+            UnityEngine.Debug.Log("no_of_tries: " + no_of_tries + " " + Math.Abs(level));
+            StartCoroutine(Post_tries(_sessionID));
         }
         no_of_tries = 0;
         //Debug.Log("Restart cus no_of_tries");
@@ -122,23 +130,50 @@ public class EnemyBehavior : MonoBehaviour
 
     IEnumerator DamageFlash()
     {
-        renderer.material.color = targetColor;
+        renderer.material.color = damageColor;
         yield return new WaitForSeconds(flashDuration);
         renderer.material.color = originalColor;
+    }
+
+    IEnumerator StunShockFlash()
+    {
+        renderer.material.color = stunColor;
+        yield return new WaitForSeconds(flashDuration);
+        renderer.material.color = originalColor;
+    }
+
+    private void StunTime()
+    {
+        shockTimer -= shockDecrement;
+        //Debug.Log(shockTimer.ToString("0"));
+
+        if (shockTimer <= 0.0f)
+        {
+            CancelInvoke("StunTime");
+            stunTextMesh.text = "";
+
+            Restart();
+        }
+        else
+        {
+            StartCoroutine(StunShockFlash());
+            stunTextMesh.text = shockTimer.ToString("0");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if (wallTouch)
+        if (wallTouch && shockTimer > 0.0f)
         {
-            shockTimer -= Time.deltaTime;
-
-            if (shockTimer <= 0.0f)
+            if (!IsInvoking("StunTime"))
             {
-                Restart();
+                InvokeRepeating("StunTime", 1.0f, 1.0f);
             }
+        }
+        else
+        {
+            CancelInvoke("StunTime");
         }
 
         if (st == State.HIT)
@@ -190,19 +225,19 @@ public class EnemyBehavior : MonoBehaviour
             st = State.HIT;
         }
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Sword" && PlayerController.swung && !PlayerController.swordHit)
         {
             //rb.isKinematic = false;
             //UnityEngine.Debug.Log("Collission happens now");
-            ndirecthits +=1;
+            ndirecthits += 1;
             temphits = ndirecthits;
             //UnityEngine.Debug.Log("DIRECT HITTTT"+ndirecthits);
         }
     }
-    
+
     private void Restart()
     {
         pushIcon.SetActive(false);
@@ -222,7 +257,7 @@ public class EnemyBehavior : MonoBehaviour
             //temphits = ndirecthits;
             StartCoroutine(Post_blocks(_sessionID));
         }
-        
+
         nforward = 0;
         npushable = 0;
         nstun = 0;
@@ -230,8 +265,11 @@ public class EnemyBehavior : MonoBehaviour
         healthred = 0;
         ndirecthits = 0;
 
-        if (no_of_tries>0) { resetPane.SetActive(true);
-            resetPanetimer = resetPaneTMAX; }
+        if (no_of_tries > 0)
+        {
+            resetPane.SetActive(true);
+            resetPanetimer = resetPaneTMAX;
+        }
 
         rb.velocity = Vector3.zero;
         transform.position = originalPos;
@@ -243,14 +281,14 @@ public class EnemyBehavior : MonoBehaviour
         health = originalHealth;
         //projectileTime = 2.0f;
         //fired = false;
-        shockTimer = 5.0f;
+        shockTimer = 6.0f;
         //light.intensity = 0.0f;
 
         if (SwitchOn.on)
         {
             ChaseBlock.chasing = true;
         }
-        
+
         no_of_tries += 1;
     }
 
@@ -292,7 +330,7 @@ public class EnemyBehavior : MonoBehaviour
                 beatBoss();
             }
             else
-            {                
+            {
                 Restart();
             }
         }
@@ -311,7 +349,7 @@ public class EnemyBehavior : MonoBehaviour
             healthred++;
 
             rb.velocity = Vector3.zero;
-            rb.AddForce(other.gameObject.transform.forward * knockBack/2.0f, ForceMode.Impulse);
+            rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
             pushIcon.SetActive(true);
             pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
             Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
@@ -323,8 +361,8 @@ public class EnemyBehavior : MonoBehaviour
             {
                 beatBoss();
             }
-           
-            
+
+
         }
         else if (other.gameObject.tag == "StunBlock")
         {
@@ -333,7 +371,7 @@ public class EnemyBehavior : MonoBehaviour
             pushIcon.SetActive(false);
 
             if (!wallTouch)
-            {                
+            {
                 knockBackTimer = 0.5f;
 
                 StartCoroutine(DamageFlash());
@@ -364,8 +402,8 @@ public class EnemyBehavior : MonoBehaviour
         else if (other.gameObject.tag == "Switch")
         {
             fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
-            Debug.Log(fblock.Length+"  "+fblock[1].transform.position.x+"   "+fblock[1].transform.position.z);
-            StartCoroutine(Post_L4(_sessionID,fblock[1].transform.position));
+            Debug.Log(fblock.Length + "  " + fblock[1].transform.position.x + "   " + fblock[1].transform.position.z);
+            StartCoroutine(Post_L4(_sessionID, fblock[1].transform.position));
             Res();
         }
     }
@@ -377,12 +415,12 @@ public class EnemyBehavior : MonoBehaviour
             wallTouch = false;
         }
     }
-    
+
     public IEnumerator Post_tries(string sessionID)
     {
         UnityEngine.Debug.Log("POSTIE");
         WWWForm form = new WWWForm();
-        
+
         form.AddField("entry.728675539", sessionID);
         form.AddField("entry.1829062957", no_of_tries);
         //for(int t=0;t<no_of_tries+1;t++)
@@ -394,7 +432,7 @@ public class EnemyBehavior : MonoBehaviour
         form.AddField("entry.596243283", (scene.buildIndex).ToString());
         using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
         {
-           
+
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
@@ -406,15 +444,15 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
     }
-    
+
     public IEnumerator Post_blocks(string sessionID)
     {
         //UnityEngine.Debug.Log("POSTBlocks");
         WWWForm form = new WWWForm();
-        
+
         form.AddField("entry.1580530392", sessionID);
         form.AddField("entry.1986196806", nforward);
-        
+
         form.AddField("entry.542647140", npushable);
         form.AddField("entry.136227332", nstun);
         form.AddField("entry.511319478", nblock);
@@ -426,7 +464,7 @@ public class EnemyBehavior : MonoBehaviour
         //UnityEngine.Debug.Log(ndirecthits);
         using (UnityWebRequest www = UnityWebRequest.Post(URL_blocks, form))
         {
-           
+
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
@@ -438,16 +476,16 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
     }
-    
+
     public IEnumerator Post_L4(string sessionID, Vector3 pos_L4)
     {
         WWWForm form = new WWWForm();
-        
+
         form.AddField("entry.603090486", sessionID);
         form.AddField("entry.1645207548", (pos_L4.x).ToString());
         form.AddField("entry.974652086", (pos_L4.y).ToString());
         form.AddField("entry.1417563745", (pos_L4.z).ToString());
- 
+
         using (UnityWebRequest www = UnityWebRequest.Post(URL_L4, form))
         {
             yield return www.SendWebRequest();
@@ -465,12 +503,12 @@ public class EnemyBehavior : MonoBehaviour
     public IEnumerator Post_Level(string sessionID)
     {
         WWWForm form = new WWWForm();
-        
+
         form.AddField("entry.1950975398", sessionID);
         form.AddField("entry.1281945691", scene.buildIndex);
         using (UnityWebRequest www = UnityWebRequest.Post(URL_Level, form))
         {
-           
+
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
