@@ -21,6 +21,9 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject player;
     public GameObject resetPane;
     public GameObject pushIcon;
+    public GameObject completePane;
+    public float completeDelayTime = 4.0f;
+    private bool isBossBeat = false;
     //public static float projectileTime = 2.0f;
     private float resetPaneTMAX = 2.0f;
     private float resetPanetimer = 0;
@@ -42,7 +45,6 @@ public class EnemyBehavior : MonoBehaviour
     private Rigidbody rb;
     private bool hitSword;
     Scene scene;
-
     public int no_of_tries = 0;
     public float[,] locations = new float[100, 100];
     private string URL_blocks = "https://docs.google.com/forms/u/1/d/e/1FAIpQLSfkVBkGzZ9kS2AIiRUbRBfmfkyHXdaP1gnOObQaXEaadvs1GQ/formResponse";
@@ -62,6 +64,7 @@ public class EnemyBehavior : MonoBehaviour
         HIT,
         COMBO,
     }
+
     public static State st = State.NORMAL;
 
     private void Awake()
@@ -80,7 +83,7 @@ public class EnemyBehavior : MonoBehaviour
         stunColor = Color.Lerp(Color.red, Color.yellow, 0.75f);
         renderer.material.color = originalColor;
         stunTextMesh.text = "";
-
+        completePane.SetActive(false);
         player = GameObject.FindWithTag("Player");
         originalPos = transform.position;
         originalRot = transform.rotation;
@@ -90,7 +93,7 @@ public class EnemyBehavior : MonoBehaviour
         scene = SceneManager.GetActiveScene();
         resetPane.SetActive(false);
         pushIcon.SetActive(false);
-
+        isBossBeat = false;
         _sessionID = DateTime.Now.Ticks.ToString();
     }
 
@@ -123,9 +126,20 @@ public class EnemyBehavior : MonoBehaviour
             UnityEngine.Debug.Log("no_of_tries: " + no_of_tries + " " + Math.Abs(level));
             StartCoroutine(Post_tries(_sessionID));
         }
+
         no_of_tries = 0;
-        //Debug.Log("Restart cus no_of_tries");
-        Restart();
+
+        if (!isBossBeat)
+        {
+            Restart();
+        }
+    }
+
+    IEnumerator OnComplete()
+    {
+        completePane.SetActive(true);
+        yield return new WaitForSeconds(completeDelayTime);
+        beatBoss();
     }
 
     IEnumerator DamageFlash()
@@ -152,7 +166,10 @@ public class EnemyBehavior : MonoBehaviour
             CancelInvoke("StunTime");
             stunTextMesh.text = "";
 
-            Restart();
+            if (!isBossBeat)
+            {
+                Restart();
+            }
         }
         else
         {
@@ -193,7 +210,10 @@ public class EnemyBehavior : MonoBehaviour
                     ChaseBlock.chasing = true;
                 }
 
-                Restart();
+                if (!isBossBeat)
+                {
+                    Restart();
+                }
             }
         }
         else if (st == State.COMBO)
@@ -242,6 +262,7 @@ public class EnemyBehavior : MonoBehaviour
     private void Restart()
     {
         pushIcon.SetActive(false);
+
         if (nforward + npushable + nstun != 0)
         {
             if (scene.buildIndex == 7)
@@ -266,7 +287,7 @@ public class EnemyBehavior : MonoBehaviour
         healthred = 0;
         ndirecthits = 0;
 
-        if (no_of_tries > 0)
+        if (no_of_tries >= 0 && !isBossBeat)
         {
             resetPane.SetActive(true);
             resetPanetimer = resetPaneTMAX;
@@ -281,6 +302,8 @@ public class EnemyBehavior : MonoBehaviour
         shockTimer = 6.0f;
         knockBackTimer = 0.5f;
         health = originalHealth;
+        completePane.SetActive(false);
+        isBossBeat = false;
         //projectileTime = 2.0f;
         //fired = false;
         //light.intensity = 0.0f;
@@ -313,6 +336,7 @@ public class EnemyBehavior : MonoBehaviour
         startDelay = true;
         wallTouch = false;
         //fired = false;
+        completePane.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         StartCoroutine(Post_Level(_sessionID));
     }
@@ -329,11 +353,15 @@ public class EnemyBehavior : MonoBehaviour
 
             if (health <= 0)
             {
-                beatBoss();
+                isBossBeat = true;
+                StartCoroutine(OnComplete());
             }
             else
             {
-                Restart();
+                if (!isBossBeat)
+                {
+                    Restart();
+                }
             }
         }
         else if (other.gameObject.tag == "ForwardBlock")
@@ -356,15 +384,11 @@ public class EnemyBehavior : MonoBehaviour
             pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
             Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
 
-
-
-
             if (health <= 0)
             {
-                beatBoss();
+                isBossBeat = true;
+                StartCoroutine(OnComplete());
             }
-
-
         }
         else if (other.gameObject.tag == "StunBlock")
         {
@@ -382,7 +406,8 @@ public class EnemyBehavior : MonoBehaviour
 
                 if (health <= 0)
                 {
-                    beatBoss();
+                    isBossBeat = true;
+                    StartCoroutine(OnComplete());
                 }
                 else
                 {
@@ -393,7 +418,10 @@ public class EnemyBehavior : MonoBehaviour
             }
             else
             {
-                Restart();
+                if (!isBossBeat)
+                {
+                    Restart();
+                }
             }
         }
         else if (other.gameObject.tag == "Block")
