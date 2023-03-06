@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Projectile" && !hit)
+        if (other.gameObject.tag == "Projectile" && !hit && !EnemyBehavior.completed)
         {
             health--;
             hit = true;

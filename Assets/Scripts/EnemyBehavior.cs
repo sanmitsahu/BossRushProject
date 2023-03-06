@@ -57,6 +57,9 @@ public class EnemyBehavior : MonoBehaviour
     private int temphits = 0;
     private int nforward = 0, npushable = 0, nstun = 0, nblock = 0, healthred = 0, ndirecthits = 0;
     private GameObject[] fblock;
+    public static bool completed = false;
+
+
 
     public enum State
     {
@@ -95,9 +98,11 @@ public class EnemyBehavior : MonoBehaviour
         pushIcon.SetActive(false);
         isBossBeat = false;
         _sessionID = DateTime.Now.Ticks.ToString();
-    }
+        completed = false;
 
-    void OnDisable()
+}
+
+void OnDisable()
     {
         EventManager.OnRestart -= OnDeath;
     }
@@ -138,6 +143,9 @@ public class EnemyBehavior : MonoBehaviour
     IEnumerator OnComplete()
     {
         completePane.SetActive(true);
+        rb.velocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezePosition;
+        completed = true;
         yield return new WaitForSeconds(completeDelayTime);
         beatBoss();
     }
