@@ -183,6 +183,7 @@ void OnDisable()
         UnityEngine.Debug.Log("Boss Beat"+ scene.buildIndex);
         completePane.SetActive(true);
         rb.velocity = Vector3.zero;
+        transform.position = new Vector3(1000.0f, 0.0f, 0.0f);
         rb.constraints = RigidbodyConstraints.FreezePosition;
         completed = true;
         PlayerPrefs.DeleteKey("pushed");
