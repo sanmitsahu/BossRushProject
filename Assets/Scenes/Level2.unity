@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5197,9 +5197,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2817374707275674450, guid: 2629b8f23e8c442799d893ef94398400, type: 3}
       propertyPath: m_text
-      value: "Lightning white blocks stun the boss in place! \n\nBeware that they
-        cannot be grabbed or pushed. Push the boss into another block before the
-        stun wears off!"
+      value: 'Electric white blocks stun the boss in place! Push the boss into another
+        block before it wears off!
+
+
+        Beware that they cannot be grabbed or
+        pushed. '
       objectReference: {fileID: 0}
     - target: {fileID: 2817374707275674450, guid: 2629b8f23e8c442799d893ef94398400, type: 3}
       propertyPath: m_margin.w
@@ -5251,7 +5254,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2817374707275674451, guid: 2629b8f23e8c442799d893ef94398400, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.121
+      value: 0.062
       objectReference: {fileID: 0}
     - target: {fileID: 2817374707275674451, guid: 2629b8f23e8c442799d893ef94398400, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5320,7 +5323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.54
+      value: -1.01
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_LocalRotation.w

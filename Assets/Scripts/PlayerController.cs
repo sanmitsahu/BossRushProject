@@ -9,7 +9,7 @@ using System;
 public class PlayerController : MonoBehaviour
 {
     private float swordTimer = 0.2f;
-    private float damageTimer = 0.1f;
+    private float damageTimer = 0.2f;
     private bool hit = false;
     public static bool swordHit = false;
     public GameObject sword;
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
             damageTimer -= Time.deltaTime;
             if (damageTimer <= 0.0f)
             {
-                damageTimer = 0.1f;
+                damageTimer = 0.2f;
                 hit = false;
             }
         }

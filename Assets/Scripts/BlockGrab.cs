@@ -13,7 +13,7 @@ public class BlockGrab : MonoBehaviour
     private Quaternion grabRot;
     private Vector3 swordPos;
     private Quaternion swordRot;
-    private bool isGrab = false;
+    public static bool isGrab = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +34,7 @@ public class BlockGrab : MonoBehaviour
         }
         else if ((Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift)) && grab && !PlayerController.swung)
         {
+            isGrab = false;
             grab = false;
             sword.transform.localPosition = swordPos;
             sword.transform.localRotation = swordRot;
@@ -49,6 +50,7 @@ public class BlockGrab : MonoBehaviour
     {
         if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && grab && !blockChild)
         {
+            isGrab = true;
             PlayerPrefs.SetFloat("pulled",PlayerPrefs.GetFloat("pulled", 0)+1);
             sword.transform.localPosition = grabPos;
             sword.transform.localRotation = grabRot;
