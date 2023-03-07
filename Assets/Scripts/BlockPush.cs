@@ -53,6 +53,7 @@ public class BlockPush : MonoBehaviour
         if (other.gameObject.tag == "Sword" && PlayerController.swung && !knocked && !PlayerController.swordHit)
         {
             //UnityEngine.Debug.Log(PlayerController.swung);
+            PlayerPrefs.SetFloat("pushed",PlayerPrefs.GetFloat("pushed", 0)+1);
             PlayerController.swordHit = true;
             rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             knocked = true;

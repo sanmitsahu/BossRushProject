@@ -26,9 +26,9 @@ public class IconHealth : MonoBehaviour
         
         for (int i = 0; i < maxHealth; i++)
         {
-            UnityEngine.Debug.Log(i);
+            //UnityEngine.Debug.Log(i);
             GameObject h = Instantiate(IconPrefab, transform);
-            UnityEngine.Debug.Log(h);
+            //UnityEngine.Debug.Log(h);
             Icons.Add(h.GetComponent<Image>()); 
         }
     }
