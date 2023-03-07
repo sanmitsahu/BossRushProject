@@ -49,6 +49,7 @@ public class BlockGrab : MonoBehaviour
     {
         if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && grab && !blockChild)
         {
+            PlayerPrefs.SetFloat("pulled",PlayerPrefs.GetFloat("pulled", 0)+1);
             sword.transform.localPosition = grabPos;
             sword.transform.localRotation = grabRot;
             //blockChild.transform.localPosition = new Vector3(grabStart.transform.localPosition.x, blockChild.transform.localPosition.y, grabStart.transform.localPosition.z);

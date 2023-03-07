@@ -58,7 +58,7 @@ public class EnemyBehavior : MonoBehaviour
     private int nforward = 0, npushable = 0, nstun = 0, nblock = 0, healthred = 0, ndirecthits = 0;
     private GameObject[] fblock;
     public static bool completed = false;
-
+    private String blocks_pref = "";
 
 
     public enum State
@@ -99,6 +99,8 @@ public class EnemyBehavior : MonoBehaviour
         isBossBeat = false;
         _sessionID = DateTime.Now.Ticks.ToString();
         completed = false;
+        PlayerPrefs.DeleteKey("pushed");
+        PlayerPrefs.DeleteKey("pulled");
 
 }
 
@@ -113,27 +115,28 @@ void OnDisable()
         locations[no_of_tries, 0] = temploc.x;
         locations[no_of_tries, 1] = temploc.y;
         locations[no_of_tries, 2] = temploc.z;
+        if (PlayerPrefs.HasKey(_sessionID+"blocks"))
+        {
+            if (scene.buildIndex == 13 || scene.buildIndex == 15)
+            {
+                StartCoroutine(Post_blocks(_sessionID));
+                Debug.Log("Sending stuff on death");
+            }
+            
+        }
+        PlayerPrefs.DeleteKey(_sessionID+"blocks");
         //UnityEngine.Debug.Log("no_of_tries: "+no_of_tries+" "+ Math.Abs(level));
         //UnityEngine.Debug.Log(locations[no_of_tries, 0]+" "+locations[no_of_tries, 1]+" "+locations[no_of_tries, 2]+" "+(no_of_tries + 1));
-        if (no_of_tries > 0)
+        if (no_of_tries >= 0)
         {
-            /*if (scene.buildIndex == 7)
-                level = 4;
-            else if (scene.buildIndex == 5)
-                level = 3;
-            else if (scene.buildIndex == 3)
-                level = 2;
-            else
-            {
-                level = 1;
-            }*/
-
+            if (scene.buildIndex == 13 || scene.buildIndex == 15)
             UnityEngine.Debug.Log("no_of_tries: " + no_of_tries + " " + Math.Abs(level));
             StartCoroutine(Post_tries(_sessionID));
         }
 
         no_of_tries = 0;
-
+        PlayerPrefs.DeleteKey("pushed");
+        PlayerPrefs.DeleteKey("pulled");
         if (!isBossBeat)
         {
             Restart();
@@ -142,11 +145,51 @@ void OnDisable()
 
     IEnumerator OnComplete()
     {
+        if (nforward + npushable + nstun != 0)
+        {
+            
+            UnityEngine.Debug.Log("OUTTTF"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
+            blocks_pref = PlayerPrefs.GetString(_sessionID+"blocks");
+            print("blockprefs"+blocks_pref);
+            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+scene.buildIndex;
+            PlayerPrefs.DeleteKey(_sessionID+"blocks");
+            PlayerPrefs.SetString(_sessionID+"blocks", blocks_pref);
+        }
+        UnityEngine.Debug.Log("OUTTTno_of_tries: " + no_of_tries + " " + Math.Abs(level));
+        if (no_of_tries >= 0)
+        {
+            if (scene.buildIndex != 13 || scene.buildIndex != 15)
+                UnityEngine.Debug.Log("no_of_tries: " + no_of_tries + " " + Math.Abs(level));
+            StartCoroutine(Post_tries(_sessionID));
+        }
+        if (PlayerPrefs.HasKey(_sessionID+"blocks"))
+        {
+            //StartCoroutine(Post_blocks(_sessionID));
+            if (scene.buildIndex != 13 && scene.buildIndex != 15)
+            {
+                Debug.Log("SEnding block data");
+                StartCoroutine(Post_blocks(_sessionID));
+            }
+        }
+        
+        nforward = 0;
+        npushable = 0;
+        nstun = 0;
+        nblock = 0;
+        healthred = 0;
+        ndirecthits = 0;
+        
+        PlayerPrefs.DeleteKey(_sessionID+"blocks");
+        UnityEngine.Debug.Log("Boss Beat"+ scene.buildIndex);
         completePane.SetActive(true);
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(1000.0f, 0.0f, 0.0f);
         rb.constraints = RigidbodyConstraints.FreezePosition;
         completed = true;
+        PlayerPrefs.DeleteKey("pushed");
+        PlayerPrefs.DeleteKey("pulled");
+        Debug.Log("complete LEVELLLLL");
+        StartCoroutine(Post_Level(_sessionID));
         yield return new WaitForSeconds(completeDelayTime);
         beatBoss();
     }
@@ -270,23 +313,20 @@ void OnDisable()
 
     private void Restart()
     {
+        UnityEngine.Debug.Log("REstart");
+        //print("restart");
         pushIcon.SetActive(false);
-
         if (nforward + npushable + nstun != 0)
         {
-            if (scene.buildIndex == 7)
-                level = 4;
-            else if (scene.buildIndex == 5)
-                level = 3;
-            else if (scene.buildIndex == 3)
-                level = 2;
-            else
-            {
-                level = 1;
-            }
-            //UnityEngine.Debug.Log("F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
+            UnityEngine.Debug.Log("F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+" D"+temphits+"   health"+healthred+"  Level"+scene.buildIndex);
             //temphits = ndirecthits;
-            StartCoroutine(Post_blocks(_sessionID));
+            //StartCoroutine(Post_blocks(_sessionID));
+            blocks_pref = PlayerPrefs.GetString(_sessionID+"blocks");
+            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+scene.buildIndex;
+            
+            PlayerPrefs.DeleteKey(_sessionID+"blocks");
+            PlayerPrefs.SetString(_sessionID+"blocks", blocks_pref);
+            print("RRRRPREFS"+PlayerPrefs.GetString(_sessionID+"blocks"));
         }
 
         nforward = 0;
@@ -313,9 +353,6 @@ void OnDisable()
         health = originalHealth;
         completePane.SetActive(false);
         isBossBeat = false;
-        //projectileTime = 2.0f;
-        //fired = false;
-        //light.intensity = 0.0f;
 
         if (SwitchOn.on)
         {
@@ -323,10 +360,32 @@ void OnDisable()
         }
 
         no_of_tries += 1;
+        print("nooftriesrestart"+no_of_tries);
     }
 
     private void Res()
     {
+        if (nforward + npushable + nstun != 0)
+        {
+            UnityEngine.Debug.Log("F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+" D"+temphits+"   health"+healthred+"  Level"+scene.buildIndex);
+            //temphits = ndirecthits;
+            //StartCoroutine(Post_blocks(_sessionID));
+            blocks_pref = PlayerPrefs.GetString(_sessionID+"blocks");
+            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+scene.buildIndex;
+            
+            PlayerPrefs.DeleteKey(_sessionID+"blocks");
+            PlayerPrefs.SetString(_sessionID+"blocks", blocks_pref);
+            print("RRRRPREFS"+PlayerPrefs.GetString(_sessionID+"blocks"));
+        }
+
+        nforward = 0;
+        npushable = 0;
+        nstun = 0;
+        nblock = 0;
+        healthred = 0;
+        ndirecthits = 0;
+        
+        Debug.Log("Res called");
         rb.velocity = Vector3.zero;
         st = State.NORMAL;
         startDelay = true;
@@ -335,7 +394,10 @@ void OnDisable()
         //fired = false;
         //projectileTime = 2.0f;
         //light.intensity = 0.0f;
+        no_of_tries += 1;
+        print("RESTRIES"+no_of_tries);
         SceneManager.LoadScene(scene.buildIndex);
+        
     }
 
     private void beatBoss()
@@ -347,7 +409,7 @@ void OnDisable()
         //fired = false;
         completePane.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        StartCoroutine(Post_Level(_sessionID));
+        
     }
 
     private void OnCollisionEnter(Collision other)
@@ -355,7 +417,7 @@ void OnDisable()
         if (other.gameObject.tag == "PushBlock")
         {
             npushable++;
-
+            
             StartCoroutine(DamageFlash());
             health--;
             healthred++;
@@ -376,7 +438,6 @@ void OnDisable()
         else if (other.gameObject.tag == "ForwardBlock")
         {
             nforward++;
-
             if (st == State.HIT || st == State.NORMAL)
             {
                 knockBackTimer = 0.5f;
@@ -391,12 +452,15 @@ void OnDisable()
             rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
             pushIcon.SetActive(true);
             pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
-            Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
-
+            //Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
             if (health <= 0)
             {
                 isBossBeat = true;
                 StartCoroutine(OnComplete());
+            }
+            else
+            {
+                //Restart();
             }
         }
         else if (other.gameObject.tag == "StunBlock")
@@ -436,14 +500,14 @@ void OnDisable()
         else if (other.gameObject.tag == "Block")
         {
             nblock++;
-            Res();
+            Restart();
         }
         else if (other.gameObject.tag == "Switch")
         {
-            fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
-            Debug.Log(fblock.Length + "  " + fblock[1].transform.position.x + "   " + fblock[1].transform.position.z);
-            StartCoroutine(Post_L4(_sessionID, fblock[1].transform.position));
-            Res();
+            fblock = GameObject.FindGameObjectsWithTag("PushBlock");
+            Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
+            StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
+            Restart();
         }
     }
 
@@ -468,6 +532,8 @@ void OnDisable()
         form.AddField("entry.1492841611", (temploc.x).ToString());
         form.AddField("entry.475872908", (temploc.y).ToString());
         form.AddField("entry.432244748", (temploc.z).ToString());
+        form.AddField("entry.1687831932", PlayerPrefs.GetFloat("pushed", 0).ToString());
+        form.AddField("entry.490935050", PlayerPrefs.GetFloat("pulled", 0).ToString());
         //}
         form.AddField("entry.596243283", (scene.buildIndex).ToString());
         using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
@@ -489,22 +555,49 @@ void OnDisable()
     {
         //UnityEngine.Debug.Log("POSTBlocks");
         WWWForm form = new WWWForm();
-
-        form.AddField("entry.1580530392", sessionID);
-        form.AddField("entry.1986196806", nforward);
-
-        form.AddField("entry.542647140", npushable);
-        form.AddField("entry.136227332", nstun);
-        form.AddField("entry.511319478", nblock);
-        form.AddField("entry.657771776", temphits);
-        form.AddField("entry.188267377", healthred);
-        form.AddField("entry.1786672107", scene.buildIndex);
+        blocks_pref = PlayerPrefs.GetString(_sessionID + "blocks");
+        print(blocks_pref.Length+"PREFS"+blocks_pref);
+        for (int i = 0; i < blocks_pref.Length; i++)
+        {
+            if (blocks_pref[i] == 'F')
+                form.AddField("entry.1986196806", int.Parse(""+blocks_pref[i + 1]));
+            else if (blocks_pref[i] == 'P')
+            {
+                form.AddField("entry.542647140", int.Parse("" + blocks_pref[i + 1]));
+            }
+            else if (blocks_pref[i] == 'S')
+                form.AddField("entry.136227332", int.Parse(""+blocks_pref[i + 1]));
+            else if (blocks_pref[i] == 'B')
+            {
+                form.AddField("entry.511319478", int.Parse("" + blocks_pref[i + 1]));
+                //Debug.Log("B here"+int.Parse("" + blocks_pref[i + 1]));
+            }
+            else if (blocks_pref[i] == 'D')
+            {
+                form.AddField("entry.657771776", int.Parse("" + blocks_pref[i + 1]));
+                //Debug.Log("B here"+int.Parse("" + blocks_pref[i + 1]));
+            }
+            //else if (blocks_pref[i] == 'D' && blocks_pref[i+2] != 'B')
+                //temphits = int.Parse(""+blocks_pref[i + 1] + blocks_pref[i + 2]);
+            else if (blocks_pref[i] == 'H')
+                form.AddField("entry.188267377", int.Parse(""+blocks_pref[i + 1]));
+            else if (blocks_pref[i] == 'L')
+            {
+                form.AddField("entry.1580530392", sessionID);
+                form.AddField("entry.1786672107", int.Parse("" + blocks_pref[i + 1]));
+            }
+            //UnityEngine.Debug.Log("Player Prefs For loop F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
+            
+            
+        }
+        //Debug.Log("player prefs"+blocks_pref);
+        
         //UnityEngine.Debug.Log("FUNCDIRECT HITTTT"+temphits);
         //UnityEngine.Log("F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
         //UnityEngine.Debug.Log(ndirecthits);
         using (UnityWebRequest www = UnityWebRequest.Post(URL_blocks, form))
         {
-
+           
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {

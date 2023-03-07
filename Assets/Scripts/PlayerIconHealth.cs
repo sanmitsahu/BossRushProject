@@ -22,7 +22,7 @@ public class PlayerIconHealth : MonoBehaviour
 
         maxHealth = PlayerController.maximumHealth;
         currentHealth = PlayerController.health;
-        UnityEngine.Debug.Log("pHealth");
+        //UnityEngine.Debug.Log("pHealth");
 
 
 
@@ -30,7 +30,7 @@ public class PlayerIconHealth : MonoBehaviour
         {
             
             GameObject h = Instantiate(IconPrefab, transform);
-            UnityEngine.Debug.Log(h);
+                //UnityEngine.Debug.Log(h);
             Icons.Add(h.GetComponent<Image>());
         }
     }
