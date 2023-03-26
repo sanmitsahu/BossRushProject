@@ -40,8 +40,11 @@ public class BlockGrab : MonoBehaviour
             sword.transform.localRotation = swordRot;
             if (blockChild)
             {
+                blockChild.GetComponent<Rigidbody>().mass = 1f;
                 blockChild.transform.parent = originalParent;
                 blockChild = null;
+                FixedJoint fj = this.GetComponent<FixedJoint>();
+                fj.connectedBody = null;
             }
         }
     }
@@ -54,10 +57,12 @@ public class BlockGrab : MonoBehaviour
             PlayerPrefs.SetFloat("pulled",PlayerPrefs.GetFloat("pulled", 0)+1);
             sword.transform.localPosition = grabPos;
             sword.transform.localRotation = grabRot;
-            //blockChild.transform.localPosition = new Vector3(grabStart.transform.localPosition.x, blockChild.transform.localPosition.y, grabStart.transform.localPosition.z);
             blockChild = other.gameObject;
             originalParent = blockChild.transform.parent;
             blockChild.transform.parent = player.transform;
+            FixedJoint fj = this.GetComponent<FixedJoint>();
+            fj.connectedBody = other.GetComponent<Rigidbody>();
+            other.GetComponent<Rigidbody>().mass = 0.00000001f;
         }
     }
 
@@ -65,11 +70,15 @@ public class BlockGrab : MonoBehaviour
     {
         if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && blockChild)
         {
+            other.GetComponent<Rigidbody>().mass = 1f;
             blockChild.transform.parent = originalParent;
             blockChild = null;
-            //grab = false;
+            grab = false;
             sword.transform.localPosition = swordPos;
             sword.transform.localRotation = swordRot;
+            //UnityEngine.Debug.Log("Gello");
+            FixedJoint fj = this.GetComponent<FixedJoint>();
+            fj.connectedBody = null;
         }
     }
 }

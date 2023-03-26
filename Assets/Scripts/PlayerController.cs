@@ -8,6 +8,7 @@ using System;
 
 public class PlayerController : MonoBehaviour
 {
+    private Rigidbody rb;
     private float swordTimer = 0.2f;
     private float damageTimer = 0.2f;
     private bool hit = false;
@@ -37,6 +38,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rb = this.GetComponent<Rigidbody>();
         scene = SceneManager.GetActiveScene();
         startPos = start.transform.localPosition;
         startRot = start.transform.localRotation;
@@ -108,8 +110,7 @@ public class PlayerController : MonoBehaviour
         verticalInput = Input.GetAxis("Vertical");
 
         Vector3 moveDirect = new Vector3(horizontalInput, 0, verticalInput);
-
-        transform.Translate(moveDirect * speed * Time.deltaTime, Space.World);
+        rb.AddForce(moveDirect * speed * Time.deltaTime);
 
         if (moveDirect != Vector3.zero && !BlockGrab.grab)
         {
