@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -596,6 +596,10 @@ PrefabInstance:
     - target: {fileID: 2817374707275674448, guid: 2629b8f23e8c442799d893ef94398400, type: 3}
       propertyPath: m_Name
       value: InWorldText
+      objectReference: {fileID: 0}
+    - target: {fileID: 2817374707275674448, guid: 2629b8f23e8c442799d893ef94398400, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2817374707275674450, guid: 2629b8f23e8c442799d893ef94398400, type: 3}
       propertyPath: m_text
@@ -12177,6 +12181,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_text
+      value: "Chase after the boss after he's been pushed! \n\nEither grab or push
+        the up arrow block to push him into the dot blocks!"
+      objectReference: {fileID: 0}
     - target: {fileID: 5000748173106898184, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -12268,6 +12277,10 @@ PrefabInstance:
     - target: {fileID: 5000748173106898188, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5000748173106898191, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6942368152845581483, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_IsActive
