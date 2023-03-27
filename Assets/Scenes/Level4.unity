@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1417,12 +1417,16 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8215603714694294385, guid: 8a09a96aed1b74f4a98bb167d2e0eeb5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8215603714694294385, guid: 8a09a96aed1b74f4a98bb167d2e0eeb5, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8215603714694294385, guid: 8a09a96aed1b74f4a98bb167d2e0eeb5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -3.25
       objectReference: {fileID: 0}
     - target: {fileID: 8215603714694294385, guid: 8a09a96aed1b74f4a98bb167d2e0eeb5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2394,7 +2398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3529463894856291908, guid: 9816bd9f2ce644744b1c21e2c9cc2566, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.7555885
+      value: 7.4
       objectReference: {fileID: 0}
     - target: {fileID: 3529463894856291908, guid: 9816bd9f2ce644744b1c21e2c9cc2566, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2856,8 +2860,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_text
-      value: "The barrier above has blocks needed to defeat the boss on the other
-        side. \n\nIt goes away when the boss's projectile hits the switch below!"
+      value: "The barrier above has blocks on the other side. \n\nIt disappears when
+        a boss projectile hits the switch below!"
       objectReference: {fileID: 0}
     - target: {fileID: 5000748173106898184, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_Pivot.x
@@ -4956,7 +4960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.96
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4964,7 +4968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.08
+      value: -1.25
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_LocalRotation.w

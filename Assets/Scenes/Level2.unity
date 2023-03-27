@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3883,12 +3883,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_text
-      value: 'Electric white blocks stun the boss in place! Push the boss into another
+      value: Yellow electric blocks stun the boss in place! Push the boss into another
         block before it wears off!
-
-
-        Beware that they cannot be grabbed or
-        pushed. '
       objectReference: {fileID: 0}
     - target: {fileID: 5000748173106898184, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_Pivot.x
@@ -5318,14 +5314,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 326922845}
     m_Modifications:
-    - target: {fileID: 4315257019139266220, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5046275188746569482, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
-      propertyPath: gameOverManager
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569488, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -5371,14 +5359,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
-      propertyPath: sword
-      value: 
-      objectReference: {fileID: 5046275188438137852}
-    - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
-      propertyPath: originalHealth
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5046275188746569495, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
       propertyPath: gameOverManager
       value: 
       objectReference: {fileID: 940527249}
@@ -5388,8 +5368,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
---- !u!1 &5046275188438137852 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4505656720361956180, guid: 52b20bc47e4f3e64b8684077759cc700, type: 3}
-  m_PrefabInstance: {fileID: 5046275188438137851}
-  m_PrefabAsset: {fileID: 0}
