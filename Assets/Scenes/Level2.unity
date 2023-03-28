@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3881,6 +3881,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 430.834
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 247.645
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 91.595
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -73.822
+      objectReference: {fileID: 0}
     - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_text
       value: Yellow electric blocks stun the boss in place! Push the boss into another
