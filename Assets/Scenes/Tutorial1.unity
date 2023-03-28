@@ -4097,19 +4097,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 441.771
+      value: 434.756
       objectReference: {fileID: 0}
     - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 214.835
+      value: 254.584
       objectReference: {fileID: 0}
     - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 97.063
+      value: 93.556
       objectReference: {fileID: 0}
     - target: {fileID: 1888628696902893797, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -57.417
+      value: -77.292
       objectReference: {fileID: 0}
     - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_text
