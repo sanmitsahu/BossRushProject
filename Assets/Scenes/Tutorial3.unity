@@ -6235,13 +6235,52 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -180.558
       objectReference: {fileID: 0}
+    - target: {fileID: 3512438989144164604, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_Color.b
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 3512438989144164604, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_Color.g
+      value: 0.049871415
+      objectReference: {fileID: 0}
+    - target: {fileID: 3512438989144164604, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_text
-      value: 'You must create a sequence of collisions with damaging blocks to kill
-        the boss!
+      value: '-Create sequence of collisions to kill boss
 
 
-        Beware that progress resets if he touches black objects!'
+        -Blocks Reset
+        Position after touching Boss
+
+
+        -Black Blocks Reset Progress'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+    - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.9905875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2140474, guid: 8a89fa14b10d46a99122fd4f73fca9a2, type: 2}
+    - target: {fileID: 4492688334236835750, guid: fc745f92c32ce44109003210574bf709, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294835968
       objectReference: {fileID: 0}
     - target: {fileID: 5000748173106898184, guid: fc745f92c32ce44109003210574bf709, type: 3}
       propertyPath: m_Pivot.x

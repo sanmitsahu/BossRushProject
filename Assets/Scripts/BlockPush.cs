@@ -64,10 +64,11 @@ public class BlockPush : MonoBehaviour
     {
         if (col.gameObject.tag == "Boss")
         {
-                knockBackTimer = 0.2f;
-                knocked = false;
-                rb.velocity = Vector3.zero;
-                transform.position = originalPos;
+            BlockGrab.fj.connectedBody = null;
+            knockBackTimer = 0.2f;
+            knocked = false;
+            rb.velocity = Vector3.zero;
+            transform.position = originalPos;
         }
     }
 }

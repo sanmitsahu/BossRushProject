@@ -14,6 +14,7 @@ public class BlockGrab : MonoBehaviour
     private Vector3 swordPos;
     private Quaternion swordRot;
     public static bool isGrab = false;
+    public static FixedJoint fj;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class BlockGrab : MonoBehaviour
         grabPos = transform.localPosition;
         grabRot = transform.localRotation;
         originalParent = null;
+        fj = this.GetComponent<FixedJoint>();
     }
 
     // Update is called once per frame
