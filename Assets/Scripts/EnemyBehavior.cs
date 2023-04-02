@@ -22,7 +22,8 @@ public class EnemyBehavior : MonoBehaviour
     public GameObject resetPane;
     public GameObject pushIcon;
     public GameObject completePane;
-    public float completeDelayTime = 4.0f;
+    public GameObject WinCanvas;
+    public float completeDelayTime = 1.0f;
     private bool isBossBeat = false;
     //public static float projectileTime = 2.0f;
     private float resetPaneTMAX = 2.0f;
@@ -75,6 +76,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         health = originalHealth;
         stunTextMesh = stunCanvas.GetComponentInChildren<TextMeshProUGUI>();
+
     }
 
     void Start()
@@ -102,8 +104,9 @@ public class EnemyBehavior : MonoBehaviour
         completed = false;
         PlayerPrefs.DeleteKey("pushed");
         PlayerPrefs.DeleteKey("pulled");
+        WinCanvas.SetActive(false);
 
-}
+    }
 
 void OnDisable()
     {
@@ -182,7 +185,8 @@ void OnDisable()
         
         PlayerPrefs.DeleteKey(_sessionID+"blocks");
         UnityEngine.Debug.Log("Boss Beat"+ scene.buildIndex);
-        completePane.SetActive(true);
+        //completePane.SetActive(true);
+        WinCanvas.SetActive(true);
         rb.velocity = Vector3.zero;
         transform.position = new Vector3(1000.0f, 0.0f, 0.0f);
         rb.constraints = RigidbodyConstraints.FreezePosition;
@@ -191,7 +195,7 @@ void OnDisable()
         PlayerPrefs.DeleteKey("pulled");
         Debug.Log("complete LEVELLLLL");
         StartCoroutine(Post_Level(_sessionID));
-        yield return new WaitForSeconds(completeDelayTime);
+        yield return new WaitForSeconds(1);
         beatBoss();
     }
 
@@ -356,6 +360,7 @@ void OnDisable()
         knockBackTimer = 0.5f;
         health = originalHealth;
         completePane.SetActive(false);
+        WinCanvas.SetActive(false);
         isBossBeat = false;
 
         if (SwitchOn.on)
@@ -412,8 +417,9 @@ void OnDisable()
         wallTouch = false;
         //fired = false;
         completePane.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        
+        //WinCanvas.SetActive(false);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        Time.timeScale = 0f;
     }
 
     private void OnCollisionEnter(Collision other)
