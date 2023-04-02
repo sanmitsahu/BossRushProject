@@ -55,6 +55,7 @@ public class BlockGrab : MonoBehaviour
     {
         if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && grab && !blockChild)
         {
+            UnityEngine.Debug.Log("Hel");
             isGrab = true;
             PlayerPrefs.SetFloat("pulled",PlayerPrefs.GetFloat("pulled", 0)+1);
             sword.transform.localPosition = grabPos;
@@ -78,7 +79,6 @@ public class BlockGrab : MonoBehaviour
             grab = false;
             sword.transform.localPosition = swordPos;
             sword.transform.localRotation = swordRot;
-            //UnityEngine.Debug.Log("Gello");
             FixedJoint fj = this.GetComponent<FixedJoint>();
             fj.connectedBody = null;
         }

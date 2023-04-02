@@ -59,6 +59,7 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject[] fblock;
     public static bool completed = false;
     private String blocks_pref = "";
+    public LineRenderer line;
 
 
     public enum State
@@ -296,6 +297,7 @@ void OnDisable()
             rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             st = State.HIT;
+            line.transform.parent = null;
         }
     }
 
@@ -345,6 +347,8 @@ void OnDisable()
         rb.velocity = Vector3.zero;
         transform.position = originalPos;
         transform.rotation = originalRot;
+        line.transform.parent = this.transform;
+        line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
         st = State.NORMAL;
         startDelay = true;
         wallTouch = false;
@@ -417,7 +421,8 @@ void OnDisable()
         if (other.gameObject.tag == "PushBlock")
         {
             npushable++;
-            
+            line.transform.parent = this.transform;
+            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
             StartCoroutine(DamageFlash());
             health--;
             healthred++;
@@ -437,6 +442,8 @@ void OnDisable()
         }
         else if (other.gameObject.tag == "ForwardBlock")
         {
+            line.transform.parent = this.transform;
+            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
             nforward++;
             if (st == State.HIT || st == State.NORMAL)
             {
@@ -465,6 +472,8 @@ void OnDisable()
         }
         else if (other.gameObject.tag == "StunBlock")
         {
+            line.transform.parent = this.transform;
+            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
             nstun++;
             //rb.velocity = Vector3.zero;
             pushIcon.SetActive(false);
@@ -499,11 +508,15 @@ void OnDisable()
         }
         else if (other.gameObject.tag == "Block")
         {
+            line.transform.parent = this.transform;
+            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
             nblock++;
             Restart();
         }
         else if (other.gameObject.tag == "Switch")
         {
+            line.transform.parent = this.transform;
+            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
             fblock = GameObject.FindGameObjectsWithTag("PushBlock");
             Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
             StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
