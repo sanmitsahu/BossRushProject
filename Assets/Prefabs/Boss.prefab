@@ -373,9 +373,10 @@ MonoBehaviour:
   resetPane: {fileID: 0}
   pushIcon: {fileID: 0}
   completePane: {fileID: 0}
+  WinCanvas: {fileID: 0}
   completeDelayTime: 4
   originalHealth: 0
-  knockBack: 3500
+  knockBack: 3000
   startDelay: 1
   knockBackTimer: 0.5
   stunCanvas: {fileID: 0}
