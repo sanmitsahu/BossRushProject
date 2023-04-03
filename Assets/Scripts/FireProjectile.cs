@@ -31,7 +31,10 @@ public class FireProjectile : MonoBehaviour
             else if (projectileTime <= 0.0f)
             {
                 light.intensity = 0.0f;
-                GameObject fire = Instantiate(fireBall, transform.position, Quaternion.identity);
+                float yPos = fireBall.transform.position.y;
+                Vector3 bossPos = transform.position;
+                Vector3 projectilePos = new Vector3(bossPos.x, yPos, bossPos.z);
+                GameObject fire = Instantiate(fireBall, projectilePos, Quaternion.identity);
                 fired = true;
                 projectileTime = 2.0f;
             }
