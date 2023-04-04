@@ -382,3 +382,4 @@ MonoBehaviour:
   stunCanvas: {fileID: 0}
   no_of_tries: 0
   line: {fileID: 7490152933767394106}
+  smoke: {fileID: 4007224275719799652, guid: c3856e150b6374c65a24dec9c5d09231, type: 3}

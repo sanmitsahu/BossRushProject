@@ -4174,6 +4174,10 @@ PrefabInstance:
       propertyPath: originalHealth
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6784917484004917501, guid: 3cd413d03c376fa4587fdf8e66090bc3, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7490152933767394106, guid: 3cd413d03c376fa4587fdf8e66090bc3, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
       value: 0.54169846
@@ -4181,6 +4185,10 @@ PrefabInstance:
     - target: {fileID: 7490152933767394106, guid: 3cd413d03c376fa4587fdf8e66090bc3, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9171439894256843748, guid: 3cd413d03c376fa4587fdf8e66090bc3, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cd413d03c376fa4587fdf8e66090bc3, type: 3}
