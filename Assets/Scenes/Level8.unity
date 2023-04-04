@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17276822, g: 0.2158921, b: 0.29782584, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2276,6 +2276,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1859177193, guid: bac3d54663d29024495bdda66a58ba23, type: 3}
+      propertyPath: smoke
+      value: 
+      objectReference: {fileID: 4007224275719799652, guid: c3856e150b6374c65a24dec9c5d09231, type: 3}
     - target: {fileID: 1859177193, guid: bac3d54663d29024495bdda66a58ba23, type: 3}
       propertyPath: pushIcon
       value: 
