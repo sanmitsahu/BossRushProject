@@ -61,6 +61,7 @@ public class EnemyBehavior : MonoBehaviour
     public static bool completed = false;
     private String blocks_pref = "";
     public LineRenderer line;
+    public GameObject smoke;
 
 
     public enum State
@@ -105,6 +106,7 @@ public class EnemyBehavior : MonoBehaviour
         PlayerPrefs.DeleteKey("pushed");
         PlayerPrefs.DeleteKey("pulled");
         WinCanvas.SetActive(false);
+        
 
     }
 
@@ -288,6 +290,7 @@ void OnDisable()
             if (resetPanetimer <= 0.0f)
             {
                 resetPane.SetActive(false);
+                //smoke.SetActive(false);
             }
         }
     }
@@ -321,6 +324,9 @@ void OnDisable()
     {
         UnityEngine.Debug.Log("REstart");
         //print("restart");
+        GameObject firstsmoke = Instantiate(smoke, transform.position, Quaternion.Euler(-90,0,0));
+        
+
         pushIcon.SetActive(false);
         if (nforward + npushable + nstun != 0)
         {
@@ -342,12 +348,19 @@ void OnDisable()
         healthred = 0;
         ndirecthits = 0;
 
-        if (no_of_tries >= 0 && !isBossBeat)
+        if (no_of_tries >= 0)
         {
-            resetPane.SetActive(true);
-            resetPanetimer = resetPaneTMAX;
-        }
+            smoke.SetActive(true);
+            if (!isBossBeat)
+            {
+                resetPane.SetActive(true);
+                resetPanetimer = resetPaneTMAX;
 
+            }
+           
+            
+        }
+        
         rb.velocity = Vector3.zero;
         transform.position = originalPos;
         transform.rotation = originalRot;
@@ -367,9 +380,11 @@ void OnDisable()
         {
             ChaseBlock.chasing = true;
         }
+        Instantiate(smoke, transform.position, Quaternion.Euler(-90, 0, 0));
 
         no_of_tries += 1;
         print("nooftriesrestart"+no_of_tries);
+
     }
 
     private void Res()
