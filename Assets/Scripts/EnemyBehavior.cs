@@ -305,6 +305,10 @@ void OnDisable()
             rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
             st = State.HIT;
             line.transform.parent = null;
+            wallTouch = false;
+            //FixedJoint fj = other.GetComponent<FixedJoint>();
+            //fj.connectedBody = null;
+            //rb.mass = 0.000000000000001f;
         }
     }
 
@@ -375,6 +379,9 @@ void OnDisable()
         completePane.SetActive(false);
         WinCanvas.SetActive(false);
         isBossBeat = false;
+        //FixedJoint fj = other.GetComponent<FixedJoint>();
+        //fj.connectedBody = null;
+        //rb.mass = 0.000000000000001f;
 
         if (SwitchOn.on)
         {
@@ -496,7 +503,7 @@ void OnDisable()
             line.transform.parent = this.transform;
             line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
             nstun++;
-            //rb.velocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
             pushIcon.SetActive(false);
 
             if (!wallTouch)
@@ -517,6 +524,9 @@ void OnDisable()
                     rb.velocity = Vector3.zero;
                     st = State.NORMAL;
                     wallTouch = true;
+                    //FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
+                    //fj.connectedBody = rb;
+                    //rb.mass = 0.000000000000001f;
                 }
             }
             else
@@ -539,8 +549,8 @@ void OnDisable()
             line.transform.parent = this.transform;
             line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
             fblock = GameObject.FindGameObjectsWithTag("PushBlock");
-            Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
-            StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
+            //Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
+            //StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
             Restart();
         }
     }
@@ -549,8 +559,10 @@ void OnDisable()
     {
         if (other.gameObject.tag == "StunBlock")
         {
-            wallTouch = false;
+            //FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
+            //fj.connectedBody = null;
             shockTimer = 6.0f;
+            //rb.mass = 1000f;
         }
     }
 

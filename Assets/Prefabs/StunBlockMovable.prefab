@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7183732401462863534, guid: 6a336c4f08f085d4d9c226f90f266113, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 103254612325580189, guid: 6a336c4f08f085d4d9c226f90f266113, type: 3}
       propertyPath: m_Name
       value: StunBlockMovable
