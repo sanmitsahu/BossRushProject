@@ -53,7 +53,7 @@ public class BlockGrab : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && grab && !blockChild)
+        if ((other.gameObject.GetComponent<BlockPush>()) && grab && !blockChild)
         {
             UnityEngine.Debug.Log("Hel");
             isGrab = true;
