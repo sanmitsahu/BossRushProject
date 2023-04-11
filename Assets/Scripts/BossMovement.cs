@@ -21,7 +21,7 @@ public class BossMovement : MonoBehaviour
         updateTimer -= Time.deltaTime;
         if (updateTimer <= 0)
         {
-            if (EnemyBehavior.st == EnemyBehavior.State.NORMAL)
+            if (EnemyBehavior.st == EnemyBehavior.State.NORMAL && !EnemyBehavior.wallTouch)
             {
                 gameObject.GetComponent<Rigidbody>().velocity = (gameObject.transform.position - player.transform.position).normalized * 0.2f;
             }
