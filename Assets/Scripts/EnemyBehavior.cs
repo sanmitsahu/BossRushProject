@@ -62,6 +62,7 @@ public class EnemyBehavior : MonoBehaviour
     private String blocks_pref = "";
     public LineRenderer line;
     public GameObject smoke;
+    private bool gotHit = false;
 
 
     public enum State
@@ -479,11 +480,11 @@ void OnDisable()
                 st = State.COMBO;
             }
 
+            rb.velocity = Vector3.zero;
             StartCoroutine(DamageFlash());
             health--;
             healthred++;
 
-            rb.velocity = Vector3.zero;
             rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
             pushIcon.SetActive(true);
             pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
