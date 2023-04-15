@@ -549,9 +549,12 @@ void OnDisable()
         {
             line.transform.parent = this.transform;
             line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
-            fblock = GameObject.FindGameObjectsWithTag("PushBlock");
-            //Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
-            //StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
+            fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
+            if(scene.buildIndex==15)
+            {
+                // Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
+                StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
+            }
             Restart();
         }
     }
