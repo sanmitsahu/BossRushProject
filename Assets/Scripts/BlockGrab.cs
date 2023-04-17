@@ -99,7 +99,7 @@ public class BlockGrab : MonoBehaviour
             grab = false;
             sword.transform.localPosition = swordPos;
             sword.transform.localRotation = swordRot;
-            blockChild.GetComponent<BlockPush>().grabbed = false;
+            other.gameObject.GetComponent<BlockPush>().grabbed = false;
             FixedJoint fj = this.GetComponent<FixedJoint>();
             fj.connectedBody = null;
         }

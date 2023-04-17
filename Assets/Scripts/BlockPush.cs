@@ -126,12 +126,9 @@ public class BlockPush : MonoBehaviour
         if (col.gameObject.tag == "ForwardBlock")
         {
             GameObject high = col.gameObject;
-            knockBackTimer = 0.2f;
-            knocked = false;
-            rb.velocity = Vector3.zero;
-            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            if (this.gameObject.tag == "ForwardBlockShort" && ((knocked && !fused && !col.gameObject.GetComponent<BlockPush>().boosted) || grabbed))
+            if (this.gameObject.tag == "ForwardBlockShort" && ((knocked || grabbed) && !fused && !col.gameObject.GetComponent<BlockPush>().boosted))
             {
+                UnityEngine.Debug.Log("hello to you too");
                 GameObject low = this.gameObject;
                 grabbed = false;
 
@@ -149,17 +146,18 @@ public class BlockPush : MonoBehaviour
                 low.GetComponent<MeshRenderer>().material.color = Color.gray;
                 high.GetComponent<MeshRenderer>().material.color = Color.gray;
             }
+            knockBackTimer = 0.2f;
+            knocked = false;
+            rb.velocity = Vector3.zero;
+            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
 
         else if(col.gameObject.tag == "ForwardBlockShort")
         {
             GameObject low = col.gameObject;
-            knockBackTimer = 0.2f;
-            knocked = false;
-            rb.velocity = Vector3.zero;
-            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            if (this.gameObject.tag == "ForwardBlock" && ((knocked && !fused && !col.gameObject.GetComponent<BlockPush>().boosted) || grabbed))
+            if (this.gameObject.tag == "ForwardBlock" && ((knocked || grabbed) && !boosted && !col.gameObject.GetComponent<BlockPush>().fused))
             {
+                UnityEngine.Debug.Log("hello");
                 GameObject high = this.gameObject;
                 grabbed = false;
 
@@ -177,6 +175,10 @@ public class BlockPush : MonoBehaviour
                 low.GetComponent<MeshRenderer>().material.color = Color.gray;
                 high.GetComponent<MeshRenderer>().material.color = Color.gray;
             }
+            knockBackTimer = 0.2f;
+            knocked = false;
+            rb.velocity = Vector3.zero;
+            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 }
