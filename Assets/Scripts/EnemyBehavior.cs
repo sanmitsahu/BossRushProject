@@ -122,9 +122,10 @@ void OnDisable()
         locations[no_of_tries, 0] = temploc.x;
         locations[no_of_tries, 1] = temploc.y;
         locations[no_of_tries, 2] = temploc.z;
+        
         if (PlayerPrefs.HasKey(_sessionID+"blocks"))
         {
-            if (scene.buildIndex == 13 || scene.buildIndex == 15)
+            if (scene.buildIndex == 14 || scene.buildIndex == 16 || scene.buildIndex == 18 || scene.buildIndex == 20)
             {
                 StartCoroutine(Post_blocks(_sessionID));
                 Debug.Log("Sending stuff on death");
@@ -136,7 +137,8 @@ void OnDisable()
         //UnityEngine.Debug.Log(locations[no_of_tries, 0]+" "+locations[no_of_tries, 1]+" "+locations[no_of_tries, 2]+" "+(no_of_tries + 1));
         if (no_of_tries >= 0)
         {
-            if (scene.buildIndex == 13 || scene.buildIndex == 15)
+
+            if (scene.buildIndex == 14 || scene.buildIndex == 16 || scene.buildIndex == 18 || scene.buildIndex == 20)
             UnityEngine.Debug.Log("no_of_tries: " + no_of_tries + " " + Math.Abs(level));
             StartCoroutine(Post_tries(_sessionID));
         }
@@ -158,7 +160,27 @@ void OnDisable()
             UnityEngine.Debug.Log("OUTTTF"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
             blocks_pref = PlayerPrefs.GetString(_sessionID+"blocks");
             print("blockprefs"+blocks_pref);
-            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+scene.buildIndex;
+            if (scene.buildIndex == 2)
+                level = 1;
+            else if (scene.buildIndex == 4)
+                level = 2;
+            else if (scene.buildIndex == 6)
+                level = 3;
+            else if (scene.buildIndex == 8)
+                level = 4;
+            else if (scene.buildIndex == 10)
+                level = 5;
+            else if (scene.buildIndex == 12)
+                level = 6;
+            else if (scene.buildIndex == 14)
+                level = 7;
+            else if (scene.buildIndex == 16)
+                level = 8;
+            else if (scene.buildIndex == 18)
+                level = 9;
+            else if (scene.buildIndex == 20)
+                level = 10;
+            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+level;
             PlayerPrefs.DeleteKey(_sessionID+"blocks");
             PlayerPrefs.SetString(_sessionID+"blocks", blocks_pref);
         }
@@ -172,7 +194,7 @@ void OnDisable()
         if (PlayerPrefs.HasKey(_sessionID+"blocks"))
         {
             //StartCoroutine(Post_blocks(_sessionID));
-            if (scene.buildIndex != 13 && scene.buildIndex != 15)
+            if (scene.buildIndex != 14 || scene.buildIndex != 16 || scene.buildIndex != 18 || scene.buildIndex != 20)
             {
                 Debug.Log("SEnding block data");
                 StartCoroutine(Post_blocks(_sessionID));
@@ -339,7 +361,27 @@ void OnDisable()
             //temphits = ndirecthits;
             //StartCoroutine(Post_blocks(_sessionID));
             blocks_pref = PlayerPrefs.GetString(_sessionID+"blocks");
-            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+scene.buildIndex;
+            if (scene.buildIndex == 2)
+                level = 1;
+            else if (scene.buildIndex == 4)
+                level = 2;
+            else if (scene.buildIndex == 6)
+                level = 3;
+            else if (scene.buildIndex == 8)
+                level = 4;
+            else if (scene.buildIndex == 10)
+                level = 5;
+            else if (scene.buildIndex == 12)
+                level = 6;
+            else if (scene.buildIndex == 14)
+                level = 7;
+            else if (scene.buildIndex == 16)
+                level = 8;
+            else if (scene.buildIndex == 18)
+                level = 9;
+            else if (scene.buildIndex == 20)
+                level = 10;
+            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+level;
             
             PlayerPrefs.DeleteKey(_sessionID+"blocks");
             PlayerPrefs.SetString(_sessionID+"blocks", blocks_pref);
@@ -594,7 +636,27 @@ void OnDisable()
         form.AddField("entry.1687831932", PlayerPrefs.GetFloat("pushed", 0).ToString());
         form.AddField("entry.490935050", PlayerPrefs.GetFloat("pulled", 0).ToString());
         //}
-        form.AddField("entry.596243283", (scene.buildIndex).ToString());
+        if (scene.buildIndex == 2)
+            level = 1;
+        else if (scene.buildIndex == 4)
+            level = 2;
+        else if (scene.buildIndex == 6)
+            level = 3;
+        else if (scene.buildIndex == 8)
+            level = 4;
+        else if (scene.buildIndex == 10)
+            level = 5;
+        else if (scene.buildIndex == 12)
+            level = 6;
+        else if (scene.buildIndex == 14)
+            level = 7;
+        else if (scene.buildIndex == 16)
+            level = 8;
+        else if (scene.buildIndex == 18)
+            level = 9;
+        else if (scene.buildIndex == 20)
+            level = 10;
+        form.AddField("entry.596243283", (level).ToString());
         using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
         {
 
@@ -643,7 +705,10 @@ void OnDisable()
             else if (blocks_pref[i] == 'L')
             {
                 form.AddField("entry.1580530392", sessionID);
-                form.AddField("entry.1786672107", int.Parse("" + blocks_pref[i + 1]));
+                if(scene.buildIndex!=20)
+                    form.AddField("entry.1786672107", int.Parse("" + blocks_pref[i + 1]));
+                else if(scene.buildIndex==20)
+                    form.AddField("entry.1786672107", 10);
             }
             //UnityEngine.Debug.Log("Player Prefs For loop F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
             
@@ -697,7 +762,28 @@ void OnDisable()
         WWWForm form = new WWWForm();
 
         form.AddField("entry.1950975398", sessionID);
-        form.AddField("entry.1281945691", scene.buildIndex);
+        if (scene.buildIndex == 2)
+            level = 1;
+        else if (scene.buildIndex == 4)
+            level = 2;
+        else if (scene.buildIndex == 6)
+            level = 3;
+        else if (scene.buildIndex == 8)
+            level = 4;
+        else if (scene.buildIndex == 10)
+            level = 5;
+        else if (scene.buildIndex == 12)
+            level = 6;
+        else if (scene.buildIndex == 14)
+            level = 7;
+        else if (scene.buildIndex == 16)
+            level = 8;
+        else if (scene.buildIndex == 18)
+            level = 9;
+        else if (scene.buildIndex == 20)
+            level = 10;
+        form.AddField("entry.1281945691", level);
+        
         using (UnityWebRequest www = UnityWebRequest.Post(URL_Level, form))
         {
 
