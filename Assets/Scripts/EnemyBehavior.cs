@@ -469,7 +469,7 @@ void OnDisable()
                 }
             }
         }
-        else if (other.gameObject.tag == "ForwardBlock")
+        else if (other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "ForwardBlockShort")
         {
             line.transform.parent = this.transform;
             line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
@@ -482,8 +482,17 @@ void OnDisable()
 
             rb.velocity = Vector3.zero;
             StartCoroutine(DamageFlash());
-            health--;
-            healthred++;
+
+            if (!other.gameObject.GetComponent<BlockPush>().boosted)
+            {
+                health--;
+                healthred++;
+            }
+            else
+            {
+                health -= 2;
+                healthred += 2;
+            }
 
             rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
             pushIcon.SetActive(true);

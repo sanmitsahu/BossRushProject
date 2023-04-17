@@ -42,6 +42,7 @@ public class BlockGrab : MonoBehaviour
             sword.transform.localRotation = swordRot;
             if (blockChild)
             {
+                blockChild.GetComponent<BlockPush>().grabbed = false;
                 blockChild.GetComponent<Rigidbody>().mass = 1f;
                 blockChild.transform.parent = originalParent;
                 blockChild = null;
@@ -53,25 +54,44 @@ public class BlockGrab : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.GetComponent<BlockPush>()) && grab && !blockChild)
+        if (other.gameObject.GetComponent<BlockPush>() && grab && !blockChild && !other.gameObject.GetComponent<BlockPush>().boosted && !other.gameObject.GetComponent<BlockPush>().fused && !other.gameObject.GetComponent<BlockPush>().grabbed)
         {
             UnityEngine.Debug.Log("Hel");
             isGrab = true;
             PlayerPrefs.SetFloat("pulled",PlayerPrefs.GetFloat("pulled", 0)+1);
+
             sword.transform.localPosition = grabPos;
             sword.transform.localRotation = grabRot;
+
             blockChild = other.gameObject;
             originalParent = blockChild.transform.parent;
             blockChild.transform.parent = player.transform;
             FixedJoint fj = this.GetComponent<FixedJoint>();
             fj.connectedBody = other.GetComponent<Rigidbody>();
+
             other.GetComponent<Rigidbody>().mass = 0.00000001f;
+            other.gameObject.GetComponent<BlockPush>().boosted = false;
+            other.gameObject.GetComponent<BlockPush>().grabbed = true;
+        }
+
+        else if (other.gameObject.GetComponent<BlockPush>() && grab && !blockChild && (other.gameObject.GetComponent<BlockPush>().fused || other.gameObject.GetComponent<BlockPush>().boosted))
+        {
+            UnityEngine.Debug.Log("Hessdasdasdasdl");
+            other.GetComponent<Rigidbody>().mass = 1f;
+            other.gameObject.transform.parent = null;
+            other.gameObject.GetComponent<BlockPush>().fused = false;
+            other.gameObject.GetComponent<BlockPush>().boosted = false;
+            other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            other.gameObject.GetComponent<Collider>().isTrigger = false;
+            other.gameObject.GetComponent<BlockPush>().grabbed = false;
+            other.GetComponent<MeshRenderer>().material.color = Color.white;
+            other.gameObject.transform.position = other.gameObject.GetComponent<BlockPush>().originalPos;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if ((other.gameObject.tag == "PushBlock" || other.gameObject.tag == "ForwardBlock") && blockChild)
+        if (other.gameObject.GetComponent<BlockPush>() && blockChild)
         {
             other.GetComponent<Rigidbody>().mass = 1f;
             blockChild.transform.parent = originalParent;
@@ -79,6 +99,7 @@ public class BlockGrab : MonoBehaviour
             grab = false;
             sword.transform.localPosition = swordPos;
             sword.transform.localRotation = swordRot;
+            blockChild.GetComponent<BlockPush>().grabbed = false;
             FixedJoint fj = this.GetComponent<FixedJoint>();
             fj.connectedBody = null;
         }
