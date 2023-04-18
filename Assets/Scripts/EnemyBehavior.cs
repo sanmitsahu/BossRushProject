@@ -494,103 +494,20 @@ void OnDisable()
     private void OnCollisionEnter(Collision other)
     {
         BoxCollider blockcollider = other.gameObject.GetComponent<BoxCollider>();
-        if ( blockcollider != null && Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position))>0)
+        if (blockcollider != null && Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position)) > 0.025)
         {
             Debug.Log("ColDist:" + Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position)));
-        
+
             if (other.gameObject.tag == "PushBlock")
             {
                 isBossBeat = true;
                 StartCoroutine(OnComplete());
             }
-            else
-            {
-                if (!isBossBeat)
-                {
-                    Restart();
-                }
-            }
-        }
-        else if (other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "ForwardBlockShort")
-        {
-            line.transform.parent = this.transform;
-            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
-            nforward++;
-            if (st == State.HIT || st == State.NORMAL)
-            {
-                knockBackTimer = 0.5f;
-                st = State.COMBO;
-            }
 
-            rb.velocity = Vector3.zero;
-            StartCoroutine(DamageFlash());
 
-            if (!other.gameObject.GetComponent<BlockPush>().boosted)
-            {
-                UnityEngine.Debug.Log(other.gameObject.tag);
-                UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
-                UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
-                health--;
-                healthred++;
-            }
-            else if (other.gameObject.GetComponent<BlockPush>().boosted)
-            {
-                UnityEngine.Debug.Log(other.gameObject.tag);
-                UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
-                UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
-
-                health -= 2;
-                healthred += 2;
-            }
-
-            other.gameObject.GetComponent<BlockPush>().fused = false;
-            other.gameObject.GetComponent<BlockPush>().boosted = false;
-            rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
-            pushIcon.SetActive(true);
-            pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
-            //Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
-            if (health <= 0)
-            {
-                isBossBeat = true;
-                StartCoroutine(OnComplete());
-            }
-            else
-            {
-                //Restart();
-            }
-        }
-        else if (other.gameObject.tag == "StunBlock")
-        {
-            line.transform.parent = this.transform;
-            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
-            nstun++;
-            rb.velocity = Vector3.zero;
-            pushIcon.SetActive(false);
-
-            if (!wallTouch)
-            {
-                knockBackTimer = 0.5f;
-
-                StartCoroutine(DamageFlash());
-                health--;
-                healthred++;
-
-                if (health <= 0)
-                {
-                    isBossBeat = true;
-                    StartCoroutine(OnComplete());
-                }
-                else
-                {
-                    if (!isBossBeat)
-                    {
-                        Restart();
-                    }
-                }
-            }
             else if (other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "ForwardBlockShort")
             {
-                Debug.Log("Collide on frame " + Time.frameCount);
+                Debug.Log("forward block");
                 line.transform.parent = this.transform;
                 line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
                 nforward++;
@@ -602,19 +519,27 @@ void OnDisable()
 
                 rb.velocity = Vector3.zero;
                 StartCoroutine(DamageFlash());
-                BlockPush pushscript = other.gameObject.GetComponent<BlockPush>();
-                if (pushscript== null || !pushscript.boosted)
+                BlockPush pushScript= other.gameObject.GetComponent<BlockPush>();
+                if (pushScript ==null ||!pushScript.boosted)
                 {
-                    Debug.Log("Damage");
+                    UnityEngine.Debug.Log(other.gameObject.tag);
+                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
+                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
                     health--;
                     healthred++;
                 }
-                else
+                else if (other.gameObject.GetComponent<BlockPush>().boosted)
                 {
+                    UnityEngine.Debug.Log(other.gameObject.tag);
+                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
+                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
+
                     health -= 2;
                     healthred += 2;
                 }
 
+                other.gameObject.GetComponent<BlockPush>().fused = false;
+                other.gameObject.GetComponent<BlockPush>().boosted = false;
                 rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
                 pushIcon.SetActive(true);
                 pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
@@ -667,8 +592,11 @@ void OnDisable()
                         Restart();
                     }
                 }
-            }
 
+
+
+
+            }
             else if (other.gameObject.tag == "Block")
             {
                 line.transform.parent = this.transform;
@@ -681,7 +609,7 @@ void OnDisable()
                 line.transform.parent = this.transform;
                 line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
                 fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
-                if(scene.buildIndex==15)
+                if (scene.buildIndex == 15)
                 {
                     // Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
                     StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
