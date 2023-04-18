@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17276774, g: 0.21589115, b: 0.2978246, a: 1}
+  m_IndirectSpecularColor: {r: 0.17276844, g: 0.21589246, b: 0.2978263, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2072,7 +2072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1410500016702514575, guid: 3b649f4a27ae0584fafce3803c281e11, type: 3}
       propertyPath: m_text
-      value: "- Push Low and High Blocks together to fuse to deal 2 HP!\n\n- Push/Pull
+      value: "- Push Low and High Blocks together to fuse to deal 2 HP!\n\n- Pushing/Pulling
         fused block will reset both blocks positions, \nBUT NOT ROTATIONS."
       objectReference: {fileID: 0}
     - target: {fileID: 5627434454979294826, guid: 3b649f4a27ae0584fafce3803c281e11, type: 3}

@@ -98,6 +98,9 @@ public class BlockPush : MonoBehaviour
             rb.isKinematic = false;
             GetComponent<Collider>().isTrigger = false;
             GetComponent<MeshRenderer>().material.color = Color.white;
+            Color newColor = mat.color;
+            newColor.a = 0.5f;
+            GetComponent<MeshRenderer>().material.color = newColor;
             transform.parent = null;
         }
     }
@@ -146,6 +149,9 @@ public class BlockPush : MonoBehaviour
                 GetComponent<Rigidbody>().isKinematic = false;
                 GetComponent<Collider>().isTrigger = false;
                 GetComponent<MeshRenderer>().material.color = Color.white;
+                Color newColor = mat.color;
+                newColor.a = 1f;
+                mat.color = newColor;
                 transform.position = originalPos;
             }
         }
@@ -228,9 +234,11 @@ public class BlockPush : MonoBehaviour
                 //high.GetComponent<Collider>().isTrigger = true;
 
                 low.GetComponent<MeshRenderer>().material.color = Color.gray;
+                Color newColor = low.GetComponent<MeshRenderer>().material.color;
+                newColor.a = 0.5f;
+                low.GetComponent<MeshRenderer>().material.color = newColor;
                 high.GetComponent<MeshRenderer>().material.color = Color.gray;
 
-                
             }
             knockBackTimer = 0.2f;
             knocked = false;
@@ -259,6 +267,9 @@ public class BlockPush : MonoBehaviour
                 //high.GetComponent<Collider>().isTrigger = true;
 
                 low.GetComponent<MeshRenderer>().material.color = Color.gray;
+                Color newColor = low.GetComponent<MeshRenderer>().material.color;
+                newColor.a = 0.5f;
+                low.GetComponent<MeshRenderer>().material.color = newColor;
                 high.GetComponent<MeshRenderer>().material.color = Color.gray;
             }
             knockBackTimer = 0.2f;
