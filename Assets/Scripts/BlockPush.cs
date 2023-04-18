@@ -15,6 +15,12 @@ public class BlockPush : MonoBehaviour
     public Vector3 originalPos;
     private GameObject player;
     private Rigidbody rb;
+    private bool respawned = false;
+    private Material mat;
+    private BoxCollider bcollider;
+    //private SphereCollider scollider;
+    private bool insideBlock = false;
+    private float phaseTimer = -1;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +28,10 @@ public class BlockPush : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         rb = gameObject.GetComponent<Rigidbody>();
         EventManager.OnRestart += OnDeath;
+        mat = gameObject.GetComponent<Renderer>().material;
+        bcollider = gameObject.GetComponent<BoxCollider>();
+        //scollider = gameObject.GetComponent<SphereCollider>();
+        //scollider.enabled = false;
     }
 
     void OnDisable()
@@ -47,6 +57,23 @@ public class BlockPush : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 knockBackTimer = 0.2f;
                 knocked = false;
+            }
+        }
+        if (phaseTimer> 0)
+        {
+            phaseTimer -= Time.deltaTime;
+            if (phaseTimer <= 0.0f)
+            {
+                Color newColor = mat.color;
+                newColor.a = 1.0f;
+                mat.color = newColor;
+                rb.isKinematic = false;
+                bcollider.isTrigger = false;
+                //bcollider.enabled = true;
+                //scollider.enabled = false;
+                respawned = false;
+
+                Debug.Log("exiting");
             }
         }
     }
@@ -100,12 +127,22 @@ public class BlockPush : MonoBehaviour
                 transform.position = originalPos;
             }
         }
+        if (other.gameObject.tag == "Player" || other.gameObject.tag =="Boss")
+        {
+            phaseTimer = 0.8f;
+        }
+
     }
+
+    
+    
+
 
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Boss")
         {
+            Debug.Log("HittingForward");
             rb.mass = 1f;
             BlockGrab.fj.connectedBody = null;
             knockBackTimer = 0.2f;
@@ -116,6 +153,16 @@ public class BlockPush : MonoBehaviour
             GetComponent<Collider>().isTrigger = false;
             GetComponent<MeshRenderer>().material.color = Color.white;
             transform.parent = null;
+
+            Color newColor = mat.color;
+            newColor.a = 0.5f;
+            mat.color = newColor;
+            Debug.Log("Color: " + mat.color);
+            rb.isKinematic = true;
+            bcollider.isTrigger = true;
+            phaseTimer = 0.8f;
+            //bcollider.enabled = false;
+            //scollider.enabled = true;
         }
     }
 
@@ -177,6 +224,18 @@ public class BlockPush : MonoBehaviour
             knocked = false;
             rb.velocity = Vector3.zero;
             col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+           
+
+
+
         }
+
+        
+        
+        
     }
+    
+
 }
+

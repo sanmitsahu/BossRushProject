@@ -63,6 +63,7 @@ public class EnemyBehavior : MonoBehaviour
     public LineRenderer line;
     public GameObject smoke;
     private bool gotHit = false;
+    private Vector3 lastColPos;
 
 
     public enum State
@@ -78,6 +79,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         health = originalHealth;
         stunTextMesh = stunCanvas.GetComponentInChildren<TextMeshProUGUI>();
+        
 
     }
 
@@ -107,7 +109,8 @@ public class EnemyBehavior : MonoBehaviour
         PlayerPrefs.DeleteKey("pushed");
         PlayerPrefs.DeleteKey("pulled");
         WinCanvas.SetActive(false);
-        
+        lastColPos = originalPos;
+
 
     }
 
@@ -122,9 +125,10 @@ void OnDisable()
         locations[no_of_tries, 0] = temploc.x;
         locations[no_of_tries, 1] = temploc.y;
         locations[no_of_tries, 2] = temploc.z;
+        
         if (PlayerPrefs.HasKey(_sessionID+"blocks"))
         {
-            if (scene.buildIndex == 13 || scene.buildIndex == 15)
+            if (scene.buildIndex == 14 || scene.buildIndex == 16 || scene.buildIndex == 18 || scene.buildIndex == 20)
             {
                 StartCoroutine(Post_blocks(_sessionID));
                 Debug.Log("Sending stuff on death");
@@ -136,7 +140,8 @@ void OnDisable()
         //UnityEngine.Debug.Log(locations[no_of_tries, 0]+" "+locations[no_of_tries, 1]+" "+locations[no_of_tries, 2]+" "+(no_of_tries + 1));
         if (no_of_tries >= 0)
         {
-            if (scene.buildIndex == 13 || scene.buildIndex == 15)
+
+            if (scene.buildIndex == 14 || scene.buildIndex == 16 || scene.buildIndex == 18 || scene.buildIndex == 20)
             UnityEngine.Debug.Log("no_of_tries: " + no_of_tries + " " + Math.Abs(level));
             StartCoroutine(Post_tries(_sessionID));
         }
@@ -158,7 +163,27 @@ void OnDisable()
             UnityEngine.Debug.Log("OUTTTF"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
             blocks_pref = PlayerPrefs.GetString(_sessionID+"blocks");
             print("blockprefs"+blocks_pref);
-            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+scene.buildIndex;
+            if (scene.buildIndex == 2)
+                level = 1;
+            else if (scene.buildIndex == 4)
+                level = 2;
+            else if (scene.buildIndex == 6)
+                level = 3;
+            else if (scene.buildIndex == 8)
+                level = 4;
+            else if (scene.buildIndex == 10)
+                level = 5;
+            else if (scene.buildIndex == 12)
+                level = 6;
+            else if (scene.buildIndex == 14)
+                level = 7;
+            else if (scene.buildIndex == 16)
+                level = 8;
+            else if (scene.buildIndex == 18)
+                level = 9;
+            else if (scene.buildIndex == 20)
+                level = 10;
+            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+level;
             PlayerPrefs.DeleteKey(_sessionID+"blocks");
             PlayerPrefs.SetString(_sessionID+"blocks", blocks_pref);
         }
@@ -172,7 +197,7 @@ void OnDisable()
         if (PlayerPrefs.HasKey(_sessionID+"blocks"))
         {
             //StartCoroutine(Post_blocks(_sessionID));
-            if (scene.buildIndex != 13 && scene.buildIndex != 15)
+            if (scene.buildIndex != 14 || scene.buildIndex != 16 || scene.buildIndex != 18 || scene.buildIndex != 20)
             {
                 Debug.Log("SEnding block data");
                 StartCoroutine(Post_blocks(_sessionID));
@@ -339,7 +364,27 @@ void OnDisable()
             //temphits = ndirecthits;
             //StartCoroutine(Post_blocks(_sessionID));
             blocks_pref = PlayerPrefs.GetString(_sessionID+"blocks");
-            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+scene.buildIndex;
+            if (scene.buildIndex == 2)
+                level = 1;
+            else if (scene.buildIndex == 4)
+                level = 2;
+            else if (scene.buildIndex == 6)
+                level = 3;
+            else if (scene.buildIndex == 8)
+                level = 4;
+            else if (scene.buildIndex == 10)
+                level = 5;
+            else if (scene.buildIndex == 12)
+                level = 6;
+            else if (scene.buildIndex == 14)
+                level = 7;
+            else if (scene.buildIndex == 16)
+                level = 8;
+            else if (scene.buildIndex == 18)
+                level = 9;
+            else if (scene.buildIndex == 20)
+                level = 10;
+            blocks_pref += "F"+nforward+"P"+npushable+"S"+nstun+"B"+nblock+"D"+temphits+"H"+healthred+"L"+level;
             
             PlayerPrefs.DeleteKey(_sessionID+"blocks");
             PlayerPrefs.SetString(_sessionID+"blocks", blocks_pref);
@@ -392,6 +437,7 @@ void OnDisable()
 
         no_of_tries += 1;
         print("nooftriesrestart"+no_of_tries);
+        lastColPos = originalPos;
 
     }
 
@@ -447,16 +493,12 @@ void OnDisable()
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.tag == "PushBlock")
+        BoxCollider blockcollider = other.gameObject.GetComponent<BoxCollider>();
+        if ( blockcollider != null && Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position))>0)
         {
-            npushable++;
-            line.transform.parent = this.transform;
-            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
-            StartCoroutine(DamageFlash());
-            health--;
-            healthred++;
-
-            if (health <= 0)
+            Debug.Log("ColDist:" + Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position)));
+        
+            if (other.gameObject.tag == "PushBlock")
             {
                 isBossBeat = true;
                 StartCoroutine(OnComplete());
@@ -540,40 +582,113 @@ void OnDisable()
                 }
                 else
                 {
-                    rb.velocity = Vector3.zero;
-                    st = State.NORMAL;
-                    wallTouch = true;
-                    //FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
-                    //fj.connectedBody = rb;
-                    //rb.mass = 0.000000000000001f;
+                    if (!isBossBeat)
+                    {
+                        Restart();
+                    }
                 }
             }
-            else
+            else if (other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "ForwardBlockShort")
             {
-                if (!isBossBeat)
+                Debug.Log("Collide on frame " + Time.frameCount);
+                line.transform.parent = this.transform;
+                line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
+                nforward++;
+                if (st == State.HIT || st == State.NORMAL)
                 {
-                    Restart();
+                    knockBackTimer = 0.5f;
+                    st = State.COMBO;
+                }
+
+                rb.velocity = Vector3.zero;
+                StartCoroutine(DamageFlash());
+                BlockPush pushscript = other.gameObject.GetComponent<BlockPush>();
+                if (pushscript== null || !pushscript.boosted)
+                {
+                    Debug.Log("Damage");
+                    health--;
+                    healthred++;
+                }
+                else
+                {
+                    health -= 2;
+                    healthred += 2;
+                }
+
+                rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
+                pushIcon.SetActive(true);
+                pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
+                //Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
+                if (health <= 0)
+                {
+                    isBossBeat = true;
+                    StartCoroutine(OnComplete());
+                }
+                else
+                {
+                    //Restart();
                 }
             }
-        }
-        else if (other.gameObject.tag == "Block")
-        {
-            line.transform.parent = this.transform;
-            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
-            nblock++;
-            Restart();
-        }
-        else if (other.gameObject.tag == "Switch")
-        {
-            line.transform.parent = this.transform;
-            line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
-            fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
-            if(scene.buildIndex==15)
+            else if (other.gameObject.tag == "StunBlock")
             {
-                // Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
-                StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
+                line.transform.parent = this.transform;
+                line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
+                nstun++;
+                rb.velocity = Vector3.zero;
+                pushIcon.SetActive(false);
+
+                if (!wallTouch)
+                {
+                    knockBackTimer = 0.5f;
+
+                    StartCoroutine(DamageFlash());
+                    health--;
+                    healthred++;
+
+                    if (health <= 0)
+                    {
+                        isBossBeat = true;
+                        StartCoroutine(OnComplete());
+                    }
+                    else
+                    {
+                        rb.velocity = Vector3.zero;
+                        st = State.NORMAL;
+                        wallTouch = true;
+                        //FixedJoint fj = other.gameObject.GetComponent<FixedJoint>();
+                        //fj.connectedBody = rb;
+                        //rb.mass = 0.000000000000001f;
+                    }
+                }
+                else
+                {
+                    if (!isBossBeat)
+                    {
+                        Restart();
+                    }
+                }
             }
-            Restart();
+
+            else if (other.gameObject.tag == "Block")
+            {
+                line.transform.parent = this.transform;
+                line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
+                nblock++;
+                Restart();
+            }
+            else if (other.gameObject.tag == "Switch")
+            {
+                line.transform.parent = this.transform;
+                line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
+                fblock = GameObject.FindGameObjectsWithTag("ForwardBlock");
+                if(scene.buildIndex==15)
+                {
+                    // Debug.Log(fblock.Length + "  " + fblock[0].transform.position.x + "   " + fblock[0].transform.position.z);
+                    StartCoroutine(Post_L4(_sessionID, fblock[0].transform.position));
+                }
+                Restart();
+            }
+            lastColPos = other.transform.position;
         }
     }
 
@@ -603,7 +718,27 @@ void OnDisable()
         form.AddField("entry.1687831932", PlayerPrefs.GetFloat("pushed", 0).ToString());
         form.AddField("entry.490935050", PlayerPrefs.GetFloat("pulled", 0).ToString());
         //}
-        form.AddField("entry.596243283", (scene.buildIndex).ToString());
+        if (scene.buildIndex == 2)
+            level = 1;
+        else if (scene.buildIndex == 4)
+            level = 2;
+        else if (scene.buildIndex == 6)
+            level = 3;
+        else if (scene.buildIndex == 8)
+            level = 4;
+        else if (scene.buildIndex == 10)
+            level = 5;
+        else if (scene.buildIndex == 12)
+            level = 6;
+        else if (scene.buildIndex == 14)
+            level = 7;
+        else if (scene.buildIndex == 16)
+            level = 8;
+        else if (scene.buildIndex == 18)
+            level = 9;
+        else if (scene.buildIndex == 20)
+            level = 10;
+        form.AddField("entry.596243283", (level).ToString());
         using (UnityWebRequest www = UnityWebRequest.Post(URL, form))
         {
 
@@ -652,7 +787,10 @@ void OnDisable()
             else if (blocks_pref[i] == 'L')
             {
                 form.AddField("entry.1580530392", sessionID);
-                form.AddField("entry.1786672107", int.Parse("" + blocks_pref[i + 1]));
+                if(scene.buildIndex!=20)
+                    form.AddField("entry.1786672107", int.Parse("" + blocks_pref[i + 1]));
+                else if(scene.buildIndex==20)
+                    form.AddField("entry.1786672107", 10);
             }
             //UnityEngine.Debug.Log("Player Prefs For loop F"+nforward+"  P"+npushable+"  S"+nstun+"  B"+nblock+"   health"+healthred+"  Level"+scene.buildIndex);
             
@@ -706,7 +844,28 @@ void OnDisable()
         WWWForm form = new WWWForm();
 
         form.AddField("entry.1950975398", sessionID);
-        form.AddField("entry.1281945691", scene.buildIndex);
+        if (scene.buildIndex == 2)
+            level = 1;
+        else if (scene.buildIndex == 4)
+            level = 2;
+        else if (scene.buildIndex == 6)
+            level = 3;
+        else if (scene.buildIndex == 8)
+            level = 4;
+        else if (scene.buildIndex == 10)
+            level = 5;
+        else if (scene.buildIndex == 12)
+            level = 6;
+        else if (scene.buildIndex == 14)
+            level = 7;
+        else if (scene.buildIndex == 16)
+            level = 8;
+        else if (scene.buildIndex == 18)
+            level = 9;
+        else if (scene.buildIndex == 20)
+            level = 10;
+        form.AddField("entry.1281945691", level);
+        
         using (UnityWebRequest www = UnityWebRequest.Post(URL_Level, form))
         {
 
