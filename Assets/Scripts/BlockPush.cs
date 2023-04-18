@@ -139,7 +139,7 @@ public class BlockPush : MonoBehaviour
             else if(boosted || fused)
             {
                 rb.mass = 1f;
-                
+                rb.velocity = Vector3.zero;
                 transform.parent = null;
                 fused = false;
                 boosted = false;
@@ -176,6 +176,7 @@ public class BlockPush : MonoBehaviour
             {
                 transform.parent.GetComponent<BlockPush>().Respawn();
                 rb.mass = 1f;
+                rb.velocity = Vector3.zero;
                 transform.parent = null;
                 fused = false;
                 boosted = false;
@@ -207,6 +208,8 @@ public class BlockPush : MonoBehaviour
         if (col.gameObject.tag == "ForwardBlock")
         {
             GameObject high = col.gameObject;
+            rb.velocity = Vector3.zero;
+            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             if (this.gameObject.tag == "ForwardBlockShort" && ((knocked || grabbed) && !fused && !col.gameObject.GetComponent<BlockPush>().boosted))
             {
                 UnityEngine.Debug.Log("hello to you too");
@@ -231,13 +234,13 @@ public class BlockPush : MonoBehaviour
             }
             knockBackTimer = 0.2f;
             knocked = false;
-            rb.velocity = Vector3.zero;
-            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
 
         else if(col.gameObject.tag == "ForwardBlockShort")
         {
             GameObject low = col.gameObject;
+            rb.velocity = Vector3.zero;
+            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             if (this.gameObject.tag == "ForwardBlock" && ((knocked || grabbed) && !boosted && !col.gameObject.GetComponent<BlockPush>().fused))
             {
                 UnityEngine.Debug.Log("hello");
@@ -260,13 +263,6 @@ public class BlockPush : MonoBehaviour
             }
             knockBackTimer = 0.2f;
             knocked = false;
-            rb.velocity = Vector3.zero;
-            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-
-           
-
-
-
         }
 
         
