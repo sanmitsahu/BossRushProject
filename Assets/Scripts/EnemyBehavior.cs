@@ -507,7 +507,7 @@ void OnDisable()
 
             else if (other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "ForwardBlockShort")
             {
-                Debug.Log("forward block");
+                
                 line.transform.parent = this.transform;
                 line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
                 nforward++;
@@ -520,11 +520,13 @@ void OnDisable()
                 rb.velocity = Vector3.zero;
                 StartCoroutine(DamageFlash());
                 BlockPush pushScript= other.gameObject.GetComponent<BlockPush>();
+                
                 if (pushScript ==null ||!pushScript.boosted)
                 {
-                    UnityEngine.Debug.Log(other.gameObject.tag);
-                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
-                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
+                    
+                    //UnityEngine.Debug.Log(other.gameObject.tag);
+                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
+                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
                     health--;
                     healthred++;
                 }
@@ -538,8 +540,12 @@ void OnDisable()
                     healthred += 2;
                 }
 
-                other.gameObject.GetComponent<BlockPush>().fused = false;
-                other.gameObject.GetComponent<BlockPush>().boosted = false;
+                if (pushScript!= null)
+                {
+                    other.gameObject.GetComponent<BlockPush>().fused = false;
+                    other.gameObject.GetComponent<BlockPush>().boosted = false;
+                }
+                
                 rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
                 pushIcon.SetActive(true);
                 pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
