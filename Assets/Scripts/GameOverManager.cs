@@ -19,4 +19,10 @@ public class GameOverManager : MonoBehaviour
         SwitchOn.on = false;
         gameOverScreen.SetActive(false);
     }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+    }
 }
