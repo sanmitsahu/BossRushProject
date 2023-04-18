@@ -25,4 +25,12 @@ public class ChaseBlock : MonoBehaviour
             rb.velocity = direct * 1.0f;
         }       
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<BoxCollider>() != null)
+        {
+            chasing = false;
+            rb.velocity = new Vector3(0,0,0);
+        }
+    }
 }

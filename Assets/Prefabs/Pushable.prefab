@@ -93,7 +93,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 3074833698651037239}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -229,3 +229,7 @@ MonoBehaviour:
   knockBack: 10
   knockBackTimer: 0.2
   knocked: 0
+  fused: 0
+  boosted: 0
+  grabbed: 0
+  originalPos: {x: 0, y: 0, z: 0}

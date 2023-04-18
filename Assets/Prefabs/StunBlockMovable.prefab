@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StunBlockMovable
       objectReference: {fileID: 0}
+    - target: {fileID: 353577585244516257, guid: 6a336c4f08f085d4d9c226f90f266113, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1238751907359016894, guid: 6a336c4f08f085d4d9c226f90f266113, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -59,6 +63,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6145283242014091524, guid: 6a336c4f08f085d4d9c226f90f266113, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7172883176377998790, guid: 6a336c4f08f085d4d9c226f90f266113, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -85,3 +93,7 @@ MonoBehaviour:
   knockBack: 10
   knockBackTimer: 0.2
   knocked: 0
+  fused: 0
+  boosted: 0
+  grabbed: 0
+  originalPos: {x: 0, y: 0, z: 0}
