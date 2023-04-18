@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="54865399-12c4-4e9a-bc91-853dd8795dcb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BossRushProject/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BossRushProject/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/EnemyBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/EnemyBehavior.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
@@ -11,6 +12,9 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/EnemyHealthBar.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -88,6 +92,8 @@
       <workItem from="1678166152706" duration="4388000" />
       <workItem from="1681238341319" duration="1616000" />
       <workItem from="1681774816608" duration="319000" />
+      <workItem from="1681839831694" duration="22000" />
+      <workItem from="1681839932819" duration="301000" />
     </task>
     <servers />
   </component>
