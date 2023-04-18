@@ -109,7 +109,7 @@ public class EnemyBehavior : MonoBehaviour
         PlayerPrefs.DeleteKey("pushed");
         PlayerPrefs.DeleteKey("pulled");
         WinCanvas.SetActive(false);
-        lastColPos = transform.position;
+        lastColPos = originalPos;
 
 
     }
@@ -437,6 +437,7 @@ void OnDisable()
 
         no_of_tries += 1;
         print("nooftriesrestart"+no_of_tries);
+        lastColPos = originalPos;
 
     }
 
@@ -493,7 +494,7 @@ void OnDisable()
     private void OnCollisionEnter(Collision other)
     {
         BoxCollider blockcollider = other.gameObject.GetComponent<BoxCollider>();
-        if ( blockcollider != null && Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position))>1)
+        if ( blockcollider != null && Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position))>0)
         {
             Debug.Log("ColDist:" + Mathf.Abs(Vector3.Distance(lastColPos, other.transform.position)));
         

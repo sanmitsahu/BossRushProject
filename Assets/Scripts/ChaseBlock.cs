@@ -30,7 +30,7 @@ public class ChaseBlock : MonoBehaviour
         if (collision.gameObject.GetComponent<BoxCollider>() != null)
         {
             chasing = false;
-            rb.velocity = new Vector3(0,0,0);
+            
         }
     }
 }

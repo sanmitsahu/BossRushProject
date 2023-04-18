@@ -164,6 +164,7 @@ public class BlockPush : MonoBehaviour
             mat.color = newColor;
             Debug.Log("Color: " + mat.color);
             rb.isKinematic = true;
+            bcollider.isTrigger = true;
             phaseTimer = 0.8f;
             //bcollider.enabled = false;
             //scollider.enabled = true;
