@@ -112,8 +112,6 @@ public class BlockPush : MonoBehaviour
             knocked = false;
             rb.velocity = Vector3.zero;
             transform.position = originalPos;
-            fused = false;
-            boosted = false;
             rb.isKinematic = false;
             GetComponent<Collider>().isTrigger = false;
             GetComponent<MeshRenderer>().material.color = Color.white;
@@ -135,7 +133,7 @@ public class BlockPush : MonoBehaviour
                 high.GetComponent<BlockPush>().fused = true;
                 low.GetComponent<BlockPush>().boosted = true;
 
-                Vector3 pos = low.transform.position;
+                Vector3 pos = high.transform.position;
                 transform.position = new Vector3(pos.x, 1.25f, pos.z);
                 col.gameObject.transform.position = new Vector3(pos.x, 0.5f, pos.z);
 
@@ -164,7 +162,7 @@ public class BlockPush : MonoBehaviour
                 high.GetComponent<BlockPush>().fused = true;
                 low.GetComponent<BlockPush>().boosted = true;
 
-                Vector3 pos = high.transform.position;
+                Vector3 pos = low.transform.position;
                 low.transform.position = new Vector3(pos.x, 1.25f, pos.z);
                 high.transform.position = new Vector3(pos.x, 0.5f, pos.z);
 
