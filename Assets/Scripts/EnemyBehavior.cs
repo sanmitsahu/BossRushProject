@@ -522,24 +522,27 @@ void OnDisable()
                 BlockPush pushScript= other.gameObject.GetComponent<BlockPush>();
                 if (pushScript ==null ||!pushScript.boosted)
                 {
-                    UnityEngine.Debug.Log(other.gameObject.tag);
-                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
-                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
+                    //UnityEngine.Debug.Log(other.gameObject.tag);
+                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
+                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
                     health--;
                     healthred++;
                 }
-                else if (other.gameObject.GetComponent<BlockPush>().boosted)
+                else if (pushScript.boosted)
                 {
-                    UnityEngine.Debug.Log(other.gameObject.tag);
-                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
-                    UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
+                    //UnityEngine.Debug.Log(other.gameObject.tag);
+                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
+                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
 
                     health -= 2;
                     healthred += 2;
                 }
 
-                other.gameObject.GetComponent<BlockPush>().fused = false;
-                other.gameObject.GetComponent<BlockPush>().boosted = false;
+                if (pushScript)
+                {
+                    pushScript.fused = false;
+                    pushScript.boosted = false;
+                }    
                 rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
                 pushIcon.SetActive(true);
                 pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
