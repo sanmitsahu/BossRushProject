@@ -101,6 +101,27 @@ public class BlockPush : MonoBehaviour
             transform.parent = null;
         }
     }
+    public void Respawn()
+    {
+        Debug.Log("Respawning");
+        rb.mass = 1f;
+        transform.parent = null;
+        fused = false;
+        boosted = false;
+        GetComponent<Rigidbody>().isKinematic = false;
+        GetComponent<Collider>().isTrigger = false;
+        GetComponent<MeshRenderer>().material.color = Color.white;
+        transform.position = originalPos;
+
+
+        Color newColor = mat.color;
+        newColor.a = 0.5f;
+        mat.color = newColor;
+        Debug.Log("Color: " + mat.color);
+        rb.isKinematic = true;
+        bcollider.isTrigger = true;
+        phaseTimer = 0.8f;
+    }
 
     void OnTriggerStay(Collider other)
     {
@@ -118,6 +139,7 @@ public class BlockPush : MonoBehaviour
             else if(boosted || fused)
             {
                 rb.mass = 1f;
+                
                 transform.parent = null;
                 fused = false;
                 boosted = false;
@@ -142,17 +164,27 @@ public class BlockPush : MonoBehaviour
     {
         if (col.gameObject.tag == "Boss")
         {
+            
             Debug.Log("HittingForward");
+            Debug.Log("Boosted:" + boosted + "Fused:" + fused);
             rb.mass = 1f;
             BlockGrab.fj.connectedBody = null;
             knockBackTimer = 0.2f;
             knocked = false;
             rb.velocity = Vector3.zero;
+            if (transform.parent != null && transform.parent.GetComponent<BlockPush>() !=null)
+            {
+                transform.parent.GetComponent<BlockPush>().Respawn();
+                rb.mass = 1f;
+                transform.parent = null;
+                fused = false;
+                boosted = false;
+                GetComponent<Rigidbody>().isKinematic = false;
+                GetComponent<Collider>().isTrigger = false;
+                GetComponent<MeshRenderer>().material.color = Color.white;
+            }
             transform.position = originalPos;
-            rb.isKinematic = false;
-            GetComponent<Collider>().isTrigger = false;
-            GetComponent<MeshRenderer>().material.color = Color.white;
-            transform.parent = null;
+            
 
             Color newColor = mat.color;
             newColor.a = 0.5f;
@@ -162,7 +194,11 @@ public class BlockPush : MonoBehaviour
             bcollider.isTrigger = true;
             phaseTimer = 0.8f;
             //bcollider.enabled = false;
-            //scollider.enabled = true;
+             //scollider.enabled = true;
+           
+
+            
+
         }
     }
 
@@ -186,10 +222,12 @@ public class BlockPush : MonoBehaviour
 
                 high.transform.parent = low.transform;
                 high.GetComponent<Rigidbody>().isKinematic = true;
-                high.GetComponent<Collider>().isTrigger = true;
+                //high.GetComponent<Collider>().isTrigger = true;
 
                 low.GetComponent<MeshRenderer>().material.color = Color.gray;
                 high.GetComponent<MeshRenderer>().material.color = Color.gray;
+
+                
             }
             knockBackTimer = 0.2f;
             knocked = false;
@@ -215,7 +253,7 @@ public class BlockPush : MonoBehaviour
 
                 high.transform.parent = low.transform;
                 high.GetComponent<Rigidbody>().isKinematic = true;
-                high.GetComponent<Collider>().isTrigger = true;
+                //high.GetComponent<Collider>().isTrigger = true;
 
                 low.GetComponent<MeshRenderer>().material.color = Color.gray;
                 high.GetComponent<MeshRenderer>().material.color = Color.gray;

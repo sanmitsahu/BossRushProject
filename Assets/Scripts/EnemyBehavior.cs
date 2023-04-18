@@ -348,6 +348,7 @@ void OnDisable()
             temphits = ndirecthits;
             //UnityEngine.Debug.Log("DIRECT HITTTT"+ndirecthits);
         }
+        
     }
 
     private void Restart()
@@ -521,7 +522,7 @@ void OnDisable()
                 StartCoroutine(DamageFlash());
                 BlockPush pushScript= other.gameObject.GetComponent<BlockPush>();
                 
-                if (pushScript ==null ||!pushScript.boosted)
+                if (pushScript ==null ||(!pushScript.boosted && !pushScript.fused))
                 {
                     //UnityEngine.Debug.Log(other.gameObject.tag);
                     //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
@@ -529,7 +530,7 @@ void OnDisable()
                     health--;
                     healthred++;
                 }
-                else if (pushScript.boosted)
+                else if (pushScript.boosted || pushScript.fused)
                 {
                     //UnityEngine.Debug.Log(other.gameObject.tag);
                     //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
