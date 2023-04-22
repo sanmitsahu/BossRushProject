@@ -18,6 +18,7 @@ TagManager:
   - TutorialSpot
   - ForwardBlockShort
   - Punch
+  - FusedBlock
   layers:
   - Default
   - TransparentFX

@@ -547,31 +547,9 @@ void OnDisable()
 
                 rb.velocity = Vector3.zero;
                 StartCoroutine(DamageFlash());
-                BlockPush pushScript= other.gameObject.GetComponent<BlockPush>();
-                
-                if (pushScript ==null ||(!pushScript.boosted && !pushScript.fused))
-                {
-                    //UnityEngine.Debug.Log(other.gameObject.tag);
-                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
-                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
-                    health--;
-                    healthred++;
-                }
-                else if (pushScript.boosted || pushScript.fused)
-                {
-                    //UnityEngine.Debug.Log(other.gameObject.tag);
-                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().fused);
-                    //UnityEngine.Debug.Log(other.gameObject.GetComponent<BlockPush>().boosted);
+                health--;
+                healthred++;
 
-                    health -= 2;
-                    healthred += 2;
-                }
-
-                if (pushScript)
-                {
-                    pushScript.fused = false;
-                    pushScript.boosted = false;
-                }    
                 rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
                 pushIcon.SetActive(true);
                 pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
@@ -586,6 +564,38 @@ void OnDisable()
                     //Restart();
                 }
             }
+
+            else if (other.gameObject.tag == "FusedBlock")
+            {
+                line.transform.parent = this.transform;
+                line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
+                nforward++;
+                if (st == State.HIT || st == State.NORMAL)
+                {
+                    knockBackTimer = 0.5f;
+                    st = State.COMBO;
+                }
+
+                rb.velocity = Vector3.zero;
+                StartCoroutine(DamageFlash());
+                health-=2;
+                healthred+=2;
+
+                rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
+                pushIcon.SetActive(true);
+                pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
+                //Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
+                if (health <= 0)
+                {
+                    isBossBeat = true;
+                    StartCoroutine(OnComplete());
+                }
+                else
+                {
+                    //Restart();
+                }
+            }
+
             else if (other.gameObject.tag == "StunBlock")
             {
                 line.transform.parent = this.transform;

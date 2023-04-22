@@ -54,7 +54,7 @@ public class BlockGrab : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.GetComponent<BlockPush>() && grab && !blockChild && !other.gameObject.GetComponent<BlockPush>().boosted && !other.gameObject.GetComponent<BlockPush>().fused && !other.gameObject.GetComponent<BlockPush>().grabbed)
+        if (other.gameObject.GetComponent<BlockPush>() && grab && !blockChild && !other.gameObject.GetComponent<BlockPush>().grabbed)
         {
             UnityEngine.Debug.Log("Hel");
             isGrab = true;
@@ -70,22 +70,7 @@ public class BlockGrab : MonoBehaviour
             fj.connectedBody = other.GetComponent<Rigidbody>();
 
             other.GetComponent<Rigidbody>().mass = 0.00000001f;
-            other.gameObject.GetComponent<BlockPush>().boosted = false;
             other.gameObject.GetComponent<BlockPush>().grabbed = true;
-        }
-
-        else if (other.gameObject.GetComponent<BlockPush>() && grab && !blockChild && (other.gameObject.GetComponent<BlockPush>().fused || other.gameObject.GetComponent<BlockPush>().boosted))
-        {
-            UnityEngine.Debug.Log("Hessdasdasdasdl");
-            other.GetComponent<Rigidbody>().mass = 1f;
-            other.gameObject.transform.parent = null;
-            other.gameObject.GetComponent<BlockPush>().fused = false;
-            other.gameObject.GetComponent<BlockPush>().boosted = false;
-            other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            other.gameObject.GetComponent<Collider>().isTrigger = false;
-            other.gameObject.GetComponent<BlockPush>().grabbed = false;
-            other.GetComponent<MeshRenderer>().material.color = Color.white;
-            other.gameObject.transform.position = other.gameObject.GetComponent<BlockPush>().originalPos;
         }
     }
 

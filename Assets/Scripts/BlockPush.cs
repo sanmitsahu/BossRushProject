@@ -8,8 +8,6 @@ public class BlockPush : MonoBehaviour
     public float knockBack = 10.0f;
     public float knockBackTimer = 0.2f;
     public bool knocked = false;
-    public bool fused = false;
-    public bool boosted = false;
     public bool grabbed = false;
     private Vector3 forward;
     public Vector3 originalPos;
@@ -21,6 +19,8 @@ public class BlockPush : MonoBehaviour
     //private SphereCollider scollider;
     private bool insideBlock = false;
     private float phaseTimer = -1;
+    public GameObject fusedBlock;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,8 +93,6 @@ public class BlockPush : MonoBehaviour
             knocked = false;
             rb.velocity = Vector3.zero;
             transform.position = originalPos;
-            fused = false;
-            boosted = false;
             rb.isKinematic = false;
             GetComponent<Collider>().isTrigger = false;
             GetComponent<MeshRenderer>().material.color = Color.white;
@@ -109,13 +107,10 @@ public class BlockPush : MonoBehaviour
         Debug.Log("Respawning");
         rb.mass = 1f;
         transform.parent = null;
-        fused = false;
-        boosted = false;
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Collider>().isTrigger = false;
         GetComponent<MeshRenderer>().material.color = Color.white;
         transform.position = originalPos;
-
 
         Color newColor = mat.color;
         newColor.a = 0.5f;
@@ -131,68 +126,32 @@ public class BlockPush : MonoBehaviour
         //UnityEngine.Debug.Log(PlayerController.swung);
         if (other.gameObject.tag == "Punch" && PlayerController.swung && !knocked && !PlayerController.swordHit)
         {
-            if (!boosted && !fused)
-            {
-                //UnityEngine.Debug.Log(PlayerController.swung);
-                PlayerPrefs.SetFloat("pushed", PlayerPrefs.GetFloat("pushed", 0) + 1);
-                PlayerController.swordHit = true;
-                rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
-                knocked = true;
-            }
-            else if(boosted || fused)
-            {
-                rb.mass = 1f;
-                rb.velocity = Vector3.zero;
-                transform.parent = null;
-                fused = false;
-                boosted = false;
-                GetComponent<Rigidbody>().isKinematic = false;
-                GetComponent<Collider>().isTrigger = false;
-                GetComponent<MeshRenderer>().material.color = Color.white;
-                Color newColor = mat.color;
-                newColor.a = 1f;
-                mat.color = newColor;
-                transform.position = originalPos;
-            }
+            PlayerPrefs.SetFloat("pushed", PlayerPrefs.GetFloat("pushed", 0) + 1);
+            PlayerController.swordHit = true;
+            rb.AddForce(other.gameObject.transform.forward * knockBack, ForceMode.Impulse);
+            knocked = true;
         }
-        if (other.gameObject.tag == "Player" || other.gameObject.tag =="Boss")
+        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Boss")
         {
             phaseTimer = 0.8f;
         }
-
     }
-
-    
-    
-
 
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Boss")
         {
-            
             Debug.Log("HittingForward");
-            Debug.Log("Boosted:" + boosted + "Fused:" + fused);
+            //Debug.Log("Boosted:" + boosted + "Fused:" + fused);
+
             rb.mass = 1f;
             BlockGrab.fj.connectedBody = null;
             knockBackTimer = 0.2f;
             knocked = false;
+            //transform.parent.GetComponent<BlockPush>().Respawn();
+            transform.parent = null;
             rb.velocity = Vector3.zero;
-            if (transform.parent != null && transform.parent.GetComponent<BlockPush>() !=null)
-            {
-                transform.parent.GetComponent<BlockPush>().Respawn();
-                rb.mass = 1f;
-                rb.velocity = Vector3.zero;
-                transform.parent = null;
-                fused = false;
-                boosted = false;
-                GetComponent<Rigidbody>().isKinematic = false;
-                GetComponent<Collider>().isTrigger = false;
-                GetComponent<MeshRenderer>().material.color = Color.white;
-            }
             transform.position = originalPos;
-            
-
             Color newColor = mat.color;
             newColor.a = 0.5f;
             mat.color = newColor;
@@ -200,12 +159,6 @@ public class BlockPush : MonoBehaviour
             rb.isKinematic = true;
             bcollider.isTrigger = true;
             phaseTimer = 0.8f;
-            //bcollider.enabled = false;
-             //scollider.enabled = true;
-           
-
-            
-
         }
     }
 
@@ -214,31 +167,20 @@ public class BlockPush : MonoBehaviour
         if (col.gameObject.tag == "ForwardBlock")
         {
             GameObject high = col.gameObject;
-            rb.velocity = Vector3.zero;
-            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            if (this.gameObject.tag == "ForwardBlockShort" && ((knocked || grabbed) && !fused && !col.gameObject.GetComponent<BlockPush>().boosted))
+            if (this.gameObject.tag == "ForwardBlockShort" && (knocked || grabbed))
             {
-                UnityEngine.Debug.Log("hello to you too");
                 GameObject low = this.gameObject;
                 grabbed = false;
-
-                high.GetComponent<BlockPush>().fused = true;
-                low.GetComponent<BlockPush>().boosted = true;
-
-                Vector3 pos = high.transform.position;
-                transform.position = new Vector3(pos.x, 1.25f, pos.z);
-                col.gameObject.transform.position = new Vector3(pos.x, 0.5f, pos.z);
-
-                high.transform.parent = low.transform;
-                high.GetComponent<Rigidbody>().isKinematic = true;
-                //high.GetComponent<Collider>().isTrigger = true;
-
-                low.GetComponent<MeshRenderer>().material.color = Color.gray;
-                Color newColor = low.GetComponent<MeshRenderer>().material.color;
-                newColor.a = 0.5f;
-                low.GetComponent<MeshRenderer>().material.color = newColor;
-                high.GetComponent<MeshRenderer>().material.color = Color.gray;
-
+                low.GetComponent<Rigidbody>().mass = 1f;
+                high.GetComponent<Rigidbody>().mass = 1f;
+                low.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                high.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                Vector3 newPos = new Vector3(high.transform.position.x, 0.5f, high.transform.position.z);
+                high.transform.parent = fusedBlock.transform;
+                low.transform.parent = fusedBlock.transform;
+                low.transform.position = new Vector3(5f, 5f, 5f);
+                high.transform.position = new Vector3(5f, 8f, 5f);
+                fusedBlock.transform.position = newPos;
             }
             knockBackTimer = 0.2f;
             knocked = false;
@@ -247,40 +189,24 @@ public class BlockPush : MonoBehaviour
         else if(col.gameObject.tag == "ForwardBlockShort")
         {
             GameObject low = col.gameObject;
-            rb.velocity = Vector3.zero;
-            col.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            if (this.gameObject.tag == "ForwardBlock" && ((knocked || grabbed) && !boosted && !col.gameObject.GetComponent<BlockPush>().fused))
+            if (this.gameObject.tag == "ForwardBlock" && (knocked || grabbed))
             {
-                UnityEngine.Debug.Log("hello");
                 GameObject high = this.gameObject;
                 grabbed = false;
-
-                high.GetComponent<BlockPush>().fused = true;
-                low.GetComponent<BlockPush>().boosted = true;
-
-                Vector3 pos = low.transform.position;
-                low.transform.position = new Vector3(pos.x, 1.25f, pos.z);
-                high.transform.position = new Vector3(pos.x, 0.5f, pos.z);
-
-                high.transform.parent = low.transform;
-                high.GetComponent<Rigidbody>().isKinematic = true;
-                //high.GetComponent<Collider>().isTrigger = true;
-
-                low.GetComponent<MeshRenderer>().material.color = Color.gray;
-                Color newColor = low.GetComponent<MeshRenderer>().material.color;
-                newColor.a = 0.5f;
-                low.GetComponent<MeshRenderer>().material.color = newColor;
-                high.GetComponent<MeshRenderer>().material.color = Color.gray;
+                low.GetComponent<Rigidbody>().mass = 1f;
+                high.GetComponent<Rigidbody>().mass = 1f;
+                low.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                high.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                Vector3 newPos = new Vector3(low.transform.position.x, 0.5f, low.transform.position.z);
+                high.transform.parent = fusedBlock.transform;
+                low.transform.parent = fusedBlock.transform;
+                low.transform.position = new Vector3(5f, 5f, 5f);
+                high.transform.position = new Vector3(5f, 8f, 5f);
+                fusedBlock.transform.position = newPos;
             }
             knockBackTimer = 0.2f;
             knocked = false;
         }
-
-        
-        
-        
     }
-    
-
 }
 
