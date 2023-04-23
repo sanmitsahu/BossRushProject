@@ -178,8 +178,9 @@ public class BlockPush : MonoBehaviour
                 Vector3 newPos = new Vector3(high.transform.position.x, 0.5f, high.transform.position.z);
                 fusedBlock.GetComponent<FuseBlock>().highChild = high;
                 fusedBlock.GetComponent<FuseBlock>().lowChild = low;
-                low.transform.position = new Vector3(5f, 5f, 5f);
-                high.transform.position = new Vector3(5f, 8f, 5f);
+                fusedBlock.transform.rotation = high.transform.rotation;
+                low.transform.position = new Vector3(15f, 15f, 15f);
+                high.transform.position = new Vector3(15f, 18f, 15f);
                 fusedBlock.transform.position = newPos;
             }
             knockBackTimer = 0.2f;
@@ -200,8 +201,9 @@ public class BlockPush : MonoBehaviour
                 Vector3 newPos = new Vector3(low.transform.position.x, 0.5f, low.transform.position.z);
                 fusedBlock.GetComponent<FuseBlock>().highChild = high;
                 fusedBlock.GetComponent<FuseBlock>().lowChild = low;
-                low.transform.position = new Vector3(5f, 5f, 5f);
-                high.transform.position = new Vector3(5f, 8f, 5f);
+                fusedBlock.transform.rotation = high.transform.rotation;
+                low.transform.position = new Vector3(15f, 15f, 15f);
+                high.transform.position = new Vector3(15f, 18f, 15f);
                 fusedBlock.transform.position = newPos;
             }
             knockBackTimer = 0.2f;

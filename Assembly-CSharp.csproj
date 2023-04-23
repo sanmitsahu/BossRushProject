@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\SplitFromBlock.cs" />
     <Compile Include="Assets\Scripts\HideTip.cs" />
     <Compile Include="Assets\Scripts\FuseBlock.cs" />
+    <Compile Include="Assets\Scripts\BlockRotate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -23,7 +23,8 @@ public class FuseBlock : MonoBehaviour
         //UnityEngine.Debug.Log(PlayerController.swung);
         if ((other.gameObject.tag == "Punch" && PlayerController.swung && !PlayerController.swordHit) || BlockGrab.grab)
         {
-            transform.position = new Vector3(10.0f, 0.0f, 0.0f);
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            transform.position = new Vector3(100.0f, 0.0f, 0.0f);
 
             lowChild.GetComponent<Rigidbody>().mass = 1.0f;
             lowChild.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -41,6 +42,7 @@ public class FuseBlock : MonoBehaviour
     {
         if (col.gameObject.tag == "Boss")
         {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
             transform.position = new Vector3(10.0f, 0.0f, 0.0f);
 
             lowChild.GetComponent<Rigidbody>().mass = 1.0f;

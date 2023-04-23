@@ -30,7 +30,6 @@ public class ChaseBlock : MonoBehaviour
         if (collision.gameObject.GetComponent<BoxCollider>() != null)
         {
             chasing = false;
-            
         }
     }
 }
