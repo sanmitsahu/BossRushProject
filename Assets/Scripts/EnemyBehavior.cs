@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 using Debug = UnityEngine.Debug;
 using UnityEngine.Networking;
@@ -13,9 +14,13 @@ using System.Runtime.CompilerServices;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    public GameObject enemyHealthBox;
     private Color originalColor;
     public Color damageColor;
     public Color stunColor;
+    public Color enemyHealthBoxOriginalColor;
+    public Color enemyHealthBoxColor;
+    public float healthColorDuration = 0.1f;
     private Renderer renderer;
     private float flashDuration;
     private GameObject player;
@@ -79,8 +84,6 @@ public class EnemyBehavior : MonoBehaviour
     {
         health = originalHealth;
         stunTextMesh = stunCanvas.GetComponentInChildren<TextMeshProUGUI>();
-        
-
     }
 
     void Start()
@@ -110,15 +113,23 @@ public class EnemyBehavior : MonoBehaviour
         PlayerPrefs.DeleteKey("pulled");
         WinCanvas.SetActive(false);
         lastColPos = originalPos;
-
-
+        
+        enemyHealthBoxOriginalColor = enemyHealthBox.GetComponent<Image>().color;
+        enemyHealthBoxColor = new Color(1.0f, 0.7f, 1.0f);
     }
 
-void OnDisable()
+    void OnDisable()
     {
         EventManager.OnRestart -= OnDeath;
     }
 
+    private IEnumerator HitColorCoroutine()
+    {
+        enemyHealthBox.GetComponent<Image>().color = enemyHealthBoxColor;
+        yield return new WaitForSeconds(0.65f);
+        enemyHealthBox.GetComponent<Image>().color = enemyHealthBoxOriginalColor;
+    }
+    
     public void OnDeath()
     {
         temploc = GameObject.Find("Player").transform.position;
@@ -530,24 +541,21 @@ void OnDisable()
                 health--;
                 healthred++;
                 npushable++;
-                //isBossBeat = true;
-                //StartCoroutine(OnComplete());
+                StartCoroutine(HitColorCoroutine());
+                
                 if (health <= 0)
                 {
                     isBossBeat = true;
                     StartCoroutine(OnComplete());
                 }
-
             }
-            
-
 
             else if (other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "ForwardBlockShort")
             {
-                
                 line.transform.parent = this.transform;
                 line.transform.position = new Vector3(this.transform.position.x, line.transform.position.y, this.transform.position.z);
                 nforward++;
+                
                 if (st == State.HIT || st == State.NORMAL)
                 {
                     knockBackTimer = 0.5f;
@@ -558,11 +566,13 @@ void OnDisable()
                 StartCoroutine(DamageFlash());
                 health--;
                 healthred++;
+                StartCoroutine(HitColorCoroutine());
 
                 rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
                 pushIcon.SetActive(true);
                 pushIcon.GetComponent<RectTransform>().eulerAngles = new Vector3(-90, 0, other.gameObject.transform.eulerAngles.y);
                 //Debug.Log(pushIcon.GetComponent<RectTransform>().rotation);
+                
                 if (health <= 0)
                 {
                     isBossBeat = true;
@@ -589,6 +599,7 @@ void OnDisable()
                 StartCoroutine(DamageFlash());
                 health-=2;
                 healthred+=2;
+                StartCoroutine(HitColorCoroutine());
 
                 rb.AddForce(other.gameObject.transform.forward * knockBack / 2.0f, ForceMode.Impulse);
                 pushIcon.SetActive(true);
@@ -620,6 +631,7 @@ void OnDisable()
                     StartCoroutine(DamageFlash());
                     health--;
                     healthred++;
+                    StartCoroutine(HitColorCoroutine());
 
                     if (health <= 0)
                     {
@@ -643,11 +655,8 @@ void OnDisable()
                         Restart();
                     }
                 }
-
-
-
-
             }
+            
             else if (other.gameObject.tag == "Block")
             {
                 line.transform.parent = this.transform;
@@ -655,6 +664,7 @@ void OnDisable()
                 nblock++;
                 Restart();
             }
+            
             else if (other.gameObject.tag == "Switch")
             {
                 line.transform.parent = this.transform;
@@ -667,6 +677,7 @@ void OnDisable()
                 }
                 Restart();
             }
+            
             lastColPos = other.transform.position;
         }
     }
@@ -853,7 +864,6 @@ void OnDisable()
         
         using (UnityWebRequest www = UnityWebRequest.Post(URL_Level, form))
         {
-
             yield return www.SendWebRequest();
             if (www.result != UnityWebRequest.Result.Success)
             {
