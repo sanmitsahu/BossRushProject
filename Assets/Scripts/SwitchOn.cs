@@ -33,7 +33,7 @@ public class SwitchOn : MonoBehaviour
         if (other.gameObject.tag == "Boss")
         {
             on = false;
-            gameObject.GetComponent<Renderer>().material.color = Color.magenta;
+            gameObject.GetComponent<Renderer>().material.color = new Color(0.06f, 0.17f, 0.59f);
         }
     }
 }
