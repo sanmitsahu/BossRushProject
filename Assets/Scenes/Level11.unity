@@ -1951,7 +1951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1410500016702514575, guid: 3b649f4a27ae0584fafce3803c281e11, type: 3}
       propertyPath: m_text
-      value: '- Purple Barrier vanishes when projectile hits Pink Switch
+      value: '- Purple Barrier vanishes when projectile hits Indigo Switch
 
 
         -

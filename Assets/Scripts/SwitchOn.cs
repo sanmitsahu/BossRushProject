@@ -8,7 +8,7 @@ public class SwitchOn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<Renderer>().material.color = Color.magenta;
+        gameObject.GetComponent<Renderer>().material.color = new Color(0.06f, 0.17f, 0.59f);
         on = false;
     }
 
