@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Menu
+  m_text: Main Menu [M]
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -93,8 +93,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 23
+  m_fontSizeBase: 23
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -359,6 +359,7 @@ GameObject:
   - component: {fileID: 1410500016318568277}
   - component: {fileID: 1410500016318568276}
   - component: {fileID: 1410500016318568283}
+  - component: {fileID: 3828391992154005001}
   m_Layer: 5
   m_Name: TipOpenButton
   m_TagString: Untagged
@@ -493,6 +494,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &3828391992154005001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410500016318568281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147abd5a401262041b7f67165c17a713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetButton: {fileID: 1410500016318568283}
+  triggerKey: 112
 --- !u!1 &1410500016320898650
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,6 +520,7 @@ GameObject:
   - component: {fileID: 1410500016320898646}
   - component: {fileID: 1410500016320898645}
   - component: {fileID: 1410500016320898644}
+  - component: {fileID: 7214398604683742697}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -639,6 +655,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &7214398604683742697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410500016320898650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147abd5a401262041b7f67165c17a713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetButton: {fileID: 1410500016320898644}
+  triggerKey: 99
 --- !u!1 &1410500016526805932
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,6 +812,7 @@ GameObject:
   - component: {fileID: 1410500016535658826}
   - component: {fileID: 1410500016535658825}
   - component: {fileID: 1410500016535658824}
+  - component: {fileID: 62505609930348346}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -952,6 +983,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &62505609930348346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410500016535658830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147abd5a401262041b7f67165c17a713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetButton: {fileID: 1410500016535658824}
+  triggerKey: 108
 --- !u!1 &1410500016702514573
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1190,7 @@ GameObject:
   - component: {fileID: 1410500016943232764}
   - component: {fileID: 1410500016943232739}
   - component: {fileID: 1410500016943232738}
+  - component: {fileID: 6591841845847216444}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1267,6 +1313,20 @@ MonoBehaviour:
           m_StringArgument: MainMenu
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6591841845847216444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410500016943232736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147abd5a401262041b7f67165c17a713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetButton: {fileID: 1410500016943232738}
+  triggerKey: 109
 --- !u!1 &1410500017188342744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1333,9 +1393,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Controls
-
-'
+  m_text: Controls [L]
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1510,7 +1568,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Continue
+  m_text: Continue [C]
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
