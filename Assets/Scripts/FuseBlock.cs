@@ -28,11 +28,15 @@ public class FuseBlock : MonoBehaviour
 
             lowChild.GetComponent<Rigidbody>().mass = 1.0f;
             lowChild.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            lowChild.transform.position = lowChild.GetComponent<BlockPush>().originalPos;
+            //lowChild.transform.position = lowChild.GetComponent<BlockPush>().originalPos;
+            lowChild.GetComponent<BlockPush>().Respawn();
+
 
             highChild.GetComponent<Rigidbody>().mass = 1.0f;
             highChild.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            highChild.transform.position = highChild.GetComponent<BlockPush>().originalPos;
+            //highChild.transform.position = highChild.GetComponent<BlockPush>().originalPos;
+            highChild.GetComponent<BlockPush>().Respawn();
+
 
             //transform.position = new Vector3(1000.0f, 1000.0f, 1000.0f);
         }

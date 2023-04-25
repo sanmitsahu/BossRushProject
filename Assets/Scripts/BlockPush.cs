@@ -107,8 +107,8 @@ public class BlockPush : MonoBehaviour
         Debug.Log("Respawning");
         rb.mass = 1f;
         transform.parent = null;
-        GetComponent<Rigidbody>().isKinematic = false;
-        GetComponent<Collider>().isTrigger = false;
+        //GetComponent<Rigidbody>().isKinematic = false;
+        //GetComponent<Collider>().isTrigger = false;
         GetComponent<MeshRenderer>().material.color = Color.white;
         transform.position = originalPos;
 

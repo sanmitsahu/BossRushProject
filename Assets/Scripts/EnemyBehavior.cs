@@ -527,10 +527,19 @@ void OnDisable()
 
             if (other.gameObject.tag == "PushBlock")
             {
+                health--;
+                healthred++;
                 npushable++;
-                isBossBeat = true;
-                StartCoroutine(OnComplete());
+                //isBossBeat = true;
+                //StartCoroutine(OnComplete());
+                if (health <= 0)
+                {
+                    isBossBeat = true;
+                    StartCoroutine(OnComplete());
+                }
+
             }
+            
 
 
             else if (other.gameObject.tag == "ForwardBlock" || other.gameObject.tag == "ForwardBlockShort")
